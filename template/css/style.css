@@ -144,17 +144,13 @@
   }
   .card-bottom .edit-icon{
 	float: right;margin: 0 20px
-	
-  }.fas:hover {
+	}
+	.fas:hover {
 	color: rgb(138, 86, 86);
 	cursor: pointer;
   }
   
-  .card-bottom p {
-	color: red;
-	text-transform: uppercase;
-	font-size: 13px
-  }
+
   .content-container{
 	  margin-top: 60px
   }
@@ -304,3 +300,9 @@
 		font-weight: 400;
 		color: rgb(150, 140, 140)
 	  }
+		.card-bottom p {
+			color: rgb(247, 4, 4);
+			text-transform: uppercase;
+			font-size: 13px;
+		cursor: pointer;
+		}
