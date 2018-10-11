@@ -1,17 +1,16 @@
 
-ul {
-	list-style: none;
-  }
+
 .card{
-	text-align: center;
-	z-index: 9999999;
+	
+	z-index: 999;margin:10px
+
 }
 
 .modal-dialog {
 	margin-top: 60px;
 	margin-right: 6px;
 	width: 27%;
-	z-index: 10040;
+	z-index: 9999999999;
 	overflow: auto;
 	overflow-y: auto;
   }
@@ -80,8 +79,8 @@ ul {
 	-moz-box-shadow: 0 4px 6px -6px #222;
 	box-shadow: 0 4px 6px -6px #222;
   }
-  .left-info, .right-info{
-	  padding: 20px 20px
+  .left-info{
+	float: left;
   }
   .biz-desciption{
 	  text-align: left;
@@ -97,11 +96,18 @@ ul {
 	  border: 1px solid #ffffff;
 	  border-radius: 50%
   }
+  .commenter-avatar {
+	
+	text-align: center
+	
+}
   .space-text{
 	margin-right: 10px
   }
 
-
+  .card-body{
+    background-color: rgb(255, 255, 255);
+  }
   .card-text{
 	margin-bottom: 3px;
 	font-weight: 450;
@@ -118,11 +124,7 @@ ul {
  
    .card i{
 	color: rgb(150, 140, 140);
-	float: left;
    }
-  .space-text{
-	margin-right: 10px
-  }
   .card-bottom{
 	margin-top: 8px
   }
@@ -167,6 +169,44 @@ ul {
 	margin-left: auto;
 	margin-right: auto
   }
+  
+.header{
+	height: 50vh;
+	background-image:
+   url('../images/hero.jpg');
+  background-size: cover;
+	background-position: top;
+	position: relative;
+	background-clip: padding-box; 
+  background-color: #F4F9FF;
+  z-index: -1;
+}
+.profile-section img{
+  border-radius: 50%;
+  border: 6px solid white;
+  width: 200px;
+  margin-top: -100px;
+}
+.profile-text{
+  text-align: center;
+  line-height:0px;
+}
+.table{
+  text-align: center;
+
+}
+.dashboard-containers{
+  width: 90%;
+  margin: auto auto;
+  background: #ffffff;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.10);
+}
+.user-info{
+  width: 85%;
+  margin: auto auto;
+  text-align: center
+
+}
   .footer p{
 	text-align: center;
 	color: #ffffff;
@@ -175,3 +215,92 @@ ul {
   .footer{
 	margin-top: 50px
   }
+  .edit-profile-btn{
+	margin-left: auto;
+	margin-right: auto;
+	}
+	.centra{
+	  text-align: center;
+	  margin: auto auto
+	}
+	.register-business-header{
+	  margin-top: 10px;
+		height: 50vh;
+		background-image:
+	  url('../images/00.jpg');
+	  background-size: cover;
+		background-position: top;
+		position: relative;
+		background-clip: padding-box; 
+	  background-color: #F4F9FF;
+	  z-index: -1;
+	}
+	
+	.profile-section-biz-details img{
+	  border-radius: 50%;
+	  border: 6px solid white;
+	  width: 200px;
+	
+	}
+	.profile-section-biz-details{
+	  width: 90%;
+	  margin-left: auto;
+	  margin-right: auto
+	}
+	.card-container{
+		width: 100%;
+	   margin-left: auto;
+	   margin-right: auto
+	  }
+	  .category{
+		margin-right: 5px;
+	  }
+	  .dot-seperator{
+		vertical-align: baseline;
+		font-weight: bolder
+	  }
+	  .review{
+		margin-left: 5px;
+	  }
+	  .cat-review{
+	  margin-top:0px
+	  }
+	  .review-card{
+		margin-left:0px;
+	  }
+	  .biz-form-container{
+		width: 50%;
+		margin-left:auto;
+		margin-right: auto;
+	  }
+	  #exampleTextarea{
+		width: 100%
+	  }
+	  .biz-descriptions{
+		background-color: #ffffff;
+		padding-bottom: 0px
+	  }
+	  .biz-descriptions p {
+		font-size: 16px;
+		font-weight: 400;
+		color: rgb(150, 140, 140);
+		margin-top: 30px;
+		margin-left: 20px;
+	  }
+	  .right-info{
+		float:left;
+	  }
+	  .right-info p{
+		display: inline;
+		font-weight: 600;
+		font-size: 30px
+	  }
+	  .right-info button{
+	   margin-left: 30px
+	  }
+	  .card p {
+		display: inline;
+		font-size: 15px;
+		font-weight: 400;
+		color: rgb(150, 140, 140)
+	  }
