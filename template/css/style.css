@@ -1,4 +1,6 @@
-
+ul{
+	list-style-type: none;
+}
 
 .card{
 	
@@ -220,7 +222,6 @@
 	  margin: auto auto
 	}
 	.register-business-header{
-	  margin-top: 10px;
 		height: 50vh;
 		background-image:
 	  url('../images/00.jpg');
