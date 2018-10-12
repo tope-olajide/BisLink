@@ -12,11 +12,11 @@
     <link rel="stylesheet" type="text/css" href="css/bootstrap-material-design.min.css" />
  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
         crossorigin="anonymous"> 
-    <title>Welcome to BisLink!</title>
+    <title> BisLink | Profile</title>
 
 </head>
 <nav class="navbar navbar-expand-md navbar-dark  bg-dark">
-    <a class="navbar-brand" href="#">Bis-Link</a>
+    <a class="navbar-brand" href="index.html">Bis-Link</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse"
         aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -24,23 +24,47 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
  
-                <a class="nav-link" href="#"><i class="fas fa-home"></i> Home </a>
+                <a class="nav-link" href="index.html"><i class="fas fa-home"></i> Home </a>
        
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-briefcase"></i> Featured</a>
+                <a class="nav-link" href="business-list.html"><i class="fas fa-briefcase"></i> Catalogue</a>
             </li>
            
         </ul>
         <ul class="navbar-nav">
-            <li class="nav-item active ">
-                <a class="nav-link" href="#"><i class="fas fa-user"></i></i> Dashboard</a></li>
+            <li class="nav-item ">
+                <a class="nav-link" href="#" onclick="openSearch()"><i class="fas fa-search"></i> Search</a></li>
+                <li class="nav-item ">
+                    <a class="nav-link" href="register-business.html"><i class="fas fa-folder-plus"></i> Add Business</a></li>
+            <li class="nav-item active">
+                <a class="nav-link" href="profile.html"><i class="fas fa-user"></i></i> Profile</a></li>
 
             <li class="nav-item" id='login' onclick="showLoginForm()">
-                <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
+                <a class="nav-link" href="index.html"><i class="fas fa-sign-out-alt"></i> Log Out</a>
             </li>
         </ul>
     </div>
 </nav>
+<div id="myOverlay" class="overlay">
+    <span class="closebtn" onclick="closeSearch()" title="Close Overlay">x</span>
+    <div class="overlay-content">
+      <form>
+        <div class="row">
+          <div class="col-md-5 mb-3">
+
+            <input type="text" class="form-control search-bar" id="businessName" placeholder="Business name" value=""
+              required>
+          </div>
+          <div class="col-md-5 mb-4">
+
+            <input type="text" class="form-control search-bar" id="slogan" placeholder="Location" value="" required>
+          </div>
+          <button type="submit" class="col-md-2 btn btn-outline-light mt-3"><i class="fa fa-search"></i></button>
+        </div>
+
+      </form>
+    </div>
+  </div>
 <body class='body'>
         <div class="header"></div>
  
@@ -207,7 +231,7 @@
             <div class="dashboard-section col-md-8">
                     <ul class="nav nav-tabs nav-fill">
                             <li class="nav-item">
-                              <a class="nav-link active" href="#">My Businesses</a>
+                              <a class="nav-link active" href="#"><i class="fas fa-briefcase"></i> My Businesses</a>
                             </li>
                             <li class="nav-item">
                               <a class="nav-link" href="#"><i class="fas fa-heart"></i>    Favourites</a>
@@ -275,9 +299,12 @@
         <nav class="navbar footer bottom navbar-expand-sm navbar-dark bg-dark">
             <p class=" light ">Copyright © 2018 BisLink. All rights reserved | Designed with <i class="fas fa-heart fa-lg"></i> by <a href="https://github.com/tope-olajide/BisLink">Temitope</a> </p>
                           </nav>
-              <script type="text/javascript" src="js/jquery-slim.min.js"></script>
-              <script type="text/javascript" src="js/popper.min.js"></script>
-              <script type="text/javascript" src="js/bootstrap-material-design.min.js"></script>
+           
+
+  <script type="text/javascript" src="js/jquery-slim.min.js"></script>
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-material-design.min.js"></script>
+  <script type="text/javascript" src="js/script.js"></script>
 </body>
 
 </html>
