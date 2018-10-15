@@ -7,10 +7,22 @@
 export default (sequelize, DataTypes) => {
   const Favorite = sequelize.define('Favorite', {
     businessId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Businesss',
+        key: 'id',
+        as: 'businessId',
+      }
     },
     userId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      onDelete: 'CASCADE',
+      references: {
+        model: 'Users',
+        key: 'id',
+        as: 'userId',
+      }
     }
   });
 
