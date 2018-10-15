@@ -8,8 +8,45 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
+      businessName: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      tagline: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      businessAddress1: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      businessAddress2: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      phoneNumber1: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      phoneNumber2: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
+      website: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      category: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      businessImageUrl: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      businessDescription: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
@@ -21,7 +58,5 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('businesses');
-  }
+  down: queryInterface => queryInterface.dropTable('businesses')
 };
