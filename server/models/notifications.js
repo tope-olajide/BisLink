@@ -1,26 +1,26 @@
 /** Define the Notification database model/association
  * @exports Notification
  * @param  {object} sequelize - sequelize
- * @param  {object} DataTypes - sequelize Datatypes
+ * @param  {object} Sequelize - sequelize Sequelize
  * @return {object} The Notification model
  */
-module.exports = (sequelize, DataTypes) => {
+module.exports = (sequelize, Sequelize) => {
   const Notifications = sequelize.define('Review', {
-    content: DataTypes.STRING,
+    content: Sequelize.STRING,
     notificationsId: {
-      type: DataTypes.INTEGER
+      type: Sequelize.STRING
     },
     userId: {
-      type: DataTypes.INTEGER
+      type: Sequelize.STRING
     },
     senderId: {
-      type: DataTypes.INTEGER
+      type: Sequelize.STRING
     },
     message: {
-      type: DataTypes.INTEGER
+      type: Sequelize.STRING
     },
     notificationState: {
-      type: DataTypes.BOOLEAN
+      type: Sequelize.BOOLEAN
     }
   });
 

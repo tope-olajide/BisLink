@@ -8,8 +8,20 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      notificationsId: {
         type: Sequelize.STRING
+      },
+      userId: {
+        type: Sequelize.STRING
+      },
+      senderId: {
+        type: Sequelize.STRING
+      },
+      message: {
+        type: Sequelize.STRING
+      },
+      notificationState: {
+        type: Sequelize.BOOLEAN
       },
       createdAt: {
         allowNull: false,
