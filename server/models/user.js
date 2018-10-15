@@ -35,6 +35,10 @@ export default (sequelize, DataTypes) => {
     about: {
       type: DataTypes.STRING,
       allowNull: true,
+    },
+    usersImageUrl: {
+      type: DataTypes.STRING,
+      allowNull: true,
     }
   });
 
