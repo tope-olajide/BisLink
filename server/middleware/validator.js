@@ -85,10 +85,10 @@ export const validateUser = (fullname, username, password) => {
     return 'Enter a valid full name!';
   }
   if (username.length < 3 || username.includes(' ')) {
-    return 'Username must contain at least 3 alphabets!';
+    return 'Username must contain at least 3 alphabets and no space!';
   }
-  if (password.trim().length === 0 || password.length < 6) {
-    return 'Password must be at least 6 characters!';
+  if (password.trim().length === 0 || password.length < 5) {
+    return 'Password must be at least 5 characters!';
   }
   return false;
 };
