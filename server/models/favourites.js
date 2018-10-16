@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       onDelete: 'CASCADE',
       references: {
-        model: 'Businesss',
+        model: 'Business',
         key: 'id',
         as: 'businessId',
       }
@@ -25,6 +25,15 @@ export default (sequelize, DataTypes) => {
       }
     }
   });
-
+  Favorite.associate = (models) => {
+    Favorite.belongsTo(models.Business, {
+      foreignKey: 'businessId',
+      onDelete: 'CASCADE'
+    });
+    Favorite.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    });
+  };
   return Favorite;
 };

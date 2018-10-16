@@ -5,24 +5,34 @@
  * @return {object} The Notification model
  */
 module.exports = (sequelize, Sequelize) => {
-  const Notifications = sequelize.define('Review', {
+  const Notification = sequelize.define('Review', {
     content: Sequelize.STRING,
-    notificationsId: {
+    NotificationId: {
       type: Sequelize.STRING
     },
     userId: {
-      type: Sequelize.STRING
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Users',
+        key: 'id',
+        as: 'userId',
+      }
     },
     senderId: {
-      type: Sequelize.STRING
+      type: Sequelize.INTEGER
     },
     message: {
       type: Sequelize.STRING
     },
-    notificationState: {
+    Notificationtate: {
       type: Sequelize.BOOLEAN
     }
   });
-
-  return Notifications;
+  Notification.associate = (models) => {
+    Notification.belongsTo(models.User, {
+      foreignKey: 'userId',
+      onDelete: 'CASCADE'
+    });
+  };
+  return Notification;
 };
