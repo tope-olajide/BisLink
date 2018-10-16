@@ -9,11 +9,22 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       businessId: {
-        type: Sequelize.INTEGER
+        type: DataTypes.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Business',
+          key: 'id',
+          as: 'businessId',
+        }
       },
       userId: {
-        type: Sequelize.INTEGER
-      },
+        type: DataTypes.INTEGER,
+        onDelete: 'CASCADE',
+        references: {
+          model: 'Users',
+          key: 'id',
+          as: 'userId',
+        },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
