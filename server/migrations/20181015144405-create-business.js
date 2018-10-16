@@ -62,7 +62,7 @@ module.exports = {
           model: 'Users',
           key: 'id',
           as: 'userId',
-        }},
+        } },
     });
   },
   down: queryInterface => queryInterface.dropTable('businesses')
