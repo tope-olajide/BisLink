@@ -65,7 +65,6 @@ module.exports = (sequelize, DataTypes) => {
     Business.hasMany(models.Favorite, {
       foreignKey: 'businessId'
     });
-
   };
 
   return Business;

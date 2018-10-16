@@ -6,10 +6,6 @@
  */
 module.exports = (sequelize, Sequelize) => {
   const Notification = sequelize.define('Review', {
-    content: Sequelize.STRING,
-    NotificationId: {
-      type: Sequelize.STRING
-    },
     userId: {
       type: Sequelize.INTEGER,
       references: {
@@ -24,7 +20,10 @@ module.exports = (sequelize, Sequelize) => {
     message: {
       type: Sequelize.STRING
     },
-    Notificationtate: {
+    url: {
+      type: Sequelize.STRING
+    },
+    notificationState: {
       type: Sequelize.BOOLEAN
     }
   });
