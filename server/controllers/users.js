@@ -1,7 +1,9 @@
+import jsonwebtoken from 'jsonwebtoken';
 import { validateUser, validateEmail } from '../middleware/validator';
 import { User } from '../models';
 
-const verifyUserNameOrEmail = (username, email) => {
+
+const verifyUserNameAndEmail = (username, email) => {
   const promise = new Promise((resolve, reject) => {
     User
       .findOne({
@@ -77,7 +79,7 @@ export default class Users {
         message: signUpError
       });
     }
-    verifyUserNameOrEmail(username, email).then(() => {
+    verifyUserNameAndEmail(username, email).then(() => {
       User
         .create({
           name: fullname,
@@ -85,13 +87,21 @@ export default class Users {
           email,
           password,
         })
-        .then(result => res.status(201).json({
-          success: true,
-          message: 'New user created',
-          user: result
-        })).catch(() => res.status(500).json({
+        .then((result) => {
+          const token = jsonwebtoken.sign({
+            id: result.id,
+            username: result.username,
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+          }, 'process.env.JWT_SECRET');
+          return res.status(201).json({
+            success: true,
+            message: 'New user created/token generated!',
+            token
+          });
+        })
+        .catch(error => res.status(500).json({
           success: false,
-          message: 'Error Creating user'
+          message: `Error creating user ${error.message}`
         }));
     }).catch(error =>
       res.status(409).json({
