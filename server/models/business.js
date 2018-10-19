@@ -5,7 +5,7 @@
  * @return {object} The Business model
  */
 module.exports = (sequelize, DataTypes) => {
-  const Business = sequelize.define('businesses', {
+  const Business = sequelize.define('Business', {
     businessName: {
       type: DataTypes.STRING,
       allowNull: false,

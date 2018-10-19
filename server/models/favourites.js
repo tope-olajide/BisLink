@@ -10,7 +10,7 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       onDelete: 'CASCADE',
       references: {
-        model: 'Business',
+        model: 'Businesses',
         key: 'id',
         as: 'businessId',
       }
