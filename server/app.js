@@ -1,24 +1,22 @@
-import express from 'express';
-import logger from 'morgan';
-import bodyParser from 'body-parser';
+import routes from './routes/users';
+
+const express = require('express');
+const bodyParser = require('body-parser');
 
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-app.use(logger('dev'));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-
-
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 app.get('/', (req, res) => {
   res.status(201).json({
-    title: 'BizLink',
-    message: 'Welcome to bizLink Homepage!'
+    title: 'BisLink',
+    message: 'Welcome to bisLink Homepage!'
   });
 });
-
+app.use('/', routes);
 app.get('*', (req, res) => {
   res.status(404).send({
     success: false,
@@ -32,10 +30,8 @@ app.post('*', (req, res) => {
     message: 'invalid link'
   });
 });
-
-
+  
+let port = 3000;
 app.listen(port, () => {
-    console.log('We are live at Port 3000');
-  });
-
-export default app;
+  console.log(`Server is up and running on port number ${port}`);
+});

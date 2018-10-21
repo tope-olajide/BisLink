@@ -41,6 +41,16 @@ export default (sequelize, DataTypes) => {
       allowNull: true,
     }
   });
-
+  User.associate = (models) => {
+    User.hasMany(models.Business, {
+      foreignKey: 'userId'
+    });
+    User.hasMany(models.Review, {
+      foreignKey: 'userId'
+    });
+    User.hasMany(models.Favorite, {
+      foreignKey: 'userId'
+    });
+  };
   return User;
 };

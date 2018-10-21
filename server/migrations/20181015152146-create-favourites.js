@@ -1,7 +1,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('favourites', {
+    return queryInterface.createTable('Favourites', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -9,22 +9,23 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       businessId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'Business',
+          model: 'Businesses',
           key: 'id',
           as: 'businessId',
         }
       },
       userId: {
-        type: DataTypes.INTEGER,
+        type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
           model: 'Users',
           key: 'id',
           as: 'userId',
-        },
+        }
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -35,5 +36,5 @@ module.exports = {
       }
     });
   },
-  down: queryInterface => queryInterface.dropTable('favourites')
+  down: queryInterface => queryInterface.dropTable('Favourites')
 };

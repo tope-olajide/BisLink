@@ -5,7 +5,7 @@
  * @return {object} The Notification model
  */
 module.exports = (sequelize, Sequelize) => {
-  const Notification = sequelize.define('Review', {
+  const Notification = sequelize.define('Notification', {
     userId: {
       type: Sequelize.INTEGER,
       references: {
