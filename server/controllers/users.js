@@ -1,7 +1,9 @@
 import jsonwebtoken from 'jsonwebtoken';
 import { validateUser, validateEmail } from '../middleware/validator';
 import { User } from '../models';
+import Encryption from '../middleware/encryption';
 
+const newEncryption = new Encryption();
 
 const verifyUserNameAndEmail = (username, email) => {
   const promise = new Promise((resolve, reject) => {
@@ -108,6 +110,71 @@ export default class Users {
         success: false,
         message: error
       }));
+    return this;
+  }
+    /**
+   * @description - Sign In a user (Search for user)
+   *
+   * @param {object} req - HTTP Request
+   *
+   * @param {object} res - HTTP Response
+   *
+   * @return {object} this - Class instance
+   *
+   * @memberof Users
+   */
+  signIn(req, res) {
+    const authName = req.body.authName;
+
+    User
+      .findOne({
+        attributes: ['id', 'name', 'username', 'email', 'password'],
+        where: {
+          $or: [
+            {
+              username: {
+                $iLike: authName
+              }
+            }, {
+              email: {
+                $iLike: authName
+              }
+            }
+          ]
+        }
+      })
+      .then((userFound) => {
+        if (!userFound) {
+          return res.status(401).json({
+            success: false,
+            message: 'Invalid Login Credentials!'
+          });
+        }
+
+        if (newEncryption.verifyHash(req.body.password, userFound.password)) {
+          const { id, username } = userFound;
+          const token = jsonwebtoken.sign({
+            id,
+            username,
+            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+          }, 'process.env.JWT_SECRET');
+
+          return res.status(200).json({
+            success: true,
+            message: 'User Signed In/token generated!',
+            token
+          });
+        }
+        res.status(401).json({
+          success: false,
+          message: 'Invalid Login Credentials!'
+        });
+      })
+      .catch((/* error */) => res.status(500).json({
+        success: false,
+        message: 'An error occured'
+      }));
+
     return this;
   }
 }
