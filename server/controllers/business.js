@@ -1,18 +1,18 @@
 import { Business, User, Favorite } from '../models';
 import { validateBusiness } from '../middleware/validator';
 import cloudinary, { uploadWithMulter } from '../services/uploadImage';
+import { validateUserRight } from '../middleware/userValidation';
 /**
- * @tagline - Check if business businessName is already picked
  *
  * @param {Number} userId - User's ID
  *
- * @param {string} businessName - Recipe businessName
+ * @param {string} businessName - Business businessName
  *
  * @returns {Promise} isPicked - Status of request
  */
 const isNamePicked = (userId, businessName) => {
   const promise = new Promise((resolve) => {
-    Business // in the Business table, find the userId in the userId column and businessName in the businessName column
+    Business 
       .findOne({
         where: {
           userId,
@@ -20,7 +20,7 @@ const isNamePicked = (userId, businessName) => {
         }
       })
       .then((business) => {
-        if (business) { // if business, then the user has already add the business with that businessName before
+        if (business) { 
           resolve(true);
         } else {
           resolve(false);
@@ -64,6 +64,11 @@ export default class Businesses {
       tagline,
       businessAddress1,
       businessAddress2,
+      phoneNumber1,
+      phoneNumber2,
+      website,
+      category,
+      businessDescription,
       imageUrl,
       userId,
       res,
@@ -74,11 +79,11 @@ export default class Businesses {
           if (isPicked) {
             return res.status(409).json({
               success: false,
-              message: 'Recipe businessName already picked!'
+              message: 'Business Name already picked!'
             });
           }
 
-          Business // create a business with the following attribute
+          Business 
             .create({
               businessName,
               tagline,
@@ -96,7 +101,7 @@ export default class Businesses {
             .then((business) => {
               res.status(201).json({
                 success: true,
-                message: 'New Recipe created',
+                message: 'New Business created',
                 business
               });
             })
@@ -106,7 +111,7 @@ export default class Businesses {
             }));
         });
     };
-   uploadWithMulter(req, res).then(({ file, body, user }) => { // req.file is the image file
+    uploadWithMulter(req, res).then(({ file, body, user }) => { 
       let imageUrl = '';
       const businessName = body.businessName;
       const tagline = body.tagline;
@@ -119,18 +124,18 @@ export default class Businesses {
       const businessDescription = body.businessDescription;
       const userId = user.id;
 
-      const validatBusinessError =
-        validateBusiness({ businessName, businessAddress1, businessDescription });// validateRecipeDetails is a function that check for valid businessName, businessAddress1 and businessAddress2
+      const validateBusinessError =
+        validateBusiness({ businessName, businessAddress1, businessDescription });
 
-      if (validatBusinessError) { // validateRecipeDetails should return an empty array if everything checked out right
+      if (validateBusinessError) { 
         return res.status(400).json({
           success: false,
-          message: validatBusinessError // return the error saved into the array
+          message: validateBusinessError
         });
       }
 
       if (file) {
-        cloudinary.upload_stream(({ error, secure_url, public_id }) => { //  cloudinary.upload_stream is used to write to the uploader as a stream
+        cloudinary.upload_stream(({ error, secure_url, public_id }) => { 
           if (!error) {
             imageUrl = secure_url; //eslint-disable-line
             addBusiness({
@@ -180,4 +185,218 @@ export default class Businesses {
     });
     return this;
   }
+  /**
+   * @description - Modify a business record
+   *
+   * @param {object} req - HTTP Request
+   *
+   * @param {object} res - HTTP Response
+   *
+   * @return {object} this - Class instance
+   *
+   * @memberof Businesses
+   */
+  modifyBusiness(req, res) {
+    /**
+     * @description - Updates data in the database
+     *
+     * @param {object} businessData - Business details
+     *
+     * @returns {void} Nothing
+     */
+    const updateBusiness = ({ 
+      businessName,
+      tagline,
+      businessAddress1,
+      businessAddress2,
+      phoneNumber1,
+      phoneNumber2,
+      website,
+      category,
+      businessDescription,
+      imageUrl,
+      imageId,
+      res,
+      foundBusiness
+    }) => {
+      foundBusiness.updateAttributes({
+        businessName,
+        tagline,
+        businessAddress1,
+        businessAddress2,
+        phoneNumber1,
+        phoneNumber2,
+        website,
+        category,
+        businessDescription,
+        imageUrl,
+        imageId
+      })
+        .then(business =>
+          res.status(200).json({
+            success: true,
+            message: 'Business record updated successfully',
+            business
+          })
+        )
+        .catch((/* error */) => res.status(500).json({
+          success: false,
+          message: 'Error updating business'
+        }));
+    };
+
+    /**
+    * @description - Check if business name is already picked
+    *
+    * @param {Number} userId - User's ID
+    *
+    * @param {string} businessName - Business name
+    *
+    * @returns {Promise} isPicked - Status of request
+    */
+    const verifyNameChange = ({
+      businessName,
+      tagline,
+      businessAddress1,
+      businessAddress2,
+      phoneNumber1,
+      phoneNumber2,
+      website,
+      category,
+      businessDescription,
+      imageUrl,
+      imageId,
+      res,
+      foundBusiness
+    }) => {
+      if (foundBusiness.name.toLowerCase() === name.toLowerCase()) {
+        updateBusiness({
+          businessName,
+          tagline,
+          businessAddress1,
+          businessAddress2,
+          phoneNumber1,
+          phoneNumber2,
+          website,
+          category,
+          businessDescription,
+          imageUrl,
+          imageId,
+          res,
+          foundBusiness
+        });
+      } else {
+        isNamePicked(foundBusiness.userId, name)
+          .then((isPicked) => {
+            if (isPicked) {
+              return res.status(409).json({
+                success: false,
+                message: 'Business name already picked!'
+              });
+            }
+            updateBusiness({
+              businessName,
+              tagline,
+              businessAddress1,
+              businessAddress2,
+              phoneNumber1,
+              phoneNumber2,
+              website,
+              category,
+              businessDescription,
+              imageUrl,
+              imageId,
+              res,
+              foundBusiness
+            });
+          });
+      }
+    };
+
+    uploadWithMulter(req, res).then(({ file, body, user, params }) => { 
+      const { businessId } = params || 0;
+      const userId = user.id;
+      const businessName = body.businessName;
+      const tagline = body.tagline;
+      const businessAddress1 = body.businessAddress1;
+      const businessAddress2 = body.businessAddress2;
+      const phoneNumber1 = body.phoneNumber1;
+      const phoneNumber2 = body.phoneNumber2;
+      const website = body.website;
+      const category = body.category;
+      const businessDescription = body.businessDescription;
+      
+
+      const validateBusinessError =
+        validateBusiness({ businessName, businessAddress1, businessDescription });
+      if (validateBusinessError) { 
+        return res.status(400).json({
+          success: false,
+          message: validateBusinessError
+        });
+      }
+
+      validateUserRight(businessId, userId).then((foundBusiness) => {
+        if (file) {
+          cloudinary.upload_stream(({ error, secure_url, public_id }) => {
+            if (!error) {
+              cloudinary.destroy(foundBusiness.imageId, () => {
+              });
+              verifyNameChange({
+                businessName,
+                tagline,
+                businessAddress1,
+                businessAddress2,
+                phoneNumber1,
+                phoneNumber2,
+                website,
+                category,
+                businessDescription,
+                imageId: public_id,
+                imageUrl: secure_url,
+                res,
+                foundBusiness
+              });
+            } else {
+              res.status(503).json({
+                success: false,
+                message: 'Error uploading image, check your network connection'
+              });
+            }
+          }).end(file.buffer);
+        } else {
+          const { imageUrl, imageId } = foundBusiness;
+          verifyNameChange({
+            businessName,
+            tagline,
+            businessAddress1,
+            businessAddress2,
+            phoneNumber1,
+            phoneNumber2,
+            website,
+            category,
+            businessDescription,
+            imageUrl,
+            imageId,
+            res,
+            foundBusiness
+          });
+        }
+      })
+        .catch(({ status, message }) => {
+          res.status(status).json({
+            success: false,
+            message
+          });
+        });
+    })
+      .catch(({ message }) => {
+        res.status(400).json({
+          success: false,
+          message
+        });
+      });
+    return this;
+  }
+
 }
