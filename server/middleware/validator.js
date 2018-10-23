@@ -92,13 +92,17 @@ export const validateUser = (fullname, username, password) => {
   }
   return false;
 };
-export const validateBusiness = (title, descriptions) => {
+export const validateBusiness = (title, address, descriptions) => {
   if (!title || title.length < 5) {
     return 'title must be more than 5 charachers';
+  }
+  if (!address || address.length < 5) {
+    return 'address length is too small';
   }
   if (!descriptions || descriptions.length < 10) {
     return 'Description is too small';
   }
+  return false;
 };
 export const validateComment = (content) => {
   if (!content || content.length < 10) {
