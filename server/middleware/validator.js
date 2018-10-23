@@ -80,7 +80,7 @@ export const validateUser = (fullname, username, password) => {
   };
   
   const validateFullname = checkForInteger(fullname);
-  if (fullname.length < 3 ||
+  if (fullname.length < 6 ||
       !fullname.includes(' ') || validateFullname.length > 1) {
     return 'Enter a valid full name!';
   }
@@ -101,7 +101,8 @@ export const validateBusiness = (title, descriptions) => {
   }
 };
 export const validateComment = (content) => {
-  if (!content || content.length < 3) {
+  if (!content || content.length < 10) {
     return 'Comment is too small';
   }
+  return false;
 };
