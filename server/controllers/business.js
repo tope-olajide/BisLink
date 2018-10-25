@@ -398,5 +398,50 @@ export default class Businesses {
       });
     return this;
   }
+  
+    /**
+   * @description - Delete a Business record
+   *
+   * @param {object} req - HTTP Request
+   *
+   * @param {object} res - HTTP Response
+   *
+   * @return {object} this - Class instance
+   *
+   * @memberof Businesses
+   */
+  deleteBusiness({ params, user }, res) {
+    const { businessId } = params;
+    validateUserRight(businessId, user.id).then(() => {
+      Business.findOne({
+        where: {
+          id: businessId
+        }
+      })
+        .then((business) => {
+          business.destroy()
+            .then(() => {
+              cloudinary.destroy(business.imageId);
+
+              res.status(200).json({
+                success: true,
+                message: 'Business Deleted!'
+              });
+            });
+        })
+        .catch(() => {
+          res.status(200).json({
+            success: false,
+            message: 'Error deleting business'
+          });
+        });
+    }).catch(({ status, message }) => {
+      res.status(status).json({
+        success: false,
+        message
+      });
+    });
+    return this;
+  }
 
 }
