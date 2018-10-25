@@ -62,12 +62,6 @@ export default class Users {
     const {
       email, username, fullname, password
     } = req.body;
-    if (!email || !username || !fullname || !password) {
-      return res.status(400).json({
-        success: false,
-        message: 'kindly fill all this fields: email, username, fullname, password to signup'
-      });
-    }
     if (!(validateEmail(email))) {
       return res.status(400).json({
         success: false,
@@ -87,7 +81,7 @@ export default class Users {
           name: fullname,
           username,
           email,
-          password,
+          password: newEncryption.generateHash(password)
         })
         .then((result) => {
           const token = jsonwebtoken.sign({
@@ -125,7 +119,6 @@ export default class Users {
    */
   signIn(req, res) {
     const authName = req.body.authName;
-
     User
       .findOne({
         attributes: ['id', 'name', 'username', 'email', 'password'],
@@ -147,7 +140,7 @@ export default class Users {
         if (!userFound) {
           return res.status(401).json({
             success: false,
-            message: 'Invalid Login Credentials!'
+            message: 'user not found'
           });
         }
 
@@ -167,7 +160,7 @@ export default class Users {
         }
         res.status(401).json({
           success: false,
-          message: 'Invalid Login Credentials!'
+          message: 'Invalid pasword!'
         });
       })
       .catch((/* error */) => res.status(500).json({
