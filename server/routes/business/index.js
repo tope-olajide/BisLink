@@ -11,6 +11,8 @@ user.use('*', newAuth.verify);
 
 user.route('/')
   .post(newBusiness.createBusiness);
-user.route('/:recipeId')
-  .put(newBusiness.modifyBusiness);
+
+user.route('/:businessId')
+  .put(newBusiness.modifyBusiness)
+  .delete(newBusiness.deleteBusiness);
 
