@@ -444,4 +444,38 @@ export default class Businesses {
     return this;
   }
 
+  /**
+   * @description - Fetch a business record
+   *
+   * @param {object} req - HTTP Request
+   *
+   * @param {object} res - HTTP Response
+   *
+   * @return {object} this - Class instance
+   *
+   * @memberof Businesses
+   */
+  getBusiness({ params }, res) {
+    const { businessId } = params;
+
+    Business
+      .findOne({
+        where: { id: businessId },
+      include: [
+          { model: User, attributes: ['name'] }
+        ]
+      })
+      .then(businessFound => businessFound.increment('viewCount'))
+      .then(business => res.status(200).json({
+        success: true,
+        message: 'Business found',
+        business
+      }))
+      .catch((/* error */) => res.status(500).json({
+        success: false,
+        message: 'Error fetching business'
+      }));
+
+    return this;
+  }
 }

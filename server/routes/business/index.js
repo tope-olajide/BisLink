@@ -14,5 +14,7 @@ user.route('/')
 
 user.route('/:businessId')
   .put(newBusiness.modifyBusiness)
-  .delete(newBusiness.deleteBusiness);
+  .delete(newBusiness.deleteBusiness)
+  .get(newBusiness.getBusiness);
+
 
