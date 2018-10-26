@@ -10,6 +10,7 @@ user.post('/signin', newUser.signIn);
 
 
 user.route('/business/:businessId')
-.post(newFavourite.addToFavourites);
+.post(newFavourite.addToFavourites)
+.delete(newFavorite.removeFromFavorites);
 
 export default user;
