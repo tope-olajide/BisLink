@@ -8,4 +8,8 @@ const newUser = new User();
 user.post('/signup', newUser.signupUser);
 user.post('/signin', newUser.signIn);
 
+
+user.route('/business/:businessId')
+.post(newFavourite.addToFavourites);
+
 export default user;
