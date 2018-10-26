@@ -41,4 +41,41 @@ export default class Favourites {
 
     return this;
   }
+    /**
+   * @description - Removes a Business from user favourites
+   *
+   * @param {object} req - HTTP Request
+   *
+   * @param {object} res - HTTP Response
+   *
+   * @return {object} this - Favourites class instance
+   *
+   * @memberof Favourites
+   */
+  removeFromFavourites({ params, user }, res) {
+    const { businessId } = params;
+    const userId = user.id;
+    Favorite
+      .destroy({
+        where: {
+          $and: [
+            { userId },
+            { businessId }
+          ]
+        },
+      })
+      .then((status) => {
+        if (status === 1) {
+          res.status(200).json({
+            success: true,
+            message: `Business with ID: ${businessId} Removed from Favourites`
+          });
+        }
+      })
+      .catch((/* error */) => res.status(500).json({
+        success: false,
+        message: 'Error removing business from favourites'
+      }));
+    return this;
+  }
 }
