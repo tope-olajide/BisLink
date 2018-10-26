@@ -443,5 +443,46 @@ export default class Businesses {
     });
     return this;
   }
+  /**
+   * @description - Fetch a list user owned businesses
+   *
+   * @param {object} req - HTTP Request
+   *
+   * @param {object} res - HTTP Response
+   *
+   * @return {object} this - Class instance
+   *
+   * @memberof Businesses
+   */
+  getUserBusiness({ user }, res) {
+    const userId = user.id;
 
+    Business
+      .findAll({
+        where: { userId },
+        include: [
+          { model: User, attributes: ['name', 'updatedAt'] }
+        ]
+      })
+      .then((business) => {
+        if (!business) {
+          return res.status(404).json({
+            success: true,
+            message: 'No Business found',
+          });
+        }
+
+        return res.status(201).json({
+          success: true,
+          message: 'Operation Successful',
+          business
+        });
+      })
+      .catch(() => res.status(500).json({
+        success: false,
+        message: 'Unable to get user business'
+      }));
+
+    return this;
+  }
 }
