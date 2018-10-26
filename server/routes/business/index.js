@@ -15,6 +15,6 @@ user.route('/')
 user.route('/:businessId')
   .put(newBusiness.modifyBusiness)
   .delete(newBusiness.deleteBusiness)
-  .get(newRecipe.getRecipe);
+  .get(newBusiness.getBusiness);
 
 
