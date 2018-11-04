@@ -1,6 +1,9 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Container, Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
+import LoginForm from '../presentational/LoginForm'
+import SignUpForm from '../presentational/SignUpForm'
+import './styles/LoginForm.css'
 import { BrowserRouter as Router } from 'react-router-dom';
 class NonFixedNavbarExample extends React.Component {
   constructor(props) {
@@ -8,6 +11,7 @@ class NonFixedNavbarExample extends React.Component {
       this.state = {
           collapse: false,
           modal6: false,
+          modal7: false
       };
   this.onClick = this.onClick.bind(this);
 }
@@ -23,7 +27,6 @@ toggle(nr) {
     });
   }
 render() {
-  const container = {height: 1300}
     return (
         <div>
           <Router>
@@ -50,26 +53,29 @@ render() {
                           <NavLink to="#"><FontAwesomeIcon icon="folder-plus" />ADD BUSINESS</NavLink>
                       </NavItem>
                       <NavItem>
-                          <NavLink to="#" onClick={() => this.toggle(6)} ><FontAwesomeIcon icon="folder-plus" />SIGN UP</NavLink>
+                          <NavLink to="#"onClick={() => this.toggle(7)} ><FontAwesomeIcon icon="user-plus" />SIGN UP</NavLink>
                       </NavItem>
                       <NavItem>
-                        <NavLink to="#">LOGIN</NavLink>
+                        <NavLink to="#"onClick={() => this.toggle(6)} ><FontAwesomeIcon icon="user" />LOGIN</NavLink>
                       </NavItem>
                     </NavbarNav>
                 </Collapse>
             </Navbar>
         </Router>
-        <Container style={container} className=" ">
+        <Container  className="modal-margin">
         <Modal className="mt-5 " isOpen={this.state.modal6} toggle={() => this.toggle(6)} side position="top-right">
-          <ModalHeader toggle={() => this.toggle(6)}>Modal title</ModalHeader>
+        
           <ModalBody>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            <LoginForm />
           </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onClick={() => this.toggle(6)}>Close</Button>
-            <Button color="primary">Save changes</Button>
-          </ModalFooter>
+ 
         </Modal>
+        <Modal className="mt-5 " isOpen={this.state.modal7} toggle={() => this.toggle(7)} side position="top-right">
+        <ModalBody>
+          <SignUpForm />
+        </ModalBody>
+
+      </Modal>
         </Container>
       </div>
     );
