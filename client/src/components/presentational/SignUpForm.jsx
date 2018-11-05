@@ -18,6 +18,7 @@ class FormsPage extends React.Component  {
               </div>
               <div className="text-center">
                 <Button color="primary">Register</Button>
+                
               </div>
             </form>
           </Col>
