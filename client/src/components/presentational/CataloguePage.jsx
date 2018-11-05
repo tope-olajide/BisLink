@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import './CataloguePage.css'
 import { FormInline, Input, Button} from 'mdbreact'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import BusinessCard from './BusinessCard'
 class CataloguePage extends Component{
     render (){
         return(<div>
@@ -12,10 +13,14 @@ class CataloguePage extends Component{
   <Input label="Business Name" icon="envelope" group type="text" />
   <Input label="Location" icon="lock" group type="text" />
   <Button>Search</Button>
-</FormInline>                
-
+</FormInline>
 
 </div>
+<div>
+    <h1 className ="text-center my-5 featured-text"> <FontAwesomeIcon icon="briefcase" /> Featured Places</h1> 
+    <BusinessCard />
+</div>
+
 </div>
         )
     }
