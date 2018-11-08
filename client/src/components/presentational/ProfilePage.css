@@ -1,0 +1,53 @@
+.header{
+	height: 50vh;
+	background-image:
+   url('../images/hero.jpg');
+  background-size: cover;
+	background-position: top;
+	position: relative;
+	background-clip: padding-box; 
+  background-color: #F4F9FF;
+  z-index: -1;
+}
+.dashboard-containers{
+    width: 90%;
+    margin: auto auto;
+    background: #ffffff;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.10), 0 3px 6px rgba(0,0,0,0.10);
+  }
+  
+  .profile-section-biz-details img{
+	border-radius: 50%;
+	border: 6px solid white;
+	width: 160px;
+  
+  }
+  .profile-section-biz-details{
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto
+  }
+  .profile-section img{
+    border-radius: 50%;
+    border: 6px solid white;
+    width: 200px;
+    margin-top: -100px;
+  }
+  .profile-section-biz-details{
+	width: 90%;
+	margin-left: auto;
+	margin-right: auto
+  }
+  .profile-text{
+    text-align: center;
+    line-height:0px;
+  }
+  .table{
+    text-align: center;
+  }
+  .user-info{
+    width: 85%;
+    margin: auto auto;
+    text-align: center
+  
+  }
