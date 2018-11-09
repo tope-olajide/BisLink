@@ -44,7 +44,7 @@ class RegisterBusinessForm extends Component {
         <div class="form-group">
             <label for="exampleInputFile" class="bmd-label-floating">Upload your business Pictures</label>
             <input type="file" class="form-control-file" id="exampleInputFile" />
-            <small class="text-muted">MAximum of 10</small>
+            <small class="text-muted">Maximum of 10</small>
           </div>
         </div>
     </div>

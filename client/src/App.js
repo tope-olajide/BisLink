@@ -5,7 +5,9 @@ import NavBar from '../src/components/presentational/NavBar'
 // import CataloguePage from '../src/components/presentational/CataloguePage'
 //import RegisterBusinessForm from '../src/components/presentational/RegisterBusinessForm'
 //import RegisterBusinessPage from '../src/components/presentational/RegisterBusinessPage'
-import ProfilePage from '../src/components/presentational/ProfilePage'
+// import ProfilePage from '../src/components/presentational/ProfilePage'
+// import BusinessSlider from '../src/components/presentational/BusinessSlider'
+import BusinessDetails from '../src/components/presentational/BusinessDetails'
 class App extends Component {
   render() {
     return (
@@ -22,7 +24,12 @@ caption6 = '... and imporove your online business awareness to increase your sal
 {/* <CataloguePage /> */}
 {/* <RegisterBusinessPage />
 <RegisterBusinessForm /> */}
-<ProfilePage />
+{/* <BusinessSlider img1 = 'featured1.jpg' 
+img2 = 'featured2.jpg' 
+img3 = 'featured3.jpg' 
+img4 = 'featured4.jpg' 
+/> */}
+<BusinessDetails />
       </div>
     );
   }
