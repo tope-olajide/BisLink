@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import './style.css';
-import { Input, Button } from 'mdbreact';
+import "./style.css";
+import { Input, Button } from "mdbreact";
 class BusinessDetails extends Component {
   render() {
     return (
@@ -32,7 +32,7 @@ class BusinessDetails extends Component {
               </div>
               <div class="card review-card  p-3 my-3">
                 <strong>
-                  <h2 className= 'text-center'> 22 Reviews</h2>
+                  <h2 className="text-center"> 22 Reviews</h2>
                 </strong>
                 <div class="row mt-5 user-review">
                   <div class="commenter-avatar col-md-3">
@@ -92,17 +92,19 @@ class BusinessDetails extends Component {
                 </div>
               </div>
               <div class="card review-card p-5 mt-3 mb-2">
-              
                 <h4 class=" light-color light-text text-center px-3 mb-5">
                   <strong>Write a Review</strong>
                 </h4>
                 <form>
-                  <p className="h4 text-center mt-4 mb-4">Edit Profile</p>
                   <div className="grey-text">
-                    <Input label="Title" icon="pencil" />
+                    <Input
+                      label="Title"
+                      label="Give your review a title"
+                      icon="pencil"
+                    />
                     <Input
                       type="textarea"
-                      label="About Me"
+                      label="Your opinion goes here..."
                       icon="pencil"
                       rows="3"
                     />
@@ -116,11 +118,7 @@ class BusinessDetails extends Component {
 
             <aside class="col-md-4 blog-sidebar">
               <div class="card mt-3 shadow-sm">
-                <img
-                  class="card-img-top"
-                  src="map.jpg"
-                  alt="Card image cap"
-                />
+                <img class="card-img-top" src="map.jpg" alt="Card image cap" />
                 <div class="card-body card-contents">
                   <ul>
                     <li>
@@ -145,10 +143,7 @@ class BusinessDetails extends Component {
               </div>
               <div class="card mt-3">
                 <div class="profile-section-biz-details">
-                  <img
-                    src="follow-img.jpg"
-                    class="mx-auto d-block"
-                  />
+                  <img src="follow-img.jpg" class="mx-auto d-block" />
                   <div class=" profile-text">
                     <h5 class="py-1">Mercy Johnson</h5>
                     <p>Lagos</p>
@@ -173,15 +168,9 @@ class BusinessDetails extends Component {
                     Hi ! My name is Mercy Johnson. I'm a UI/UX Designer from
                     Lagos, in Nigeria. I really enjoy photography and mountains.
                   </p>
-                  <button
-                    class=" mb-5 btn btn-outline-light  bg-dark btn-rounded btn-block my-4 "
-                    data-toggle="modal"
-                    href="#editProfile"
-                    data-target="#editProfile"
-                    type="button"
-                  >
-                    Follow
-                  </button>
+                  <div className="text-center my-3">
+                    <Button>Follow</Button>
+                  </div>
                 </div>
               </div>
             </aside>
