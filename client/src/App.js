@@ -7,7 +7,7 @@ import NavBar from '../src/components/presentational/NavBar'
 //import RegisterBusinessPage from '../src/components/presentational/RegisterBusinessPage'
 // import ProfilePage from '../src/components/presentational/ProfilePage'
 // import BusinessSlider from '../src/components/presentational/BusinessSlider'
-import BusinessDetails from '../src/components/presentational/BusinessDetails'
+import BusinessDetailsPage from '../src/components/presentational/BusinessDetailsPage'
 class App extends Component {
   render() {
     return (
@@ -29,7 +29,7 @@ img2 = 'featured2.jpg'
 img3 = 'featured3.jpg' 
 img4 = 'featured4.jpg' 
 /> */}
-<BusinessDetails />
+<BusinessDetailsPage />
       </div>
     );
   }

@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import "./ProfilePage.css";
 import ProfileTab from "./ProfileTab";
-import EditProfileForm from './EditProfileForm'
-import {Container, Modal, ModalBody,ModalHeader } from 'mdbreact'
+import EditProfileForm from "./EditProfileForm";
+import { Container, Modal, ModalBody, ModalHeader } from "mdbreact";
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
@@ -27,14 +27,19 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
-                  <Container  className="modal-margin">
-        <Modal className="mt-1 " isOpen={this.state.modal6} size='md' toggle={() => this.toggle(6)}>
-       
-          <ModalBody> <ModalHeader toggle={() => this.toggle(4)}></ModalHeader>
-            <EditProfileForm />
-          </ModalBody>
- 
-        </Modal>
+        <Container className="modal-margin">
+          <Modal
+            className="mt-1 "
+            isOpen={this.state.modal6}
+            size="md"
+            toggle={() => this.toggle(6)}
+          >
+            <ModalBody>
+              {" "}
+              <ModalHeader toggle={() => this.toggle(4)} />
+              <EditProfileForm />
+            </ModalBody>
+          </Modal>
         </Container>
         <div class="header" />
         <div class="dashboard-containers ">
@@ -67,7 +72,8 @@ class ProfilePage extends Component {
               </p>
               <button
                 class=" mb-5 btn btn-outline-dark  bg-dark btn-rounded btn-block my-4 "
-                type="button" onClick={() => this.toggle(6)} 
+                type="button"
+                onClick={() => this.toggle(6)}
               >
                 Edit profile
               </button>
