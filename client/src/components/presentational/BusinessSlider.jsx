@@ -6,10 +6,11 @@ class BusinessSlider extends Component {
     var settings = {
       dots: true,
       infinite: false,
-      speed: 500,
-      slidesToShow: 4,
+      speed: 700,
+      slidesToShow: 3,
       slidesToScroll: 1,
-      initialSlide: 0,
+      initialSlide: 1,
+
       responsive: [
         {
           breakpoint: 1024,
@@ -38,8 +39,7 @@ class BusinessSlider extends Component {
       ]
     };
     return (
-      <div>
-        <h2> Responsive </h2>
+      <div className = 'card'>
         <Slider {...settings}>
           <div>
             <img class="" src={this.props.img1} />
@@ -54,6 +54,17 @@ class BusinessSlider extends Component {
           <img class="" src={this.props.img4} />
           </div>
         </Slider>
+        <div className = 'container mt-3'>
+<div className = 'row'>
+<div className= 'col-md-6'>
+<h2>Tasty Hand-Pulled Noodles</h2>
+<p> Innovative cooking, paired with fine wines in a modern setting. </p>
+</div>
+<div className= 'col-md-6'>
+<button className= 'mt-4 btn btn-md btn-outline-dark'> Write a Review</button>
+</div>
+</div>
+          </div>
       </div>
     );
   }
