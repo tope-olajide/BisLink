@@ -17,7 +17,7 @@ class FormsPage extends React.Component  {
                 <Input label="confirm your password" icon="exclamation-triangle" group type="password" validate/>
               </div>
               <div className="text-center">
-                <Button color="primary">Register</Button>
+                <Button onClick = {this.props.parentMethod} color="primary">Register</Button>
                 
               </div>
             </form>
