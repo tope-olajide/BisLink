@@ -3,10 +3,11 @@ import './CataloguePage.css'
 import { FormInline, Input, Button} from 'mdbreact'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BusinessCard from './BusinessCard'
+import NavBar from './NavBar';
 class CataloguePage extends Component{
     render (){
         return(<div>
-<div className = "header">
+<div className = "catalogue-header">
 <h1 className ='hero-title'> Discover great places in Nigeria</h1>
 <p className ='hero-paragraph'>Let's uncover the best places to eat, drink, and shop nearest to you.</p>
 <FormInline className ='search-container'>
