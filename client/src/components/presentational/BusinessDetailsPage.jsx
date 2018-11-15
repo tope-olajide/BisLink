@@ -5,6 +5,7 @@ class BusinessDetailsPage extends Component {
   render() {
     return (
       <div>
+       
         <BusinessSlider
           img1="featured1.jpg"
           img2="featured2.jpg"
