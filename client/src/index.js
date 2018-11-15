@@ -8,9 +8,12 @@ import { faHome, faBriefcase, faSearch, faFolderPlus, faUserPlus, faSignInAlt, f
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
 library.add(faHome, faBriefcase, faSearch, faFolderPlus, faUserPlus, faSignInAlt, faMapMarker, faMobile, faLink, faHeartbeat  )
-ReactDOM.render(<App />, document.getElementById('root'));
+
+
+ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
 registerServiceWorker();
