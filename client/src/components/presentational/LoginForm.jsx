@@ -14,7 +14,7 @@ class FormsPage extends React.Component  {
                 <Input label="Type your password" icon="lock" group type="password" validate/>
               </div>
               <div className="text-center">
-                <Button>Login</Button>
+                <Button > Login</Button>
               </div>
             </form>
           </Col>
