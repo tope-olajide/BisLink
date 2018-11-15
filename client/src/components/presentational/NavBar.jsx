@@ -1,85 +1,219 @@
-import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Container, Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
-import LoginForm from '../presentational/LoginForm'
-import SignUpForm from '../presentational/SignUpForm'
-import './styles/LoginForm.css'
-import { BrowserRouter as Router } from 'react-router-dom';
-class NonFixedNavbarExample extends React.Component {
+import React, { Component } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarNav,
+  NavbarToggler,
+  Collapse,
+  NavItem,
+  NavLink,
+  Container,
+  Button,
+  Modal,
+  ModalBody,
+  Row,
+  Col,
+  Input
+} from "mdbreact";
+
+import "./styles/LoginForm.css";
+class NavigationBar extends Component {
   constructor(props) {
-      super(props);
-      this.state = {
-          collapse: false,
-          modal6: false,
-          modal7: false
-      };
-  this.onClick = this.onClick.bind(this);
-}
-onClick(){
-  this.setState({
-      collapse: !this.state.collapse,
+    super(props);
+    this.state = {
+      collapse: false,
+      modal6: false,
+      modal7: false
+    };
+    this.onClick = this.onClick.bind(this);
+  }
+  onClick() {
+    this.setState({
+      collapse: !this.state.collapse
     });
-}
-toggle(nr) {
-    let modalNumber = 'modal' + nr
+  }
+  toggle(nr) {
+    let modalNumber = "modal" + nr;
     this.setState({
       [modalNumber]: !this.state[modalNumber]
     });
   }
-render() {
+
+  render() {
     return (
-        <div>
-          <Router>
-            <Navbar color="black" dark expand="md" scrolling>
-                <NavbarBrand href="/">
-                    <strong><FontAwesomeIcon icon="" size="1x" />BISLINK</strong>
-                </NavbarBrand>
-                <NavbarToggler onClick={this.onClick } />
-                <Collapse isOpen = { this.state.collapse } navbar>
-                    <NavbarNav left>
-                      <NavItem active>
-                          <NavLink to="#"><FontAwesomeIcon icon="home" />HOME</NavLink>
-                      </NavItem>
-                      <NavItem>
-                          <NavLink to="#"><FontAwesomeIcon icon="briefcase" />CATALOGUE</NavLink>
-                      </NavItem>
+      <div>
+        <Navbar color="black" dark expand="md" scrolling>
+          <NavbarBrand href="/">
+            <strong>
+              <FontAwesomeIcon icon="" size="1x" />
+              BISLINK
+            </strong>
+          </NavbarBrand>
+          <NavbarToggler onClick={this.onClick} />
+          <Collapse isOpen={this.state.collapse} navbar>
+            <NavbarNav left>
+              <NavItem active>
+                <NavLink to="/"> HOME</NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="/businesses">
+                  <FontAwesomeIcon icon="briefcase" /> CATALOGUE
+                </NavLink>
+              </NavItem>
+            </NavbarNav>
+            <NavbarNav right>
+              <NavItem>
+                <NavLink to="#">
+                  <FontAwesomeIcon icon="search" /> SEARCH
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="/register-business">
+                  <FontAwesomeIcon icon="folder-plus" /> ADD BUSINESS
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="#" onClick={() => this.toggle(7)}>
+                  <FontAwesomeIcon icon="user-plus" /> SIGN UP
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink to="#" onClick={() => this.toggle(6)}>
+                  <FontAwesomeIcon icon="user" /> LOGIN
+                </NavLink>
+              </NavItem>
+            </NavbarNav>
+          </Collapse>
+        </Navbar>
 
-                    </NavbarNav>
-                    <NavbarNav right>
-                    <NavItem>
-                          <NavLink to="#"><FontAwesomeIcon icon="search" />SEARCH</NavLink>
-                      </NavItem>
-                      <NavItem>
-                          <NavLink to="#"><FontAwesomeIcon icon="folder-plus" />ADD BUSINESS</NavLink>
-                      </NavItem>
-                      <NavItem>
-                          <NavLink to="#"onClick={() => this.toggle(7)} ><FontAwesomeIcon icon="user-plus" />SIGN UP</NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink to="#"onClick={() => this.toggle(6)} ><FontAwesomeIcon icon="user" />LOGIN</NavLink>
-                      </NavItem>
-                    </NavbarNav>
-                </Collapse>
-            </Navbar>
-        </Router>
-        <Container  className="modal-margin">
-        <Modal className="mt-5 " isOpen={this.state.modal6} toggle={() => this.toggle(6)} side position="top-right">
-        
-          <ModalBody>
-            <LoginForm />
-          </ModalBody>
- 
-        </Modal>
-        <Modal className="mt-5 " isOpen={this.state.modal7} toggle={() => this.toggle(7)} side position="top-right">
-        <ModalBody>
-          <SignUpForm />
-        </ModalBody>
-
-      </Modal>
+        <Container className="modal-margin">
+          <Modal
+            className="mt-5 "
+            isOpen={this.state.modal6}
+            toggle={() => this.toggle(6)}
+            side
+            position="top-right"
+          >
+            <ModalBody>
+              <Container>
+                <Row>
+                  <Col md="">
+                    <form
+                      className="form-width"
+                      onSubmit={this.handleSignUpForm}
+                    >
+                      <p className="h4 text-center mt-4 mb-4">Sign in</p>
+                      <div className="grey-text">
+                        <Input
+                          label="Type your email"
+                          icon="envelope"
+                          group
+                          type="email"
+                          onChange={(event) => {
+                            this.props.handleInputChange('email', event.target.value);
+                          }}
+                        />
+                        <Input
+                          label="Type your password"
+                          icon="lock"
+                          group
+                          type="password"
+                          onChange={(event) => {
+                            this.props.handleInputChange('password', event.target.value);
+                          }}
+                        />
+                      </div>
+                      <div className="text-center">
+                      <Button
+                          onClick={this.props.handleSignIn}
+                          color="primary"
+                        >Login</Button>
+                      </div>
+                    </form>
+                  </Col>
+                </Row>
+              </Container>
+            </ModalBody>
+          </Modal>
+          <Modal
+            className="mt-5 "
+            isOpen={this.state.modal7}
+            toggle={() => this.toggle(7)}
+            side
+            position="top-right"
+          >
+            <ModalBody>
+              <Container>
+                <Row>
+                  <Col>
+                    <form>
+                      <p className="h5 text-center">Sign up</p>
+                      <div className="grey-text">
+                        <Input
+                          label="Your fullname"
+                          icon="user-plus"
+                          group
+                          type="text"
+                          onChange={(event) => {
+                            this.props.handleInputChange('fullname', event.target.value);
+                          }}
+                        />
+                        <Input
+                          label="Your username"
+                          icon="user"
+                          group
+                          type="text"
+                          onChange={(event) => {
+                            this.props.handleInputChange('username', event.target.value);
+                          }}
+                        />
+                        <Input
+                          label="Your email"
+                          icon="envelope"
+                          group
+                          type="email"
+                          onChange={(event) => {
+                            this.props.handleInputChange('email', event.target.value);
+                          }}
+                        />
+                        <Input
+                          label="Your password"
+                          icon="lock"
+                          group
+                          type="password"
+                          onChange={(event) => {
+                            this.props.handleInputChange('password', event.target.value);
+                          }}
+                        />
+                        <Input
+                          label="confirm your password"
+                          icon="exclamation-triangle"
+                          group
+                          type="password"
+                          onChange={(event) => {
+                            this.props.handleInputChange('confirmPassword', event.target.value);
+                          }}
+                        />
+                      </div>
+                      <div className="text-center">
+                        <Button
+                          onClick={this.props.handleSignUp}
+                          color="primary"
+                        >
+                          Register
+                        </Button>
+                      </div>
+                    </form>
+                  </Col>
+                </Row>
+              </Container>
+            </ModalBody>
+          </Modal>
         </Container>
       </div>
     );
   }
 }
 
-export default NonFixedNavbarExample;
+export default NavigationBar;
