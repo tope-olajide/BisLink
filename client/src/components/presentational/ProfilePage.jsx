@@ -27,6 +27,7 @@ class ProfilePage extends Component {
   render() {
     return (
       <div>
+
         <Container className="modal-margin">
           <Modal
             className="mt-1 "
