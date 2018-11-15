@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './cb-slideshow.css';
 
-class HomeAnimation extends React.Component {
+class HomeAnimation extends Component {
 render () {
     return (
         <div>
+          
             <ul className="cb-slideshow">
 <li><span>Image 01</span>
   <div>
