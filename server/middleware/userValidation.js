@@ -49,9 +49,7 @@ export const validateUserName = (User, username, userId) => {
  * @returns {Promise} promise - Status of request
  */
 export const validateUserRight = (businessId, userId) => { 
-// validateUserRight issa function that takes in recipeId and userId as parameters
-// it search for the recipeId in the recipe table, then compare the Id of the user that added it with the userId in the parameter
-// if the id is the same, then it returns recipe and all its object( containing userId,procedure,methods etc)
+
   const promise = new Promise((resolve, reject) => {
     Business
       .findById(businessId)
