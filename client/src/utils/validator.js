@@ -64,10 +64,12 @@ export const validateEmail = (emailAddress) => {
   return true;
 };
   
-export const validateUser = (fullname, username, password) => {
-  fullname = fullname.toLowerCase();
-  username = username.toLowerCase();
-  password = password.toLowerCase();
+export const validateUser = ({
+  fullname = '',
+  username = '',
+  password = ''
+})=> {
+ 
   
   const checkEachChar = (char) => {
     char = parseInt(char, 10);
