@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import BusinessCard from './BusinessCard'
 import NavBar from './NavBar';
 class CataloguePage extends Component{
-    render (){
+    render () {
         return(<div>
 <div className = "catalogue-header">
 <h1 className ='hero-title'> Discover great places in Nigeria</h1>
