@@ -1,5 +1,5 @@
 import routes from './routes/users';
-
+import cors from 'cors'
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -10,6 +10,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(cors())
 app.get('/', (req, res) => {
   res.status(201).json({
     title: 'BisLink',
@@ -31,7 +32,7 @@ app.post('*', (req, res) => {
   });
 });
   
-let port = 3000;
+let port = 5000;
 app.listen(port, () => {
   console.log(`Server is up and running on port number ${port}`);
 });
