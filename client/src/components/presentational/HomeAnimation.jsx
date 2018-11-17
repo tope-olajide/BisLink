@@ -5,7 +5,6 @@ class HomeAnimation extends Component {
 render () {
     return (
         <div>
-          
             <ul className="cb-slideshow">
 <li><span>Image 01</span>
   <div>
