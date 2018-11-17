@@ -11,9 +11,39 @@ import './index.css';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+import jsonwebtoken from 'jsonwebtoken';
+import setToken from '../src/utils/setToken';
+import { SET_CURRENT_USER } from '../src/constants';
+import reducer from '../src/reducers';
+
 
 library.add(faHome, faBriefcase, faSearch, faFolderPlus, faUserPlus, faSignInAlt, faMapMarker, faMobile, faLink, faHeartbeat  )
 
 
-ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
+
+const store = createStore(
+    reducer,
+    compose(
+      applyMiddleware(thunk),
+      window.devToolsExtension && process.env.NODE_ENV !== 'production'
+        ? window.devToolsExtension() : f => f
+    )
+  );
+  
+  if (localStorage.token) {
+    setToken(localStorage.token);
+    store.dispatch({
+      type: SET_CURRENT_USER,
+      userData: jsonwebtoken.decode(localStorage.token)
+    });
+  }
+ReactDOM.render(
+<Provider store={store}>
+<Router>
+<App />
+</Router>
+</Provider>, document.getElementById('root'));
 registerServiceWorker();
