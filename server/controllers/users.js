@@ -62,19 +62,19 @@ export default class Users {
     const {
       email, username, fullname, password
     } = req.body;
-    if (!(validateEmail(email))) {
+/*     if (!(validateEmail(email))) {
       return res.status(400).json({
         success: false,
         message: 'Please enter a valid email Address'
       });
-    }
-    const signUpError = validateUser(fullname, username, password);
+    } */
+/*     const signUpError = validateUser(fullname, username, password);
     if (signUpError) {
       return res.status(400).json({
         success: false,
         message: signUpError
       });
-    }
+    } */
     verifyUserNameAndEmail(username, email).then(() => {
       User
         .create({
