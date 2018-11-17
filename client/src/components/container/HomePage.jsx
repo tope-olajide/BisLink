@@ -3,7 +3,7 @@ import { validateUser, validateEmail } from '../../utils/validator';
 import HomeAnimation from '../presentational/HomeAnimation';
 import NavBar from '../presentational/NavBar'
 import { connect } from 'react-redux';
-import { signUp } from '../../actions/authAction';
+import { signUp, signIn } from '../../actions/authAction';
 export class HomePage extends Component {
   constructor(props) {
     super(props);
@@ -18,16 +18,14 @@ export class HomePage extends Component {
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
-   /*  this.handleSignInForm = this.handleSignInForm.bind(this); */
+     this.handleSignInForm = this.handleSignInForm.bind(this); 
     this.handleSignUpForm = this.handleSignUpForm.bind(this);
   }
   handleInputChange(key, value) {
       this.setState({ [key]: value });
     console.log(value)
   }
-  handleSignInForm () {
-    console.log("sign in")
-  }
+
   handleSignUpForm() {
     const signUpError = validateUser(this.state);
     if (signUpError) {
@@ -52,6 +50,25 @@ export class HomePage extends Component {
     } else {
       alert ( 'Passwords does not match!');
     }
+  }
+  handleSignInForm() {
+    this.setState({
+      isLoading: true
+    });
+
+    this.props.signIn(this.state)
+      .then(() => {
+        notify('success', `Welcome back <br/><em>${this.state.authName}</em>`);
+        setTimeout(() => {
+          window.location = '/recipes/?page=1&limit=10';
+        }, 300);
+      },
+      (error) => {
+        this.setState({
+          isLoading: false
+        });
+        notify('error', error.response.data.message);
+      });
   }
   render() {
     return (<div>
