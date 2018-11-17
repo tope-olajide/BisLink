@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import { validateUser, validateEmail } from '../../utils/validator';
 import HomeAnimation from '../presentational/HomeAnimation';
-import NaBar from '../presentational/NavBar'
-class HomePage extends Component {
+import NavBar from '../presentational/NavBar'
+import { connect } from 'react-redux';
+import { signUp } from '../../actions/authAction';
+export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -27,41 +29,33 @@ class HomePage extends Component {
     console.log("sign in")
   }
   handleSignUpForm() {
-    console.log('[evt.target.name]')
-    const signUpError = validateUser(this.state.fullname, this.state.username, this.state.password);
+    const signUpError = validateUser(this.state);
     if (signUpError) {
-/*       this.setState({
-        isLoading: false
-      }); */
       alert(signUpError);
     }
     else if (!(validateEmail(this.state.email))) {
       alert('Please enter a valid email address');
     } else if (this.state.password === this.state.confirmPassword) {
       alert ('success!')
-/*       this.props.signUp(this.state.fullname, this.state.email, this.state.username, this.state.password, )
+
+       this.props.signUp(this.state)
+
         .then(() => {
-          notify('info', `Welcome <br/><em>${this.state.username}</em>`);
+          alert(`Welcome <br/><em>${this.state.username}</em>`);
           setTimeout(() => {
-            window.location = '/recipes/?page=1&limit=10';
+            window.location = '/businesses';
           }, 300);
         },
         (error) => {
-          this.setState({
-            isLoading: false
-          });
-          notify('error', error.response.data.message.replace(';;', '\n'));
-        }); */
+          alert('error unable to signup', error.response.data.message);
+        });
     } else {
-/*       this.setState({
-        isLoading: false
-      }); */
       alert ( 'Passwords does not match!');
     }
   }
   render() {
     return (<div>
-      < NaBar handleSignUp = { this.handleSignUpForm } 
+      < NavBar handleSignUp = { this.handleSignUpForm } 
       handleSignIn = { this.handleSignInForm }
       handleInputChange = { this.handleInputChange }
       />
@@ -69,4 +63,4 @@ class HomePage extends Component {
     </div>)
   }
 }
-export default HomePage;
+export default connect(null, { signUp })(HomePage);
