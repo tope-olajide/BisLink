@@ -43,7 +43,7 @@ class NavigationBar extends Component {
   render() {
     return (
       <div>
-        <Navbar color="black" dark expand="md" scrolling>
+        <Navbar color="black" dark expand="sm" scrolling>
           <NavbarBrand href="/">
             <strong>
               <FontAwesomeIcon icon="" size="1x" />
@@ -56,23 +56,10 @@ class NavigationBar extends Component {
               <NavItem active>
                 <NavLink to="/"> HOME</NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink to="/businesses">
-                  <FontAwesomeIcon icon="briefcase" /> CATALOGUE
-                </NavLink>
-              </NavItem>
+
             </NavbarNav>
             <NavbarNav right>
-              <NavItem>
-                <NavLink to="#">
-                  <FontAwesomeIcon icon="search" /> SEARCH
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/register-business">
-                  <FontAwesomeIcon icon="folder-plus" /> ADD BUSINESS
-                </NavLink>
-              </NavItem>
+ 
               <NavItem>
                 <NavLink to="#" onClick={() => this.toggle(7)}>
                   <FontAwesomeIcon icon="user-plus" /> SIGN UP
