@@ -58,7 +58,7 @@ export class HomePage extends Component {
 
     this.props.signIn(this.state)
       .then(() => {
-        notify('success', `Welcome back <br/><em>${this.state.authName}</em>`);
+        alert('success', `Welcome back <br/><em>${this.state.authName}</em>`);
         setTimeout(() => {
           window.location = '/recipes/?page=1&limit=10';
         }, 300);
@@ -67,7 +67,7 @@ export class HomePage extends Component {
         this.setState({
           isLoading: false
         });
-        notify('error', error.response.data.message);
+        alert('error', error.response.data.message);
       });
   }
   render() {
