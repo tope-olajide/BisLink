@@ -35,3 +35,11 @@ export function signUp(userData) {
             .decode(localStorage.getItem('token'))));
         });
     }
+    export function signOut() {
+      return (dispatch) => {
+        localStorage.removeItem('token');
+        setToken(false);
+        dispatch(setCurrentUser({}));
+        window.location = '/';
+      };
+    }
