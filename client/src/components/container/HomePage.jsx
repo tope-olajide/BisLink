@@ -37,7 +37,6 @@ export class HomePage extends Component {
       alert ('success!')
 
        this.props.signUp(this.state)
-
         .then(() => {
           alert(`Welcome <br/><em>${this.state.username}</em>`);
           setTimeout(() => {
