@@ -11,6 +11,7 @@ import Home from './components/container/Home'
 import BusinessList from './components/container/BusinessList'
 import BusinessDetails from '../src/components/container/BusinessDetails'
 import AddBusiness from './components/container/AddBusiness'
+import Profile from './components/container/Profile'
 class App extends Component {
   render() {
     return (
@@ -32,7 +33,7 @@ img2 = 'featured2.jpg'
 img3 = 'featured3.jpg' 
 img4 = 'featured4.jpg' 
 /> */}
-<BusinessDetails />
+<Profile />
       </div>
     );
   }
