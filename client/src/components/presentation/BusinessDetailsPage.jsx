@@ -8,7 +8,7 @@ class BusinessDetailsPage extends Component {
             <main role="main" class="container">
               <div class="row">
                 <div class="col-md-8 blog-main">
-                  <div class="card mt-3 p-4 biz-desciption">
+                  <div class="card review-card mt-3 p-4 biz-desciption">
                     <p>
                       Tasty Hand-Pulled Noodles is a 1950s style diner located in
                       Madison, Wisconsin. Opened in 1946 by Mickey Weidman, and
@@ -97,12 +97,12 @@ class BusinessDetailsPage extends Component {
                       <strong>Write a Review</strong>
                     </h4>
                     <form>
-                      <p className="h4 text-center mt-4 mb-4">Edit Profile</p>
+                      
                       <div className="grey-text">
                         <Input label="Title" icon="pencil" />
                         <Input
                           type="textarea"
-                          label="About Me"
+                          label="Review"
                           icon="pencil"
                           rows="3"
                         />
@@ -143,7 +143,7 @@ class BusinessDetailsPage extends Component {
                       </ul>
                     </div>
                   </div>
-                  <div class="card mt-3">
+                  <div class="card mt-3 p-3">
                     <div class="profile-section-biz-details">
                       <img
                         src="follow-img.jpg"
@@ -173,15 +173,9 @@ class BusinessDetailsPage extends Component {
                         Hi ! My name is Mercy Johnson. I'm a UI/UX Designer from
                         Lagos, in Nigeria. I really enjoy photography and mountains.
                       </p>
-                      <button
-                        class=" mb-5 btn btn-outline-light  bg-dark btn-rounded btn-block my-4 "
-                        data-toggle="modal"
-                        href="#editProfile"
-                        data-target="#editProfile"
-                        type="button"
-                      >
-                        Follow
-                      </button>
+                      <div className="text-center">
+                        <Button> Follow </Button>
+                      </div>
                     </div>
                   </div>
                 </aside>
