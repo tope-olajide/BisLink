@@ -1,9 +1,7 @@
-.header {
+.biz-header {
 	height: 100vh;
 	background-image:
-		linear-gradient(to right bottom,
-		rgba(32, 33, 34, 0.3),
-		rgba(12, 13, 14, 0.1)),
+
 		url('../images/Lagos-skyline.jpg');
 	background-size: cover;
 	background-position: top;
@@ -11,7 +9,6 @@
 	background-clip: padding-box;
     background-color: #F4F9FF;
     margin-top:-40px;
-    z-index: -2;
 }
 .hero-title{
     text-align: center;
@@ -21,7 +18,8 @@
     transform: translate(-50%, -50%);
     color: white;
     font-size: 70px;
-    width: 100%
+    width: 100%;
+
 }
 .hero-paragraph{
     text-align: center;
