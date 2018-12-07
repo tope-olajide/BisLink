@@ -9,7 +9,8 @@ import NavBar from '../src/components/presentation/NavBar'
 // import BusinessSlider from '../src/components/presentation/BusinessSlider'
 import Home from './components/container/Home'
 import BusinessList from './components/container/BusinessList'
-import BusinessDetails from '../src/components/presentation/BusinessDetails'
+import BusinessDetails from '../src/components/container/BusinessDetails'
+import AddBusiness from './components/container/AddBusiness'
 class App extends Component {
   render() {
     return (
@@ -31,7 +32,7 @@ img2 = 'featured2.jpg'
 img3 = 'featured3.jpg' 
 img4 = 'featured4.jpg' 
 /> */}
-<BusinessList />
+<BusinessDetails />
       </div>
     );
   }
