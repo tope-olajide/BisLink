@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 
-// import HomeAnimation from '../src/components/presentational/HomeAnimation'
-import NavBar from '../src/components/presentational/NavBar'
-// import CataloguePage from '../src/components/presentational/CataloguePage'
-//import RegisterBusinessForm from '../src/components/presentational/RegisterBusinessForm'
-//import RegisterBusinessPage from '../src/components/presentational/RegisterBusinessPage'
-// import ProfilePage from '../src/components/presentational/ProfilePage'
-// import BusinessSlider from '../src/components/presentational/BusinessSlider'
-import BusinessDetails from '../src/components/presentational/BusinessDetails'
+// import HomeAnimation from '../src/components/presentation/HomeAnimation'
+import NavBar from '../src/components/presentation/NavBar'
+// import CataloguePage from '../src/components/presentation/CataloguePage'
+//import RegisterBusinessForm from '../src/components/presentation/RegisterBusinessForm'
+//import RegisterBusinessPage from '../src/components/presentation/RegisterBusinessPage'
+// import ProfilePage from '../src/components/presentation/ProfilePage'
+// import BusinessSlider from '../src/components/presentation/BusinessSlider'
+import Home from './components/container/Home'
+import BusinessDetails from '../src/components/presentation/BusinessDetails'
 class App extends Component {
   render() {
     return (
@@ -29,7 +30,7 @@ img2 = 'featured2.jpg'
 img3 = 'featured3.jpg' 
 img4 = 'featured4.jpg' 
 /> */}
-<BusinessDetails />
+<Home />
       </div>
     );
   }
