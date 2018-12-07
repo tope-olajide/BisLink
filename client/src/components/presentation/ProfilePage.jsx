@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import "./ProfilePage.css";
 import ProfileTab from "./ProfileTab";
 import EditProfileForm from './EditProfileForm'
-import {Container, Modal, ModalBody,ModalHeader } from 'mdbreact'
+import {Container, Modal, ModalBody, ModalHeader } from 'mdbreact'
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
