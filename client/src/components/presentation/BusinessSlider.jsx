@@ -39,7 +39,7 @@ class BusinessSlider extends Component {
       ]
     };
     return (
-      <div className = 'card'>
+      <div className = 'card p-5 mt-0'>
         <Slider {...settings}>
           <div>
             <img class="" src={this.props.img1} />
