@@ -173,7 +173,7 @@ class BusinessDetailsPage extends Component {
                         Hi ! My name is Mercy Johnson. I'm a UI/UX Designer from
                         Lagos, in Nigeria. I really enjoy photography and mountains.
                       </p>
-                      <div className="text-center">
+                      <div className="text-center mt-3">
                         <Button> Follow </Button>
                       </div>
                     </div>
