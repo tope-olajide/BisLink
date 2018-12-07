@@ -4,8 +4,9 @@ import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLi
 import LoginForm from '../presentation/LoginForm'
 import SignUpForm from '../presentation/SignUpForm'
 import './styles/LoginForm.css'
+import './navBar.css'
 import { BrowserRouter as Router } from 'react-router-dom';
-class NonFixedNavbarExample extends React.Component {
+class NavigationBar extends React.Component {
   constructor(props) {
       super(props);
       this.state = {
@@ -30,14 +31,14 @@ render() {
     return (
         <div>
           <Router>
-            <Navbar color="black" dark expand="md" scrolling>
+            <Navbar color="black" dark className = 'zindex' expand="md" scrolling>
                 <NavbarBrand href="/">
                     <strong><FontAwesomeIcon icon="" size="1x" />BISLINK</strong>
                 </NavbarBrand>
                 <NavbarToggler onClick={this.onClick } />
                 <Collapse isOpen = { this.state.collapse } navbar>
                     <NavbarNav left>
-                      <NavItem active>
+                      <NavItem  >
                           <NavLink to="#"><FontAwesomeIcon icon="home" />HOME</NavLink>
                       </NavItem>
                       <NavItem>
@@ -82,4 +83,4 @@ render() {
   }
 }
 
-export default NonFixedNavbarExample;
+export default NavigationBar;
