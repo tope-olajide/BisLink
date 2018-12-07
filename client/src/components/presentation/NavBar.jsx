@@ -1,8 +1,8 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Container, Button, Modal, ModalBody, ModalHeader, ModalFooter } from 'mdbreact';
-import LoginForm from '../presentational/LoginForm'
-import SignUpForm from '../presentational/SignUpForm'
+import LoginForm from '../presentation/LoginForm'
+import SignUpForm from '../presentation/SignUpForm'
 import './styles/LoginForm.css'
 import { BrowserRouter as Router } from 'react-router-dom';
 class NonFixedNavbarExample extends React.Component {
