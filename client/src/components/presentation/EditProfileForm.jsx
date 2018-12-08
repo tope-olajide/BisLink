@@ -1,12 +1,12 @@
 import React, {Component} from 'react';
 import { Input, Button } from 'mdbreact';
-
+import './style.css'
 class EditProfileForm extends Component {
     render () {
         return (
-            <div>
+            <div className = 'card col-md-5 p-4 my-3 centra'>
             <form>
-            <p className="h4 text-center mt-4 mb-4">Edit Profile</p>
+            <h4 className="h4 text-center mt-4 mb-4">Edit my profile</h4>
               <div className="grey-text">
                 <Input label="Firstname" icon="" group type="text" validate error="wrong" success="right"/>
                 <Input label="Lastname" icon="" group type="text" validate/>
