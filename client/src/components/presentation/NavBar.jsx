@@ -39,10 +39,10 @@ render() {
                 <Collapse isOpen = { this.state.collapse } navbar>
                     <NavbarNav left>
                       <NavItem  >
-                          <NavLink to="#"><FontAwesomeIcon icon="home" />HOME</NavLink>
+                          <NavLink to="/"><FontAwesomeIcon icon="home" />HOME</NavLink>
                       </NavItem>
                       <NavItem>
-                          <NavLink to="#"><FontAwesomeIcon icon="briefcase" />CATALOGUE</NavLink>
+                          <NavLink to="/businesses"><FontAwesomeIcon icon="briefcase" />CATALOGUE</NavLink>
                       </NavItem>
 
                     </NavbarNav>
@@ -51,7 +51,7 @@ render() {
                           <NavLink to="#"><FontAwesomeIcon icon="search" />SEARCH</NavLink>
                       </NavItem>
                       <NavItem>
-                          <NavLink to="#"><FontAwesomeIcon icon="folder-plus" />ADD BUSINESS</NavLink>
+                          <NavLink to="register-business"><FontAwesomeIcon icon="folder-plus" />ADD BUSINESS</NavLink>
                       </NavItem>
                       <NavItem>
                           <NavLink to="#"onClick={() => this.toggle(7)} ><FontAwesomeIcon icon="user-plus" />SIGN UP</NavLink>
