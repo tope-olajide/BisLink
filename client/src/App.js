@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import { Route, Switch } from 'react-router-dom';
 // import HomeAnimation from '../src/components/presentation/HomeAnimation'
 import NavBar from '../src/components/presentation/NavBar'
 // import CataloguePage from '../src/components/presentation/CataloguePage'
@@ -7,7 +7,7 @@ import NavBar from '../src/components/presentation/NavBar'
 //import RegisterBusinessPage from '../src/components/presentation/RegisterBusinessPage'
 // import ProfilePage from '../src/components/presentation/ProfilePage'
 // import BusinessSlider from '../src/components/presentation/BusinessSlider'
-import Home from './components/container/Home'
+import AuthPage from './components/container/Home'
 import BusinessList from './components/container/BusinessList'
 import BusinessDetails from '../src/components/container/BusinessDetails'
 import AddBusiness from './components/container/AddBusiness'
@@ -35,7 +35,16 @@ img2 = 'featured2.jpg'
 img3 = 'featured3.jpg' 
 img4 = 'featured4.jpg' 
 /> */}
-<ModifyBusiness />
+  <Switch>
+    <Route exact path="/" component={AuthPage} />
+    <Route exact path="/register-business" component={AddBusiness} />
+    <Route exact path="/businesses" component={BusinessList} />
+    <Route exact path="/business-details/:id" component={BusinessDetails} />
+    <Route exact path="/modify-user/:id" component={ModifyUser} />
+    <Route exact path="/modify-business/:id" component={ModifyBusiness} />
+    <Route exact path="/view-profile/:id" component={Profile} />
+  </Switch>
+
       </div>
     );
   }
