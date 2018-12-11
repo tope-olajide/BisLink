@@ -1,5 +1,5 @@
-import routes from './routes/users';
-
+import routes from './routes';
+import cors from 'cors'
 const express = require('express');
 const bodyParser = require('body-parser');
 
@@ -10,13 +10,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(cors());
+app.use('/api/', routes);
 app.get('/', (req, res) => {
   res.status(201).json({
     title: 'BisLink',
     message: 'Welcome to bisLink Homepage!'
   });
 });
-app.use('/', routes);
+
 app.get('*', (req, res) => {
   res.status(404).send({
     success: false,
@@ -31,7 +33,7 @@ app.post('*', (req, res) => {
   });
 });
   
-let port = 3000;
+let port = 5000;
 app.listen(port, () => {
   console.log(`Server is up and running on port number ${port}`);
 });
