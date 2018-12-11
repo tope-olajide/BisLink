@@ -1,5 +1,5 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { validateUser, validateEmail } from '../middleware/validator';
+import { validateUser } from '../middleware/validator';
 import { User } from '../models';
 import Encryption from '../middleware/encryption';
 
@@ -27,18 +27,16 @@ const verifyUserNameAndEmail = (username, email) => {
       .then((userFound) => {
         if (userFound) {
           let field;
-          if (userFound.username.toUpperCase === username.toUpperCase) {
+          if (userFound.username.toUpperCase() === username.toUpperCase()) {
             field = 'Username';
-          } else if (userFound.email === email) {
+          } else {
             field = 'Email';
           }
+
           reject(`${field} already taken!`);
         }
 
         resolve();
-      })
-      .catch(() => {
-        reject('An error occured!');
       });
   });
   return promise;
@@ -60,15 +58,10 @@ export default class Users {
    */
   signupUser(req, res) {
     const {
-      email, username, fullname, password
+     fullname, username, password, email
     } = req.body;
-    if (!(validateEmail(email))) {
-      return res.status(400).json({
-        success: false,
-        message: 'Please enter a valid email Address'
-      });
-    }
-    const signUpError = validateUser(fullname, username, password);
+
+    const signUpError = validateUser({fullname, username, password, email} );
     if (signUpError) {
       return res.status(400).json({
         success: false,
@@ -78,7 +71,7 @@ export default class Users {
     verifyUserNameAndEmail(username, email).then(() => {
       User
         .create({
-          name: fullname,
+          fullname,
           username,
           email,
           password: newEncryption.generateHash(password)
