@@ -27,5 +27,4 @@ class FormsPage extends React.Component  {
     );
   }
 };
-
 export default FormsPage;
