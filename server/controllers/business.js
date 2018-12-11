@@ -1,6 +1,6 @@
 import { Business, User, Favorite } from '../models';
 import { validateBusiness } from '../middleware/validator';
-import cloudinary, { uploadWithMulter } from '../services/uploadImage';
+/* import cloudinary, { uploadWithMulter } from '../services/uploadImage'; */
 import { validateUserRight } from '../middleware/userValidation';
 /**
  *
