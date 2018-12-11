@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import HomeAnimation from '../src/components/presentation/HomeAnimation'
-import NavBar from '../src/components/presentation/NavBar'
+import NavBar from '../src/components/container/NavBar'
 // import CataloguePage from '../src/components/presentation/CataloguePage'
 //import RegisterBusinessForm from '../src/components/presentation/RegisterBusinessForm'
 //import RegisterBusinessPage from '../src/components/presentation/RegisterBusinessPage'
@@ -14,6 +14,7 @@ import AddBusiness from './components/container/AddBusiness'
 import Profile from './components/container/Profile'
 import ModifyUser from './components/container/ModifyUser'
 import ModifyBusiness from './components/container/ModifyBusiness'
+import Loading from './components/presentation/LoadingAnimation'
 class App extends Component {
   render() {
     return (
