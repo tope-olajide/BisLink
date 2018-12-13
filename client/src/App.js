@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import HomeAnimation from '../src/components/presentation/HomeAnimation'
-import NavBar from '../src/components/container/NavBar'
+import NavigationBar from './components/container/NavigationBar'
 // import CataloguePage from '../src/components/presentation/CataloguePage'
 //import RegisterBusinessForm from '../src/components/presentation/RegisterBusinessForm'
 //import RegisterBusinessPage from '../src/components/presentation/RegisterBusinessPage'
@@ -19,7 +19,7 @@ class App extends Component {
   render() {
     return (
       <div>
-       <NavBar /> 
+     <NavigationBar />  
 {/* <HomeAnimation 
 caption1 = 'Bis-Link is a direct optimized way of submitting your business details to nearby city directories.' 
 caption2 ='Search for businesses, services, houses, apartments and lands for sale or for rent'
