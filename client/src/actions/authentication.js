@@ -21,3 +21,13 @@ export function signUp(userData) {
           .decode(localStorage.getItem('token'))));
       });
   }
+  export function signIn (userData) {
+    return dispatch => axios.post(`${url}signin`, userData)
+      .then((response) => {
+        const { token } = response.data;
+        localStorage.setItem('token', token);
+        setToken(token);
+        dispatch(setCurrentUser(jsonwebtoken
+          .decode(localStorage.getItem('token'))));
+      });
+  }
