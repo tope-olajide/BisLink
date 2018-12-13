@@ -3,7 +3,7 @@ import jsonwebtoken from 'jsonwebtoken';
 import setToken from '../utils/setToken';
 import {
     SET_CURRENT_USER
-  } from '../constants';
+  } from '../actions/type';
   const url = 'http://127.0.0.1:5000/api/user/'
   export function setCurrentUser(userData) {
     return {
