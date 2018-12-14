@@ -1,14 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Navbar,
-  NavbarBrand,
-  NavbarNav,
-  NavbarToggler,
-  Collapse,
-  NavItem,
-  NavLink,
-  Container,
+import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Container,
   Modal,
   ModalBody,
   Row,
@@ -17,7 +9,8 @@ import {
   Button
 } from "mdbreact";
 /* import "./styles/LoginForm.css"; */
-import { signUp } from "../../actions/authentication";
+import { connect } from 'react-redux';
+import {signIn, signUp} from "../../actions/authentication";
 import { validateUser } from "../../utils/validator";
 class NavigationBar extends React.Component {
   constructor(props) {
@@ -52,6 +45,7 @@ class NavigationBar extends React.Component {
     } else if (this.state.password !== this.state.confirmPassword) {
       alert("passwords does not match");
     } else {
+      alert('saving...')
       this.props.signUp(this.state).then(
         () => {
           alert(`Welcome <br/><em>${this.state.username}</em>`);
@@ -68,6 +62,26 @@ class NavigationBar extends React.Component {
       );
     }
   };
+
+  handleSignIn = () => {
+/*     this.setState({
+      isLoading: true
+    }); */
+alert('signing in... ')
+    this.props.signIn(this.state)
+      .then(() => {
+        alert('success', `Welcome back <br/><em>${this.state.authName}</em>`);
+        setTimeout(() => {
+          window.location = '/businesses/';
+        }, 300);
+      },
+      (error) => {
+/*         this.setState({
+          isLoading: false
+        }); */
+        alert(error.response.data.message);
+      });
+  }
   toggle(nr) {
     let modalNumber = "modal" + nr;
     this.setState({
@@ -167,7 +181,7 @@ class NavigationBar extends React.Component {
                         />
                       </div>
                       <div className="text-center">
-                        <Button>Login</Button>
+                        <Button onClick={this.handleSignIn}> Login</Button>
                       </div>
                     </form>
                   </Col>
@@ -256,5 +270,4 @@ class NavigationBar extends React.Component {
     );
   }
 }
-
-export default NavigationBar;
+export default connect(null, {signUp, signIn})(NavigationBar);
