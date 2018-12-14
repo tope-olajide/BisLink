@@ -111,10 +111,10 @@ export default class Users {
    * @memberof Users
    */
   signIn(req, res) {
-    const authName = req.body.authName;
+    const authName = req.body.usernameOrEmail;
     User
       .findOne({
-        attributes: ['id', 'name', 'username', 'email', 'password'],
+        attributes: ['id', 'fullname', 'username', 'email', 'password'],
         where: {
           $or: [
             {
