@@ -35,6 +35,57 @@ class BusinessList extends Component {
       handleInputChange(key, value) {
         this.setState({ [key]: value });
       }
+      handleFormSubmit = files => {
+        alert("Loading....");
+        // start loading animation
+        // Push all the axios request promise into a single array
+        const uploaders = this.state.filesToBeSent.map( file => {
+          console.log(file);
+          // Initial FormData
+          const formData = new FormData();
+    
+          formData.append("upload_preset", "sijxpjkn");
+          formData.append("api_key", "139423638121511");
+          formData.append("file", file);
+          formData.append("timestamp", (Date.now() / 1000) | 0);
+    
+          // Make an AJAX upload request using Axios
+          return axios
+            .post(
+              "https://api.cloudinary.com/v1_1/temitope/image/upload",
+              formData,
+              {
+                headers: { "X-Requested-With": "XMLHttpRequest" }
+              }
+            )
+            .then(response => {
+              const data = response.data;
+              this.setState({
+                imageUrl: data.secure_url,
+                imageId: data.public_id
+              });
+              console.log(data);
+            })
+            .catch(function(err) {
+              alert("error " + err);
+            });
+        });
+    
+        // Once all the files are uploaded
+        axios
+          .all(uploaders)
+          .then(data => {
+            alert(
+              "Success!!!: Upload picture successfully, now saving to database"
+            );
+            this.props.onAddUser(this.state);
+            alert("saved to database successfully");
+            
+          })
+          .catch(function(err) {
+            alert(err);
+          });
+      };
     render () {
         return (
 <AddBusiness
