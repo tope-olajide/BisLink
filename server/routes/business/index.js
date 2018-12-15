@@ -10,9 +10,11 @@ const newBusiness = new Business();
 user.use('*', newAuth.verify);
 
 user.route('/')
-  .post(newBusiness.createBusiness);
+  .post(newBusiness.createBusiness)
+  .get(newBusiness.getAllBusinesses)
 
 user.route('/:businessId')
   .put(newBusiness.modifyBusiness)
   .delete(newBusiness.deleteBusiness)
   .get(newBusiness.getUserBusiness);
+  export default user;
