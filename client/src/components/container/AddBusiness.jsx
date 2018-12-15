@@ -88,7 +88,7 @@ class BusinessList extends Component {
       };
     render () {
         return (
-<AddBusiness
+          <AddBusiness
           files={this.state}
           onDrop={this.onDrop}
           handleFormSubmit={this.handleFormSubmit}
