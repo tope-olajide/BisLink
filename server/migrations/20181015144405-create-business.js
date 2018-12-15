@@ -44,6 +44,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
+      businessImageId: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
       businessDescription: {
         type: Sequelize.STRING,
         allowNull: false
