@@ -1,20 +1,7 @@
-import { Favourite, Business } from '../models';
+import { Favourite, Business, User } from '../models';
 
-/**
- * Class Definition for the Favourite Object
- *
- * @export
- * @class Favourite
- */
 export default class Favourites {
-  /**
-   * Add a Business to user's favourite
-   *
-   * @param {object} req - HTTP Request
-   * @param {object} res - HTTP Response
-   * @returns {object} Class instance
-   * @memberof Favourite
-   */
+
   addToFavourite({ user, params }, res) {
     const userId = user.id;
     const { businessId } = params;
@@ -25,7 +12,8 @@ export default class Favourites {
         if (created) {
           return res.status(201).json({
             success: true,
-            message: `Business with id: ${businessId} added to favourites!`
+            message: `Business with id: ${businessId} added to favourites!`,
+            addedBusiness
           });
         }
 
@@ -41,17 +29,7 @@ export default class Favourites {
 
     return this;
   }
-    /**
-   * @description - Removes a Business from user favourites
-   *
-   * @param {object} req - HTTP Request
-   *
-   * @param {object} res - HTTP Response
-   *
-   * @return {object} this - Favourites class instance
-   *
-   * @memberof Favourites
-   */
+
   removeFromFavourites({ params, user }, res) {
     const { businessId } = params;
     const userId = user.id;
@@ -78,4 +56,41 @@ export default class Favourites {
       }));
     return this;
   }
+  getFavBusinesses({ user }, res) {
+    const userId = user.id;
+
+    Favorite
+      .findAll({
+        where: { userId },
+        attributes: ['businessId']
+      })
+      .then((favorites) => {
+        if (favorites.length === 0) {
+          return res.status(404).json({
+            success: true,
+            message: 'Nothing found!',
+            business: []
+          });
+        }
+
+        const ids = favorites.map(business => business.businessId);
+        Business.findAll({
+          where: { id: ids },
+          include: [
+            { model: User, attributes: ['fullname'] }
+          ]
+        }).then(businesses => res.status(200).json({
+          success: true,
+          message: 'Favorite Businesses found',
+          businesses
+        }));
+      })
+      .catch((/* error */) => res.status(500).json({
+        success: false,
+        message: 'Error fetching favorite recipes'
+      }));
+
+    return this;
+  }
+
 }
