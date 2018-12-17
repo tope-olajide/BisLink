@@ -113,9 +113,13 @@ export const validateBusiness = ({ businessName, businessAddress1, businessDescr
   }
   return false;
 };
-export const validateComment = (content) => {
-  if (!content || content.length < 10) {
-    return 'Comment is too small';
+export const validateReview = ({title, content}) => {
+    
+  if (!title) {
+    return 'Please input a valid review Title';
+  }
+  if (!content) {
+    return 'Please input a valid review';
   }
   return false;
 };
