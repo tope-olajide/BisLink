@@ -1,4 +1,3 @@
-
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Users', {
@@ -27,7 +26,7 @@ module.exports = {
         allowNull: false,
       },
       phoneNumber: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       location: {
@@ -38,9 +37,23 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: true,
       },
-      usersImageUrl: {
+      ImageUrl: {
         type: Sequelize.STRING,
         allowNull: true,
+      },
+      ImageId: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      followers: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      followees: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
       },
       createdAt: {
         allowNull: false,
