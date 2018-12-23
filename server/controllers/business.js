@@ -155,7 +155,7 @@ export default class Businesses {
         .then((business) =>{
           Favourite
           .findAll({
-            where: {businessId: business.Id },
+            where: { businessId: business.Id },
             attributes: ['userId']
           }).then ((userIds)=>  {
             const notificationAlert = {
