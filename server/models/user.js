@@ -25,7 +25,7 @@ export default (sequelize, DataTypes) => {
       allowNull: false,
     },
     phoneNumber: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     location: {
@@ -36,10 +36,24 @@ export default (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    usersImageUrl: {
+    ImageUrl: {
       type: DataTypes.STRING,
       allowNull: true,
-    }
+    },
+    ImageId: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    followers: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    followees: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
   });
   User.associate = (models) => {
     User.hasMany(models.Business, {
@@ -48,7 +62,13 @@ export default (sequelize, DataTypes) => {
     User.hasMany(models.Review, {
       foreignKey: 'userId'
     });
-    User.hasMany(models.Favorite, {
+    User.hasMany(models.Favourite, {
+      foreignKey: 'userId'
+    });
+    User.hasMany(models.Follower, {
+      foreignKey: 'userId'
+    });
+    User.hasMany(models.Notification, {
       foreignKey: 'userId'
     });
   };
