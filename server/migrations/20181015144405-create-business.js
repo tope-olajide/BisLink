@@ -25,11 +25,11 @@ module.exports = {
         allowNull: true,
       },
       phoneNumber1: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: false,
       },
       phoneNumber2: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         allowNull: true,
       },
       website: {
@@ -52,13 +52,19 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      viewCount: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      upvotes: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
+      downvotes: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -67,6 +73,15 @@ module.exports = {
           key: 'id',
           as: 'userId',
         } },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      
     });
   },
   down: queryInterface => queryInterface.dropTable('Businesses')
