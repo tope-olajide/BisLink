@@ -10,6 +10,23 @@ export default class Favourites {
       .findOrCreate({ where: { userId, businessId } })
       .spread((addedBusiness, created) => {
         if (created) {
+          Business
+          .findOne({
+            where: { id: businessId }
+          }).then((business) =>{         
+const notificationAlert = {
+  receiverId:business.userId,
+  title:`${user.username} has added one of your business to his/her favourite`,
+  message: `${user.username} has added your business ${business.businessName}  to his/her favourite`
+};
+Notification
+          .create({
+            userId:notificationAlert.receiverId,
+            title:notificationAlert.title,
+            message:notificationAlert.message,
+          })
+          })
+        
           return res.status(201).json({
             success: true,
             message: `Business with id: ${businessId} added to favourites!`,
@@ -33,7 +50,7 @@ export default class Favourites {
   removeFromFavourites({ params, user }, res) {
     const { businessId } = params;
     const userId = user.id;
-    Favorite
+    Favourite
       .destroy({
         where: {
           $and: [
@@ -50,22 +67,55 @@ export default class Favourites {
           });
         }
       })
-      .catch((/* error */) => res.status(500).json({
+      .catch(( error) => res.status(500).json({
         success: false,
         message: 'Error removing business from favourites'
       }));
     return this;
   }
+
+  getFavBusiness({ params, user: { id } }, res) {
+    const { businessId } = params;
+    const userId = id;
+
+    Favourite
+      .findOne({
+        where: { userId, businessId },
+        attributes: ['businessId']
+      })
+      .then((business) => {
+        if (!business) {
+          return res.status(404).json({
+            success: true,
+            message: 'Nothing found!',
+            business: {}
+          });
+        }
+
+        return res.status(200).json({
+          success: true,
+          message: 'Favourite business found',
+          business
+        });
+      })
+      .catch((/* error */) => res.status(500).json({
+        success: false,
+        message: 'Error fetching Favourite business'
+      }));
+
+    return this;
+  }
+
   getFavBusinesses({ user }, res) {
     const userId = user.id;
 
-    Favorite
+    Favourite
       .findAll({
         where: { userId },
         attributes: ['businessId']
       })
-      .then((favorites) => {
-        if (favorites.length === 0) {
+      .then((Favourites) => {
+        if (Favourites.length === 0) {
           return res.status(404).json({
             success: true,
             message: 'Nothing found!',
@@ -73,7 +123,7 @@ export default class Favourites {
           });
         }
 
-        const ids = favorites.map(business => business.businessId);
+        const ids = Favourites.map(business => business.businessId);
         Business.findAll({
           where: { id: ids },
           include: [
@@ -81,13 +131,13 @@ export default class Favourites {
           ]
         }).then(businesses => res.status(200).json({
           success: true,
-          message: 'Favorite Businesses found',
+          message: 'Favourite Businesses found',
           businesses
         }));
       })
       .catch((/* error */) => res.status(500).json({
         success: false,
-        message: 'Error fetching favorite recipes'
+        message: 'Error fetching Favourite business'
       }));
 
     return this;
