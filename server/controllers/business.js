@@ -100,9 +100,10 @@ export default class Businesses {
               userId
             });
           })
-          .catch(() => res.status(500).json({
+          .catch((error) => res.status(500).json({
             success: false,
-            message: 'Error creating business'
+            message: 'Error creating business',
+            error
           }));
 
       });
@@ -151,13 +152,34 @@ export default class Businesses {
           businessImageUrl,
           businessImageId
         })
-        .then(business =>
+        .then((business) =>{
+          Favourite
+          .findAll({
+            where: {businessId: business.Id },
+            attributes: ['userId']
+          }).then ((userIds)=>  {
+            const notificationAlert = {
+              title:`${user.username} has modified one of your favourite business`,
+              message: `one of your favourite business named: ${business.businessName} has been modified by its owner`
+            };   
+const bizFavouriteUserIds = userIds.map((eachUser) => 
+{
+  return {
+  receiverId: eachUser,
+  title: notificationAlert.title,
+  message: notificationAlert.message
+}
+});
+Notification.bulkCreate(bizFavouriteUserIds)
+          }).then((notifiedUsers) => {
           res.status(200).json({
             success: true,
             message: 'Business record updated successfully',
-            business
+            business,
+            notifiedUsers
           })
-        )
+          })
+        })
         .catch(( /* error */ ) => res.status(500).json({
           success: false,
           message: 'Error updating business'
@@ -309,7 +331,7 @@ export default class Businesses {
    *
    * @memberof Businesses
    */
-  getUserBusiness({user}, res) {
+  getUserBusiness({user,}, res) {
     const userId = user.id;
      Business
       .findAll({
@@ -372,4 +394,55 @@ export default class Businesses {
 
   return this;
   }
+  getBusiness({ params }, res) {
+    const { businessId } = params;
+
+    Business
+      .findOne({
+        where: { id: businessId },
+        include: [
+          { model: User, attributes: ['fullname'] }
+        ]
+      })
+      .then(businessFound => businessFound.increment('viewCount'))
+      .then(business => res.status(200).json({
+        success: true,
+        message: 'business found',
+        business
+      }))
+      .catch((/* error */) => res.status(500).json({
+        success: false,
+        message: 'Error fetching business'
+      }));
+
+    return this;
+  }
+  arrayTest (req, res) {
+   const business = {
+      username : 'rrrrrr',
+      id : 12345
+    }
+    const user = {username:'rrrerrer'}
+    const notificationAlert = {
+      receiverId:business.userId,
+      title:`${user.username} has added one of your business to his/her favourite`,
+      message: `${user.username} has added your business ${business.businessName}  to his/her favourite`
+    };
+    const userIds = [1,2,3,4,5]
+const notifyUsers = userIds.map((eachUser) => {
+ return {
+   id:eachUser,
+   title: notificationAlert.title
+}
+})
+
+
+
+res.status(200).json({
+  success: true,
+  message: 'business found',
+  userid:notifyUsers
+})
+return this;
+  } 
 }
