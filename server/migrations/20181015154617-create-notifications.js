@@ -8,9 +8,6 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      notificationsId: {
-        type: Sequelize.STRING
-      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
@@ -19,17 +16,16 @@ module.exports = {
           as: 'userId',
         }
       },
-      senderId: {
+      title: {
         type: Sequelize.STRING
       },
       message: {
         type: Sequelize.STRING
       },
-      url: {
-        type: Sequelize.STRING
-      },
       notificationState: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.ENUM,
+        values: ['seen', 'unseen'],
+        defaultValue: 'unseen'
       },
       createdAt: {
         allowNull: false,
