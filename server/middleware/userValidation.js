@@ -1,4 +1,4 @@
-import { Business } from '../models';
+import { Business, Notification } from '../models';
 
 
 export const validateUserName = (User, username, userId) => {
@@ -42,6 +42,23 @@ export const validateUserRight = (businessId, userId) => {
           });
         }
         resolve(businessFound);
+      });
+  });
+  return promise;
+};
+
+export const validateNotificationOwner = (notificationId, userId) => { 
+  const promise = new Promise((resolve, reject) => {
+    Notification
+      .findById(notificationId)
+      .then((notification) => {
+        if (Number(notification.userId) !== Number(userId)) {
+          reject({
+            status: 401,
+            message: 'You cannot view or modify a notification that is not yours'
+          });
+        }
+        resolve(notification);
       });
   });
   return promise;
