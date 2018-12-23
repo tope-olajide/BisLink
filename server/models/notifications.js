@@ -4,28 +4,27 @@
  * @param  {object} Sequelize - sequelize Sequelize
  * @return {object} The Notification model
  */
-module.exports = (sequelize, Sequelize) => {
+module.exports = (sequelize, DataTypes) => {
   const Notification = sequelize.define('Notification', {
     userId: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       references: {
         model: 'Users',
         key: 'id',
         as: 'userId',
       }
     },
-    senderId: {
-      type: Sequelize.INTEGER
+    title: {
+      type: DataTypes.STRING
     },
     message: {
-      type: Sequelize.STRING
-    },
-    url: {
-      type: Sequelize.STRING
+      type: DataTypes.STRING
     },
     notificationState: {
-      type: Sequelize.BOOLEAN
-    }
+      type: DataTypes.ENUM,
+      values: ['seen', 'unseen'],
+      defaultValue: 'unseen'
+    },
   });
   Notification.associate = (models) => {
     Notification.belongsTo(models.User, {
