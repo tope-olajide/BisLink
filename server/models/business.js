@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     phoneNumber1: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     phoneNumber2: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: true,
     },
     website: {
@@ -50,6 +50,20 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
+    viewCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    upvotes: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    downvotes: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
     userId: {
       type: DataTypes.INTEGER,
       references: {
@@ -66,7 +80,13 @@ module.exports = (sequelize, DataTypes) => {
     Business.hasMany(models.Review, {
       foreignKey: 'businessId'
     });
-    Business.hasMany(models.Favorite, {
+    Business.hasMany(models.Favourite, {
+      foreignKey: 'businessId'
+    });
+    Business.hasMany(models.Upvote, {
+      foreignKey: 'businessId'
+    });
+    Business.hasMany(models.Downvote, {
       foreignKey: 'businessId'
     });
   };
