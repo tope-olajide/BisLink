@@ -116,10 +116,10 @@ export const validateBusiness = ({ businessName, businessAddress1, businessDescr
 export const validateReview = ({title, content}) => {
     
   if (!title) {
-    return 'Please input a valid review Title';
+    return 'Please input a valid review title';
   }
   if (!content) {
-    return 'Please input a valid review';
+    return 'Please input a valid review contents';
   }
   return false;
 };
