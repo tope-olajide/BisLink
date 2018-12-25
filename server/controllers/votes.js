@@ -62,9 +62,21 @@ export default class Vote {
                 .then(businessModel => businessModel.reload())
                 .then((business) => {
                   const {
+                    businessName,
+                    userId,
                     upvotes,
                     downvotes
                   } = business;
+                  const notificationAlert = {
+                    title:`One of your business has been upvoted `,
+                    message: `One of your business named: ${businessName} has been upvoted by ${user.id} `
+                  }
+                  Notification
+                  .create({
+                    userId,
+                    title:notificationAlert.title,
+                    message:notificationAlert.message,
+                  })
                   return res.status(201).json({
                     success: true,
                     message: `Business with id: ${businessId} Upvoted!`,
@@ -148,9 +160,21 @@ export default class Vote {
                 .then(businessModel => businessModel.reload())
                 .then((business) => {
                   const {
+                    businessName,
+                    userId,
                     upvotes,
                     downvotes
                   } = business;
+                  const notificationAlert = {
+                    title:`One of your business has been Downvoted `,
+                    message: `One of your business named: ${businessName} has been Downvoted by ${user.id} `
+                  }
+                  Notification
+                  .create({ 
+                    userId,
+                    title:notificationAlert.title,
+                    message:notificationAlert.message,
+                  })
                   return res.status(201).json({
                     success: true,
                     message: `Business with id: ${businessId} Downvoted!`,
