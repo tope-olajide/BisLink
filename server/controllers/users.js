@@ -1,13 +1,49 @@
 import jsonwebtoken from 'jsonwebtoken';
 import {
-  validateUser
+  validateUser, validateModifiedUser
 } from '../middleware/validator';
 import {
-  User
+  User, Notification, Business, Favourite, Follower
 } from '../models';
 import Encryption from '../middleware/encryption';
-import verifyUserNameAndEmail from '../middleware/userValidation'
 const newEncryption = new Encryption();
+
+ const verifyUserNameAndEmail = (username, email) => {
+  const promise = new Promise((resolve, reject) => {
+    User
+      .findOne({
+        attributes: ['email', 'username'],
+        where: {
+          $or: [
+            {
+              username: {
+                $iLike: username
+              }
+            }, {
+              email: {
+                $iLike: email
+              }
+            }
+          ]
+        }
+      })
+      .then((userFound) => {
+        if (userFound) {
+          let field;
+          if (userFound.username.toUpperCase() === username.toUpperCase()) {
+            field = 'Username';
+          } else {
+            field = 'Email';
+          }
+
+          reject(`${field} already taken!`);
+        }
+
+        resolve();
+      });
+  });
+  return promise;
+};
 
 export default class Users {
 
@@ -143,7 +179,7 @@ export default class Users {
       ImageUrl,
       ImageId
     } = body
-    const validateUserDetails = validateUser({
+    const validateUserDetails = validateModifiedUser({
       fullname,
       email
     });
@@ -166,19 +202,18 @@ export default class Users {
           });
         }
 
-        if (imageId !== foundUser.imageId) {
+/*         if (imageId !== foundUser.imageId) {
           cloudinary.destroy(foundUser.imageId, () => {});
-        }
-        validateUserName(User, username, userId).then(() => {
+        } */
+       
           foundUser.updateAttributes({
               fullname,
               email,
-              username,
               phoneNumber,
               location,
               about,
-              imageUrl: imageUrl || foundUser.imageUrl,
-              imageId: imageId || foundUser.imageId
+              ImageUrl,
+              ImageId
             })
             .then((user) => {
               const {
@@ -201,15 +236,7 @@ export default class Users {
                 }
               });
             })
-        }).catch(({
-          status,
-          message
-        }) => {
-          res.status(status).json({
-            success: false,
-            message
-          });
-        });
+ 
       }).catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: "Error Updating user's profile"
@@ -279,7 +306,7 @@ export default class Users {
       userId
     } = params;
     User.findOne({
-        attributes: ['id', 'fullname', 'about', 'location', 'username', 'email', 'imageUrl'],
+        attributes: ['id', 'fullname', 'about', 'location', 'username', 'email', 'ImageUrl'],
         where: {
           id: userId
         }
@@ -327,7 +354,7 @@ export default class Users {
               Notification.findAll({
                 where: {
                   userId
-                }
+                }})
                 .then((notifications) => {
                   userInfo.myNotifications = notifications;
                   Follower.findAndCountAll({
@@ -352,7 +379,7 @@ export default class Users {
                     })
                   })
                 })
-              })
+              
             });
         }).catch(( /* error */ ) => res.status(500).json({
           success: false,
