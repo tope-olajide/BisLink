@@ -5,6 +5,7 @@ import Auth from '../../middleware/auth';
 import Favourites from '../../controllers/favourite';
 import Followers from '../../controllers/follower';
 import Notifications from '../../controllers/notification'
+
 const user = express.Router();
 const newBusiness = new Businesses();
 const newUser = new User();
@@ -15,7 +16,14 @@ const newNotification = new Notifications ()
 user.post('/signup', newUser.signupUser);
 user.post('/signin', newUser.signIn);
 
+
+
+
 user.use('*', newAuth.verify);
+
+user.put('/profile', newUser.modifyUser);
+user.put('/change-password', newUser.changePassword);
+user.get('/:userId/profile', newUser.getUser);
 user.get('/businesses', newBusiness.getUserBusiness);
 
 user.route('/business/favourite/:businessId')
@@ -39,7 +47,7 @@ user.route('/follow/:userId')
   .get(newNotification.getAllNotifications);
   
   user.route('/notification/:notificationId')
-  .get(newNotification.getNotification);
+  .get(newNotification.viewNotification);
   
   user.route('/notifications/unread')
   .get(newNotification.getUnreadNotifications);
