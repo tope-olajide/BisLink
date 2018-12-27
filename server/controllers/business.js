@@ -61,7 +61,7 @@ export default class Businesses {
         if (isPicked) {
           return res.status(409).json({
             success: false,
-            message: 'Business Name already picked!'
+            message: 'This business exist already'
           });
         }
 
@@ -417,32 +417,5 @@ Notification.bulkCreate(bizFavouriteUserIds)
 
     return this;
   }
-  arrayTest (req, res) {
-   const business = {
-      username : 'rrrrrr',
-      id : 12345
-    }
-    const user = {username:'rrrerrer'}
-    const notificationAlert = {
-      receiverId:business.userId,
-      title:`${user.username} has added one of your business to his/her favourite`,
-      message: `${user.username} has added your business ${business.businessName}  to his/her favourite`
-    };
-    const userIds = [1,2,3,4,5]
-const notifyUsers = userIds.map((eachUser) => {
- return {
-   id:eachUser,
-   title: notificationAlert.title
-}
-})
 
-
-
-res.status(200).json({
-  success: true,
-  message: 'business found',
-  userid:notifyUsers
-})
-return this;
-  } 
 }
