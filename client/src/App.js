@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 // import HomeAnimation from '../src/components/presentation/HomeAnimation'
-import NavigationBar from './components/container/NavigationBar'
+/* import NavigationBar from './components/container/NavigationBar' */
 // import CataloguePage from '../src/components/presentation/CataloguePage'
 //import RegisterBusinessForm from '../src/components/presentation/RegisterBusinessForm'
 //import RegisterBusinessPage from '../src/components/presentation/RegisterBusinessPage'
 // import ProfilePage from '../src/components/presentation/ProfilePage'
 // import BusinessSlider from '../src/components/presentation/BusinessSlider'
-import AuthPage from './components/container/Home'
-import BusinessList from './components/container/BusinessList'
-import BusinessDetails from '../src/components/container/BusinessDetails'
-import AddBusiness from './components/container/AddBusiness'
-import Profile from './components/container/Profile'
-import ModifyUser from './components/container/ModifyUser'
-import ModifyBusiness from './components/container/ModifyBusiness'
-import Loading from './components/presentation/LoadingAnimation'
+import AuthPage from './components/AuthPage'
+import AddBusiness from './components/AddBusiness'
+import BusinessList from './components/Catalogue'
+import BusinessDetails from './components/BusinessDetails'
+import Profile from './components/Profile'
+import ModifyUser from './components/ModifyUser'
+import ModifyBusiness from './components/ModifyBusiness'
+
+/*import Loading from './components/presentation/LoadingAnimation' */
 class App extends Component {
   render() {
     return (
       <div>
-     <NavigationBar />  
+  {/*    <NavigationBar />   */}
 {/* <HomeAnimation 
 caption1 = 'Bis-Link is a direct optimized way of submitting your business details to nearby city directories.' 
 caption2 ='Search for businesses, services, houses, apartments and lands for sale or for rent'
@@ -38,12 +39,13 @@ img4 = 'featured4.jpg'
 /> */}
   <Switch>
     <Route exact path="/" component={AuthPage} />
-    <Route exact path="/register-business" component={AddBusiness} />
+ <Route exact path="/register-business" component={AddBusiness} />
     <Route exact path="/businesses" component={BusinessList} />
     <Route exact path="/business-details/:id" component={BusinessDetails} />
-    <Route exact path="/modify-user/:id" component={ModifyUser} />
-    <Route exact path="/modify-business/:id" component={ModifyBusiness} />
     <Route exact path="/view-profile/:id" component={Profile} />
+    <Route exact path="/modify-user/:id" component={ModifyUser} />
+   <Route exact path="/modify-business/:id" component={ModifyBusiness} />
+   {/*   */}
   </Switch>
 
       </div>
