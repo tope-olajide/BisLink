@@ -64,6 +64,42 @@ const validateEmail = (emailAddress) => {
   return true;
 };
 
+
+
+
+export const validateModifiedUser = ({
+  fullname,
+  email
+}) => {
+
+  const checkEachChar = (char) => {
+    char = parseInt(char, 10);
+    return Number.isInteger(char);
+  };
+  const checkForInteger = (stringVal) => {
+    const newstring = stringVal.split('');
+    const newarray = newstring.filter(checkEachChar);
+    return newarray;
+  };
+
+  const validateFullname = checkForInteger(fullname);
+  if (fullname.length < 4 ||
+     validateFullname.length > 1) {
+    return 'Fullname minimum character must be 4 and must not contain a number';
+  }
+  if (!fullname.includes(' ')) {
+    return 'Your firstname and lastname must be separated with space';
+  }
+  if (!validateEmail(email)) {
+    return 'please enter a valid email address'
+  }
+  return false;
+};
+
+
+
+
+
 export const validateUser = ({
   fullname,
   username,
@@ -83,9 +119,9 @@ export const validateUser = ({
   };
 
   const validateFullname = checkForInteger(fullname);
-  if (fullname.length < 5 ||
+  if (fullname.length < 4 ||
      validateFullname.length > 1) {
-    return 'Enter a valid fullname!';
+    return 'Fullname minimum character must be 4 and must not contain a number';
   }
   if (!fullname.includes(' ')) {
     return 'Your firstname and lastname must be separated with space';
