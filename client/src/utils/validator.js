@@ -93,7 +93,7 @@ export const validateUser = ({
     return 'Your firstname and lastname must be separated with space';
   }
   if (username.length < 3 || username.includes(' ')) {
-    return 'Username must contain at least 3 alphabets and no space!';
+    return 'Username must contain at least 3 alphabets with no space!';
   }
   if (!validateEmail(email)) {
     return 'please enter a valid email address'
