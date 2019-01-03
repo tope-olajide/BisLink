@@ -1,6 +1,7 @@
 import {
   Business,
-  User
+  User,
+  Follower
 } from '../models';
 import {
   validateBusiness
@@ -152,33 +153,34 @@ export default class Businesses {
           businessImageUrl,
           businessImageId
         })
-        .then((business) =>{
+        .then((business) => {
           Favourite
-          .findAll({
-            where: { businessId: business.Id },
-            attributes: ['userId']
-          }).then ((userIds)=>  {
-            const notificationAlert = {
-              title:`${user.username} has modified one of your favourite business`,
-              message: `one of your favourite business named: ${business.businessName} has been modified by its owner`
-            };   
-const bizFavouriteUserIds = userIds.map((eachUser) => 
-{
-  return {
-  receiverId: eachUser,
-  title: notificationAlert.title,
-  message: notificationAlert.message
-}
-});
-Notification.bulkCreate(bizFavouriteUserIds)
-          }).then((notifiedUsers) => {
-          res.status(200).json({
-            success: true,
-            message: 'Business record updated successfully',
-            business,
-            notifiedUsers
-          })
-          })
+            .findAll({
+              where: {
+                businessId: business.Id
+              },
+              attributes: ['userId']
+            }).then((userIds) => {
+              const notificationAlert = {
+                title: `${user.username} has modified one of your favourite business`,
+                message: `one of your favourite business named: ${business.businessName} has been modified by its owner`
+              };
+              const bizFavouriteUserIds = userIds.map((eachUser) => {
+                return {
+                  receiverId: eachUser,
+                  title: notificationAlert.title,
+                  message: notificationAlert.message
+                }
+              });
+              Notification.bulkCreate(bizFavouriteUserIds)
+            }).then((notifiedUsers) => {
+              res.status(200).json({
+                success: true,
+                message: 'Business record updated successfully',
+                business,
+                notifiedUsers
+              })
+            })
         })
         .catch(( /* error */ ) => res.status(500).json({
           success: false,
@@ -331,16 +333,18 @@ Notification.bulkCreate(bizFavouriteUserIds)
    *
    * @memberof Businesses
    */
-  getUserBusiness({user,}, res) {
+  getUserBusiness({
+    user,
+  }, res) {
     const userId = user.id;
-     Business
+    Business
       .findAll({
         where: {
           userId
         },
         include: [{
           model: User,
-          attributes: ['fullname', 'username','updatedAt']
+          attributes: ['fullname', 'username', 'updatedAt']
         }]
       })
       .then((business) => {
@@ -360,57 +364,97 @@ Notification.bulkCreate(bizFavouriteUserIds)
       .catch(() => res.status(500).json({
         success: false,
         message: 'Unable to get user business'
-      })); 
+      }));
 
     return this;
   }
   getAllBusinesses(req, res) {
     Business
-    .findAll({
-      include: [
-        { model: User, attributes: ['fullname'] }
-      ]
-    })
-    .then((businesses) => {
-      if (businesses.length < 1) {
-        return res.status(404).json({
+      .findAll({
+        include: [{
+          model: User,
+          attributes: ['fullname']
+        }]
+      })
+      .then((businesses) => {
+        if (businesses.length < 1) {
+          return res.status(404).json({
+            success: true,
+            message: 'Nothing found!',
+            businesses: []
+          });
+        }
+
+        return res.status(200).json({
           success: true,
-          message: 'Nothing found!',
-          businesses: []
+          message: 'business(es) found!',
+          businesses
         });
-      }
+      })
+      .catch((error) => res.status(500).json({
+        success: false,
+        message: 'Error fetching all businesses',
+        error
+      }));
 
-      return res.status(200).json({
-        success: true,
-        message: 'business(es) found!',
-        businesses
-      });
-    })
-    .catch((error) => res.status(500).json({
-      success: false,
-      message: 'Error fetching all businesses',
-      error
-    }));
-
-  return this;
+    return this;
   }
-  getBusiness({ params }, res) {
-    const { businessId } = params;
-
+  getBusinessDetails({
+    params,user
+  }, res) {
+    const userId = user.id;
+    const {
+      businessId
+    } = params;
+    const infoCount = {}
     Business
       .findOne({
-        where: { id: businessId },
-        include: [
-          { model: User, attributes: ['fullname'] }
-        ]
+        where: {
+          id: businessId
+        },
+        include: [{
+          model: User,
+          attributes: ['id', 'username', 'location', 'ImageUrl', 'about']
+        }]
       })
       .then(businessFound => businessFound.increment('viewCount'))
-      .then(business => res.status(200).json({
-        success: true,
-        message: 'business found',
-        business
-      }))
-      .catch((/* error */) => res.status(500).json({
+      .then((business) => {
+        if(userId == business.User.id){
+          infoCount.isBusinessOwner = true
+        }
+        else{
+          infoCount.isBusinessOwner = false
+        }
+        Business.count({
+          where: {
+            userId: business.User.id
+          }
+        }).then((businessCount) => {
+          infoCount.businessCount = businessCount
+          Follower.count({
+            where: {
+              userId: business.User.id
+            }
+          }).then((followersCount) => {
+            infoCount.followersCount = followersCount
+            Follower.count({
+              where: {
+                followerId: business.User.id
+              }
+            }).then((followingCount) => {
+
+              infoCount.followingCount = followingCount
+              res.status(200).json({
+                success: true,
+                message: 'business found',
+                business,
+                infoCount
+              })
+            })
+          })
+        })
+      })
+      .catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: 'Error fetching business'
       }));
