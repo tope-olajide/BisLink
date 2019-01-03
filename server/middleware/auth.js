@@ -25,7 +25,7 @@ export default class Auth {
   verify(req, res, next) {
     const token = req.body.token
       || req.query.token
-      || req.headers['x-access-token'];
+      || req.headers['authorization'];
 
     if (token) {
       const jwtSecret = 'process.env.JWT_SECRET';
