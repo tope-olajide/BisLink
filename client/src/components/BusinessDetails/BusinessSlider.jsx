@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import Slider from "react-slick";
+import { Button } from 'mdbreact';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class BusinessSlider extends Component {
   render() {
@@ -54,14 +56,19 @@ class BusinessSlider extends Component {
           <img className="" src={this.props.img4} />
           </div>
         </Slider>
-        <div className = 'container mt-3'>
+        <div className = 'container mt-0'>
 <div className = 'row'>
-<div className= 'col-md-6'>
-<h2>Tasty Hand-Pulled Noodles</h2>
-<p> Innovative cooking, paired with fine wines in a modern setting. </p>
+<div className= 'col-md-6 mt-5'>
+<h2>{this.props.businessName}</h2>
+<p> {this.props.tagline} </p>
 </div>
-<div className= 'col-md-6'>
-<button className= 'mt-4 btn btn-md btn-outline-dark'> Write a Review</button>
+<div className= ' mt-4 col-md-6'>
+<Button > <FontAwesomeIcon icon="thumbs-up" size="2x" /> <b>{this.props.upvotes}</b></Button>
+<Button > <FontAwesomeIcon icon="thumbs-down" size="2x" /><b>{this.props.downvotes}</b></Button>
+<Button >  <FontAwesomeIcon icon={["far","heart" ]}size="2x" /></Button>
+<Button> <h5>Write a Review </h5></Button>
+{/* <Button > <FontAwesomeIcon icon="eye" size="2x" /> <b>10</b></Button> */}
+<Button disabled>  <FontAwesomeIcon icon={["far","eye" ]}size="2x" /> {this.props.viewCount}</Button>
 </div>
 </div>
           </div>

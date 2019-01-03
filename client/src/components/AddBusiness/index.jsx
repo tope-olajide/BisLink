@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios'
 import AddBusiness from './../AddBusiness/RegisterBusinessPage';
-import NavBar from './../utils/NavigationBar';
+import NavBar from './../commons/NavigationBar';
 class BusinessList extends Component {
     constructor() {
         super();
