@@ -1,4 +1,4 @@
-import {Review, Business, User } from '../models';
+import {Review, Business,Notification, User } from '../models';
 import { validateReview } from '../middleware/validator';
 
 export default class Reviews {
@@ -54,12 +54,12 @@ export default class Reviews {
                     message: 'New review created',
                     review,
                     reviewer: user.username
-                  }).catch((error) => res.status(500).json({
-                    success: false,
-                    message: 'Error posting review',
-                    error
-                  }));
-            })
+                  })
+            }).catch((error) => res.status(500).json({
+              success: false,
+              message: 'Error Creating review',
+              error
+            }));
     }
     getBusinessReviews({ params }, res) {
         const businessId = params.businessId;
@@ -67,7 +67,7 @@ export default class Reviews {
           .findAll({
             where: { businessId },
             include: [
-              { model: User, attributes: ['fullname'] }
+              { model: User, attributes: ['username','ImageUrl'] }
             ],
             order: [
               ['id', 'DESC']
@@ -75,9 +75,9 @@ export default class Reviews {
           })
           .then((reviews) => {
             if (reviews.length === 0) {
-              return res.status(404).json({
+              return res.status(200).json({
                 success: true,
-                message: 'Nothing found!',
+                message: 'No Review found!',
                 reviews: []
               });
             }
