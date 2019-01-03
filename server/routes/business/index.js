@@ -10,8 +10,6 @@ const newAuth = new Auth();
 const newReview = new Reviews();
 const user = express.Router();
 const newBusiness = new Business();
-  user.route('/arraytest')
-  .get(newBusiness.arrayTest);
 
 user.use('*', newAuth.verify);
 
@@ -22,7 +20,7 @@ user.route('/')
 user.route('/:businessId')
   .put(newBusiness.modifyBusiness)
   .delete(newBusiness.deleteBusiness)
-  .get(newBusiness.getBusiness);
+  .get(newBusiness.getBusinessDetails);
 
 user.route('/:businessId/upvotes')
   .post(newVote.upvoteBusiness)
