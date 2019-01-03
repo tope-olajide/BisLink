@@ -42,3 +42,13 @@
     font-weight: 700;
     font-size: 2.7em
 }
+.biz-name{
+	margin-bottom: 3px;
+	font-weight: 400;
+    font-size: 1.1em;
+    color:rgb(150, 140, 140);
+    text-transform: capitalize
+  }
+.category, .biz-address {
+    text-transform: capitalize
+}

@@ -35,6 +35,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
  */
 import './index.css';
+import './styles/toastr.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 const store = createStore(

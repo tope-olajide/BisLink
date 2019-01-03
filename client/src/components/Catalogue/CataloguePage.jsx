@@ -1,31 +1,56 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
 import "./CataloguePage.css";
-import { FormInline, Input, Button } from "mdbreact";
+import Image from "react-graceful-image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import BusinessCard from "./BusinessCard";
 class CataloguePage extends Component {
   render() {
     return (
-      <div>
-        <div className="biz-header">
-          <h1 className="hero-title"> Discover great places in Nigeria</h1>
-          <p className="hero-paragraph">
-            Let's uncover the best places to eat, drink, and shop nearest to
-            you.
-          </p>
-          <FormInline className="search-container">
-            <Input label="Business Name" icon="envelope" group type="text" />
-            <Input label="Location" icon="lock" group type="text" />
-            <Button>Search</Button>
-          </FormInline>
-        </div>
-        <div>
-          <h1 className="text-center my-5 featured-text">
-            <FontAwesomeIcon icon="briefcase" /> Featured Places
-          </h1>
-          <BusinessCard />
-        </div>
-      </div>
+      <>
+              <div className="col-md-4"><Link to={`/business-details/${this.props.id}`}>
+                <div className="card  mb-5 mb-5 ml-0 mr-0 shadow-md rounded-0">
+                  <Image
+                    className="card-img-top rounded-0"
+                    src={this.props.image} 
+                    alt="Card image cap"
+                  />
+                  <div className="card-body">
+                    <h6 className="biz-name">{this.props.businessName}</h6>
+                    <div className="cat-rewiew">
+                      <p className="category ">{this.props.category}</p>{" "}
+                      <p className="dot-seperator">•</p>{" "}
+                      <p className="review">{this.props.reviewCount} Review(s)</p>
+                    </div>
+                    <ul>
+                      <li>
+                        <span>
+                          <FontAwesomeIcon icon="map-marker-alt" size="1x" />
+                          <span className="space-text" />{" "}
+                          <p className="biz-address ">{this.props.businessAddress}</p>
+                        </span>
+                      </li>
+                      <li>
+                        <FontAwesomeIcon icon="mobile-alt" size="1x" />
+                        <span className="space-text" />
+                        <p> {this.props.phoneNumber}</p>
+                      </li>
+                      <li>
+                        <FontAwesomeIcon icon="link" size="1x" />
+                        <span className="space-text" />
+                        <p>{this.props.website}</p>
+                      </li>
+                    </ul>
+                    <div className="card-bottom">
+                      <div className="fav-icon">
+                        {" "}
+                        <FontAwesomeIcon icon={["far","heart" ]}size="1x" />
+                      </div>
+                      <p>View Business</p>
+                    </div>
+                  </div>
+                </div>
+                </Link></div>
+            </>
     );
   }
 }
