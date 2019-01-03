@@ -1,12 +1,30 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
-// import HomeAnimation from '../src/components/presentation/HomeAnimation'
-/* import NavigationBar from './components/container/NavigationBar' */
-// import CataloguePage from '../src/components/presentation/CataloguePage'
-//import RegisterBusinessForm from '../src/components/presentation/RegisterBusinessForm'
-//import RegisterBusinessPage from '../src/components/presentation/RegisterBusinessPage'
-// import ProfilePage from '../src/components/presentation/ProfilePage'
-// import BusinessSlider from '../src/components/presentation/BusinessSlider'
+ import {
+    library
+} from '@fortawesome/fontawesome-svg-core'
+import {
+    faHome,
+    faBriefcase,
+    faSearch,
+    faFolderPlus,
+    faUserPlus,
+    faSignInAlt,
+    faMapMarker,
+    faMobile,
+    faLink,
+    faHeartbeat,
+    faSpinner,faMapMarkerAlt,faMobileAlt,
+    faHeart, faThumbsDown, faThumbsUp,faEye,faTag
+} from '@fortawesome/free-solid-svg-icons'
+
+import {faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
+import {faEye as faEyeRegular} from '@fortawesome/free-regular-svg-icons'
+
+
+
+
+
 import AuthPage from './components/AuthPage'
 import AddBusiness from './components/AddBusiness'
 import BusinessList from './components/Catalogue'
@@ -14,8 +32,28 @@ import BusinessDetails from './components/BusinessDetails'
 import Profile from './components/Profile'
 import ModifyUser from './components/ModifyUser'
 import ModifyBusiness from './components/ModifyBusiness'
-
+import LoadingAnimation from './components/commons/LoadingAnimation'
 /*import Loading from './components/presentation/LoadingAnimation' */
+import withAuthorization from './utils/withAuthorization'
+
+
+
+
+library.add(
+  faHome,
+  faBriefcase,
+  faSearch,
+  faFolderPlus,
+  faUserPlus,
+  faSignInAlt,
+  faMapMarker,
+  faMobile,
+  faLink,
+  faHeartbeat,faSpinner, faMapMarkerAlt, faMobileAlt,
+  faHeart,faHeartRegular,
+  faThumbsDown, faThumbsUp,faEye,faEyeRegular,faTag
+
+)
 class App extends Component {
   render() {
     return (
@@ -39,12 +77,12 @@ img4 = 'featured4.jpg'
 /> */}
   <Switch>
     <Route exact path="/" component={AuthPage} />
- <Route exact path="/register-business" component={AddBusiness} />
-    <Route exact path="/businesses" component={BusinessList} />
-    <Route exact path="/business-details/:id" component={BusinessDetails} />
-    <Route exact path="/view-profile/:id" component={Profile} />
-    <Route exact path="/modify-user/:id" component={ModifyUser} />
-   <Route exact path="/modify-business/:id" component={ModifyBusiness} />
+ <Route exact path="/register-business" component={withAuthorization(AddBusiness)} />
+    <Route exact path="/businesses" component={withAuthorization(BusinessList)} />
+    <Route exact path="/business-details/:businessId" component={withAuthorization(BusinessDetails)} />
+    <Route exact path="/view-profile/:id" component={withAuthorization(Profile)} />
+    <Route exact path="/modify-user/:id" component={withAuthorization(ModifyUser)} />
+   <Route exact path="/modify-business/:id" component={withAuthorization(ModifyBusiness)} />
    {/*   */}
   </Switch>
 
