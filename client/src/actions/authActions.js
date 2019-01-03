@@ -1,6 +1,5 @@
 import axios from 'axios';
 import jsonwebtoken from 'jsonwebtoken';
-import setToken from '../utils/setToken';
 import {
     SET_CURRENT_USER, PASSWORD_CHANGED
   } from './type';
@@ -16,7 +15,6 @@ export function signUp(userData) {
       .then((response) => {
         const { token } = response.data;
         localStorage.setItem('token', token);
-        setToken(token);
         dispatch(setCurrentUser(jsonwebtoken
           .decode(localStorage.getItem('token'))));
       });
@@ -26,12 +24,12 @@ export function signUp(userData) {
       .then((response) => {
         const { token } = response.data;
         localStorage.setItem('token', token);
-        setToken(token);
+        axios.defaults.headers.common['authorization'] = token;
+
         dispatch(setCurrentUser(jsonwebtoken
           .decode(localStorage.getItem('token'))));
       });
   }
-
   export function updateProfile(userData) {
     return dispatch => axios.put(`${url}profile`, userData)
       .then((response) => {
@@ -39,7 +37,6 @@ export function signUp(userData) {
           user: { token }
         } = response.data;
         localStorage.setItem('token', token);
-        setToken(token);
         dispatch(setCurrentUser(jsonwebtoken.decode(token)));
       });
   }
@@ -55,7 +52,6 @@ export function signUp(userData) {
   export function signOut() {
     return (dispatch) => {
       localStorage.removeItem('token');
-      setToken(false);
       dispatch(setCurrentUser({}));
       window.location = '/';
     };

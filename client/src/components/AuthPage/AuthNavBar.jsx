@@ -1,5 +1,6 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import toastNotification from './../../utils/toastNotification'
 import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Container,
   Modal,
   ModalBody,
@@ -10,8 +11,9 @@ import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLin
 } from "mdbreact";
 /* import "./styles/LoginForm.css"; */
 import { connect } from 'react-redux';
-import {signIn, signUp} from "../../actions/authActions";
+import { signIn, signUp } from "../../actions/authActions";
 import { validateUser } from "../../utils/validator";
+
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +21,11 @@ class NavigationBar extends React.Component {
       collapse: false,
       modal6: false,
       modal7: false,
+      disableLoginBotton: false,
+      loginBottonLabel: "Login",
+      disableSignUpBotton: false,
+      SignUpBottonLabel: "Signup",
+      loadingIcon :"",
       fullname: "",
       username: "",
       email: "",
@@ -38,48 +45,77 @@ class NavigationBar extends React.Component {
     this.setState({ [key]: value });
     console.log(value);
   }
+  enableSignuploading = () => {
+    this.setState({
+      disableSignUpBotton: false,
+      SignUpBottonLabel: "Signup",
+      loadingIcon :"",
+    });
+  }
+  disableSignuploading = () => {
+    this.setState({
+      disableSignUpBotton: true,
+      SignUpBottonLabel: " ",
+      loadingIcon :"spinner"
+    });
+  }
   handleSignUp = () => {
+    
     const validateSignupError = validateUser(this.state);
     if (validateSignupError) {
-      alert(validateSignupError);
+      toastNotification(["error"],validateSignupError);
     } else if (this.state.password !== this.state.confirmPassword) {
-      alert("passwords does not match");
+      toastNotification(["error"],"passwords does not match");
     } else {
-      alert('saving...')
+      this.disableSignuploading()
+      toastNotification(["info"],'Signing you up...')
       this.props.signUp(this.state).then(
         () => {
-          alert(`Welcome <br/><em>${this.state.username}</em>`);
+          toastNotification(["success"],`Welcome <br/><em>${this.state.username}</em>`);
           setTimeout(() => {
             window.location = "/businesses/";
           }, 300);
         },
         error => {
-          /*         this.setState({
-          isLoading: false
-        }); */
-          alert(error.response.data.message);
+          if(!error.response){
+            toastNotification(["error"], 'Network Error');
+          }
+          else{
+            toastNotification(["error"], error.response.data.message);
+          }
+        
+        this.enableSignuploading()
         }
       );
     }
   };
 
   handleSignIn = () => {
-/*     this.setState({
-      isLoading: true
-    }); */
-alert('signing in... ')
+    this.setState({
+      disableLoginBotton: true,
+      loginBottonLabel: " ",
+      loadingIcon :"spinner"
+    });
+    toastNotification(["info"],('logging in... '))
     this.props.signIn(this.state)
       .then(() => {
-        alert('success', `Welcome back <br/><em>${this.state.authName}</em>`);
+        toastNotification(['success'], `Welcome back <br/><em>${this.state.usernameOrEmail}</em>`);
         setTimeout(() => {
           window.location = '/businesses/';
         }, 300);
       },
       (error) => {
-/*         this.setState({
-          isLoading: false
-        }); */
-        alert(error.response.data.message);
+        this.setState({
+        disableLoginBotton: false,
+        loginBottonLabel: "Login",
+        loadingIcon :""
+      });
+      if(!error.response){
+        toastNotification(["error"], 'Network Error');
+      }
+      else{
+        toastNotification(["error"], error.response.data.message);
+      }
       });
   }
   toggle(nr) {
@@ -103,41 +139,33 @@ alert('signing in... ')
             <NavbarNav left>
               <NavItem>
                 <NavLink to="/">
-                  <FontAwesomeIcon icon="home" />
-                  HOME
-                </NavLink>
+                  <FontAwesomeIcon icon="home" /> HOME</NavLink>
               </NavItem>
               <NavItem>
                 <NavLink to="/businesses">
-                  <FontAwesomeIcon icon="briefcase" />
-                  CATALOGUE
+                  <FontAwesomeIcon icon="briefcase" /> CATALOGUE
                 </NavLink>
               </NavItem>
             </NavbarNav>
             <NavbarNav right>
               <NavItem>
                 <NavLink to="#">
-                  <FontAwesomeIcon icon="search" />
-                  SEARCH
+                  <FontAwesomeIcon icon="search" /> SEARCH
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink to="register-business">
-                  <FontAwesomeIcon icon="folder-plus" />
-                  ADD BUSINESS
+                  <FontAwesomeIcon icon="folder-plus" /> ADD BUSINESS
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink to="#" onClick={() => this.toggle(7)}>
-                  <FontAwesomeIcon icon="user-plus" />
-                  SIGN UP
+                  <FontAwesomeIcon icon="user-plus" /> SIGN UP
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink to="#" onClick={() => this.toggle(6)}>
-                  <FontAwesomeIcon icon="user" />
-                  LOGIN
-                </NavLink>
+                  <FontAwesomeIcon icon="sign-in-alt" /> LOGIN </NavLink>
               </NavItem>
             </NavbarNav>
           </Collapse>
@@ -181,7 +209,7 @@ alert('signing in... ')
                         />
                       </div>
                       <div className="text-center">
-                        <Button onClick={this.handleSignIn}> Login</Button>
+                        <Button disabled={this.state.disableLoginBotton} onClick={this.handleSignIn}> {this.state.loginBottonLabel} <FontAwesomeIcon icon={this.state.loadingIcon} spin size='2x' /> </Button>
                       </div>
                     </form>
                   </Col>
@@ -255,8 +283,8 @@ alert('signing in... ')
                         />
                       </div>
                       <div className="text-center">
-                        <Button color="primary" onClick={this.handleSignUp}>
-                          Register
+                        <Button color="primary" disabled={this.state.disableSignUpBotton} onClick={this.handleSignUp}  >
+                        {this.state.SignUpBottonLabel} <FontAwesomeIcon icon={this.state.loadingIcon} spin size='2x' />
                         </Button>
                       </div>
                     </form>
