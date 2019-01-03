@@ -1,12 +1,79 @@
 import axios from 'axios';
 import {
     ADD_BUSINESS,
-    SET_CURRENT_BUSINESS,
+    SET_BUSINESS_DETAILS,
     SET_MY_BUSINESSES,
     DELETE_BUSINESS,
-    EDIT_BUSINESS
+    EDIT_BUSINESS,
+    FETCH_ALL_BUSINESSES,
+    ADD_BUSINESS_REVIEW,FETCH_BUSINESS_REVIEWS
 } from '../actions/type'
-const url = 'http://127.0.0.1:5000/api/business/'
+const url = 'http://127.0.0.1:5000/api/business'
+
+const token = localStorage.getItem('token');
+const setHeaderToken = {
+    headers:{
+        authorization:token
+    }
+}
+export function fetchAllBusinesses() {
+    return dispatch => axios.get(`${url}`,setHeaderToken)
+        .then((response) => {
+            const {
+                businesses
+            } = response.data;
+            dispatch({
+                type: FETCH_ALL_BUSINESSES,
+                businesses
+            });
+        });
+}
+
+export function fetchBusinessDetails(businessId) {
+    return dispatch =>
+        axios.get(`${url}/${businessId}`,setHeaderToken)
+        .then((response) => {
+            const  {business} = response.data;
+            const {infoCount} = response.data;
+            const businessDetails = {business, infoCount}
+            dispatch({
+                type: SET_BUSINESS_DETAILS,
+                businessDetails
+            });
+        });
+}
+
+export function fetchBusinessReviews(businessId) {
+    return dispatch =>
+        axios.get(`${url}/${businessId}/reviews`,setHeaderToken)
+        .then((response) => {
+            const  {reviews} = response.data;
+           
+            dispatch({
+                type: FETCH_BUSINESS_REVIEWS,
+                reviews
+            });
+        });
+}
+
+export function addBusinessReviews(businessId, userReview) {
+    return dispatch =>
+        axios.post(`${url}/${businessId}/reviews`, userReview, setHeaderToken)
+        .then((response) => {
+            const  {reviews} = response.data;
+            dispatch({
+                type: ADD_BUSINESS_REVIEW,
+                reviews
+            });
+        });
+}
+
+  
+
+
+
+
+
 
 export function addBusiness(businessData) {
     return dispatch => axios.post(`${url}`, businessData)
@@ -21,21 +88,7 @@ export function addBusiness(businessData) {
         });
 }
 
-export function fetchBusinessDetails(businessId) {
-    return dispatch =>
-        axios.get(`${url}/${businessId}`)
-        .then((response) => {
-            const {
-                data: {
-                    business
-                }
-            } = response;
-            dispatch({
-                type: SET_CURRENT_BUSINESS,
-                business
-            });
-        });
-}
+
 export function fetchMyBusinesses() {
     return dispatch =>
         axios
