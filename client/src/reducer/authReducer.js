@@ -1,8 +1,8 @@
-import  {SET_CURRENT_USER, SET_USER_PROFILE } from './../actions/type';
+import  {SET_CURRENT_USER, FETCH_USERS_PROFILE } from './../actions/type';
 
 const initialState = {
   user: {},
-  profile: {}
+  usersProfile: {}
 };
 export default (state = initialState, action = {}) => {
     switch (action.type) {
@@ -10,9 +10,9 @@ export default (state = initialState, action = {}) => {
         return {
           ...state, user: action.userData
         };
-        case SET_USER_PROFILE:
+        case FETCH_USERS_PROFILE:
         return {
-          ...state, profile: action.user
+          ...state, usersProfile: action.user
         };
       default: return state;
     }

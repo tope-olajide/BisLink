@@ -23,7 +23,7 @@ user.use('*', newAuth.verify);
 
 user.put('/profile', newUser.modifyUser);
 user.put('/change-password', newUser.changePassword);
-user.get('/:userId/profile', newUser.getUser);
+user.get('/profile/:userId', newUser.getUser);
 user.get('/businesses', newBusiness.getUserBusiness);
 
 user.route('/business/favourite/:businessId')

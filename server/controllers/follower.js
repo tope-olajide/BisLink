@@ -98,7 +98,7 @@ const notificationAlert = {
 
     Follower
       .findAll({
-        where: { followerId : userId },
+        where: {  userId },
         attributes: ['userId']
       })
       .then((followers) => {
@@ -133,7 +133,7 @@ const notificationAlert = {
 
     Follower
       .findAll({
-        where: { userId },
+        where: { followerId :userId },
         attributes: ['userId']
       })
       .then((followees) => {

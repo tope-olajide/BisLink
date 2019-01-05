@@ -351,12 +351,6 @@ export default class Users {
             })
             .then((favourites) => {
               userInfo.myFavourites = favourites;
-              Notification.findAll({
-                where: {
-                  userId
-                }})
-                .then((notifications) => {
-                  userInfo.myNotifications = notifications;
                   Follower.findAndCountAll({
                     where: {
                       followerId: userId
@@ -378,7 +372,7 @@ export default class Users {
                       });
                     })
                   })
-                })
+              
               
             });
         }).catch(( /* error */ ) => res.status(500).json({

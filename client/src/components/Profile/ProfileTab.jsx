@@ -21,9 +21,7 @@ class ProfileTab extends Component {
           <Tab>
             <p className="text-center ">FAVOURITES</p>
           </Tab>
-          <Tab>
-            <p className="text-center ">NOTIFICATIONS</p>
-          </Tab>
+
         </TabList>
         <TabPanel>
           <div class="row card-container">

@@ -33,6 +33,7 @@ import Profile from './components/Profile'
 import ModifyUser from './components/ModifyUser'
 import ModifyBusiness from './components/ModifyBusiness'
 import LoadingAnimation from './components/commons/LoadingAnimation'
+import Notifications from './components/Notifications/NotificationPage'
 /*import Loading from './components/presentation/LoadingAnimation' */
 import withAuthorization from './utils/withAuthorization'
 
@@ -80,9 +81,10 @@ img4 = 'featured4.jpg'
  <Route exact path="/register-business" component={withAuthorization(AddBusiness)} />
     <Route exact path="/businesses" component={withAuthorization(BusinessList)} />
     <Route exact path="/business-details/:businessId" component={withAuthorization(BusinessDetails)} />
-    <Route exact path="/view-profile/:id" component={withAuthorization(Profile)} />
+    <Route exact path="/view-profile/:userId" component={withAuthorization(Profile)} />
     <Route exact path="/modify-user/:id" component={withAuthorization(ModifyUser)} />
    <Route exact path="/modify-business/:id" component={withAuthorization(ModifyBusiness)} />
+   <Route exact path="/notifications/:userId" component={Notifications} />
    {/*   */}
   </Switch>
 

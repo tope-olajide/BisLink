@@ -13,6 +13,7 @@
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-graceful-image": "^1.2.9",
+    "react-images": "^0.5.19",
     "react-scripts": "2.0.3",
     "react-slick": "^0.23.2",
     "react-tabs": "^2.3.0",
