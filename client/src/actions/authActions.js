@@ -37,20 +37,7 @@ export function signUp(userData) {
       });
   }
 
-  export function fetchUsersProfile(userId) {
-    return dispatch => axios.get(`${url}profile/${userId}`, setHeaderToken)
-      .then((response) => {
-        const {
-          user
-        } = response.data;
-        dispatch({
-          type: FETCH_USERS_PROFILE,
-          user
-      });
-       
-      });
-  }
-
+  
 
 
 
