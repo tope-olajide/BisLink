@@ -1,6 +1,6 @@
 import axios from 'axios';
 import {
-NEW_NOTIFICATIONS,SINGLE_NOTIFICATION,ALL_NOTIFICATIONS
+NEW_NOTIFICATIONS,NOTIFICATION_DETAILS,ALL_NOTIFICATIONS
 } from '../actions/type'
 const url = 'http://127.0.0.1:5000/api/user/notifications'
 
@@ -29,7 +29,7 @@ export function fetchSingleNotification(notificationId) {
                 notification
             } = response.data;
             dispatch({
-                type: SINGLE_NOTIFICATION,
+                type: NOTIFICATION_DETAILS,
                 notification
             });
         });

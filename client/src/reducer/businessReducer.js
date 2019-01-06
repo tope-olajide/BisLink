@@ -36,8 +36,7 @@ export default (state = initialState, action) => {
         case ADD_BUSINESS_REVIEW:
         return { ...state, businessDetails: action.addBusinessReview };
 
-
-
+        
         case ADD_BUSINESS:
         return {...state, myBusinesses: action.businesses };
         case SET_MY_BUSINESSES:
