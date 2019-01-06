@@ -44,13 +44,13 @@ user.route('/follow/:userId')
   .delete(newFollower.unFollowUser);
 
   user.route('/notifications')
-  .get(newNotification.getAllNotifications);
+   .get(newNotification.getUnreadNotifications);
   
   user.route('/notification/:notificationId')
   .get(newNotification.viewNotification);
   
-  user.route('/notifications/unread')
-  .get(newNotification.getUnreadNotifications);
+  user.route('/notifications/all')
+  .get(newNotification.getAllNotifications);
   
 export default user;
 

@@ -52,10 +52,10 @@ export default class Notifications {
       validateNotificationOwner(notificationId, userId).then((notificationFound) => {
         notificationFound.updateAttributes({
           notificationState: 'seen'
-        }).then(notifications => res.status(200).json({
+        }).then(notification => res.status(200).json({
           success: true,
           message: 'notification found',
-          notifications
+          notification
         }))
       })
       .catch(( /* error */ ) => res.status(500).json({
