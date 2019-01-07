@@ -325,7 +325,7 @@ export default class Users {
           location,
           username,
           email,
-          imageUrl
+          ImageUrl
         } = userFound;
 
         const userInfo = {
@@ -335,7 +335,7 @@ export default class Users {
           location,
           username,
           email,
-          imageUrl
+          ImageUrl
         };
         Business.findAndCountAll({
           where: {

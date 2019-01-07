@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProfilePage from './ProfilePage';
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
-import { fetchUsersProfile } from "../../actions/authActions";
+import { fetchUsersProfile } from "../../actions/userAction";
 import NavigationBar from "../commons/NavigationBar";
 import { connect } from "react-redux";
 class Profile extends Component {
@@ -58,13 +58,23 @@ class Profile extends Component {
             );
           }
         return (
-            <ProfilePage />
+            <ProfilePage 
+            about= {this.props.usersProfile.about}
+            email= {this.props.usersProfile.email}
+            ImageUrl= {this.props.usersProfile.ImageUrl}
+            fullname= {this.props.usersProfile.fullname}
+            username= {this.props.usersProfile.username}
+            myBusinessCount={this.props.usersProfile.myBusinessCount}
+            myFollowersCount={this.props.usersProfile.myFollowersCount}
+            myFolloweesCount={this.props.usersProfile.myFolloweesCount}
+            myBusinesses={this.props.usersProfile.myBusinesses}
+             />
         )
     }
 }
 const mapStateToProps = state => {
-    console.log(state.authReducer)
+    console.log(state.authReducer.usersProfile)
     return {
-      usersProfile: state.authReducer
+      usersProfile: state.authReducer.usersProfile
     }}
 export default connect(mapStateToProps)(Profile);
