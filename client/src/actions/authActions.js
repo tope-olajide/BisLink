@@ -1,7 +1,7 @@
 import axios from 'axios';
 import jsonwebtoken from 'jsonwebtoken';
 import {
-    SET_CURRENT_USER, PASSWORD_CHANGED,FETCH_USERS_PROFILE
+    SET_CURRENT_USER, PASSWORD_CHANGED
   } from './type';
   const url = 'http://127.0.0.1:5000/api/user/'
   const token = localStorage.getItem('token');
@@ -36,15 +36,6 @@ export function signUp(userData) {
           .decode(localStorage.getItem('token'))));
       });
   }
-
-  
-
-
-
-
-
-
-
   export function updateProfile(userData) {
     return dispatch => axios.put(`${url}profile`, userData)
       .then((response) => {
@@ -55,6 +46,14 @@ export function signUp(userData) {
         dispatch(setCurrentUser(jsonwebtoken.decode(token)));
       });
   }
+  
+
+
+
+
+
+
+
 
   export function changePassword(userData) {
     return dispatch => axios.put(`${url}changePassword`, userData)
