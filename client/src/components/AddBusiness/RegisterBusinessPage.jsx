@@ -3,6 +3,16 @@ import "./RegisterBusinessPage.css";
 import "./RegisterBusinessForm.css";
 import { Input, Button } from "mdbreact";
 import Dropzone from "react-dropzone";
+const dropZoneStyle= {
+  width:200,
+  height:200,
+  marginLeft: 'auto',
+  marginRight:'auto',
+  borderWidth: 2,
+  borderColor: '#666',
+  borderStyle: 'dashed',
+  borderRadius: 5
+}
 const thumbsContainer = {
   display: "flex",
   flexDirection: "row",
@@ -55,9 +65,9 @@ class RegisterBusinessPage extends Component {
           </div>
         </div>
         <div className="biz-form-container card mt-5 p-5">
-          <h6 className="dark-text biz-form-title  text-center ">
+{/*           <h6 className="dark-text biz-form-title  text-center ">
             Register your business
-          </h6>
+          </h6> */}
 
           <form>
             <div className="row">
@@ -87,18 +97,18 @@ class RegisterBusinessPage extends Component {
               </div>
             </div>
             <Input
-              label="Address"
+              label="Email Address"
               icon="building"
               onChange={event => {
-                this.props.handleInputChange("businessAddress1", event.target.value);
+                this.props.handleInputChange("email", event.target.value);
               }}
             />
             <Input
-              label=" Address 2"
+              label="Business Address"
               className="mt-5"
               icon="building"
               onChange={event => {
-                this.props.handleInputChange("businessAddress2", event.target.value);
+                this.props.handleInputChange("businessAddress1", event.target.value);
               }}
             />
             <div className="row">
@@ -116,33 +126,7 @@ class RegisterBusinessPage extends Component {
               </div>
               <div className="col-md-6">
                 <Input
-                  label="Phone Number 2"
-                  icon="building"
-                  onChange={event => {
-                    this.props.handleInputChange(
-                      "phoneNumber2",
-                      event.target.value
-                    );
-                  }}
-                />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-md-6">
-                <Input
-                  label="Email Address"
-                  icon="building"
-                  onChange={event => {
-                    this.props.handleInputChange(
-                      "fullname",
-                      event.target.value
-                    );
-                  }}
-                />
-              </div>
-              <div className="col-md-6">
-                <Input
-                  label="Category"
+                  label="Business Category"
                   icon="building"
                   onChange={event => {
                     this.props.handleInputChange(
@@ -153,6 +137,7 @@ class RegisterBusinessPage extends Component {
                 />
               </div>
             </div>
+
             <Input
               label="Website"
               icon="building"
@@ -171,7 +156,7 @@ class RegisterBusinessPage extends Component {
             />
             <section>
               <div className="dropzone">
-                <Dropzone accept="image/*" onDrop={this.props.onDrop}>
+                <Dropzone accept="image/*" style={dropZoneStyle} onDrop={this.props.onDrop}>
                   <h4>
                     Try dropping your picture here, or click to select the
                     picture you want to upload.
@@ -180,8 +165,8 @@ class RegisterBusinessPage extends Component {
                 <aside style={thumbsContainer}>{thumbs}</aside>
               </div>
               <div className="text-center">
-                <Button onClick={this.props.handleFormSubmit} color="primary">
-                  Login
+                <Button onClick={this.props.handleFormSubmit} >
+                  Register Business
                 </Button>
               </div>
             </section>

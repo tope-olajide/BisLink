@@ -20,11 +20,6 @@ import {
 
 import {faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
 import {faEye as faEyeRegular} from '@fortawesome/free-regular-svg-icons'
-
-
-
-
-
 import AuthPage from './components/AuthPage'
 import AddBusiness from './components/AddBusiness'
 import BusinessList from './components/Catalogue'

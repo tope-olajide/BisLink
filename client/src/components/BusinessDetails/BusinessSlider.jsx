@@ -64,7 +64,7 @@ class BusinessSlider extends Component {
 </div>
 <div className= ' mt-4 col-md-6'>
 <Button > <FontAwesomeIcon icon="thumbs-up" size="2x" /> <b>{this.props.upvotes}</b></Button>
-<Button > <FontAwesomeIcon icon="thumbs-down" size="2x" /> <b>{this.props.downvotes}</b></Button>
+<Button > <FontAwesomeIcon icon="thumbs-down" size="2x" /><b>{this.props.downvotes}</b></Button>
 <Button >  <FontAwesomeIcon icon={["far","heart" ]}size="2x" /></Button>
 <Button> <h5>Write a Review </h5></Button>
 {/* <Button > <FontAwesomeIcon icon="eye" size="2x" /> <b>10</b></Button> */}

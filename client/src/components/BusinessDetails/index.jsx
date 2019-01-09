@@ -17,7 +17,8 @@ class BusinessDetails extends Component {
       isLoading: true,
       isError: false,
       title: "",
-      content: ""
+      content: "",
+      lightboxIsOpen:''
     };
   }
   componentDidMount() {
