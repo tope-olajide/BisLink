@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import CataloguePage from "./CataloguePage";
-import BusinessCard from "./BusinessCard";
 import CataloguePageHeader from "./CataloguePageHeader";
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
