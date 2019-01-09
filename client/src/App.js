@@ -31,7 +31,7 @@ import LoadingAnimation from './components/commons/LoadingAnimation'
 import Notifications from './components/Notifications/NotificationPage'
 /*import Loading from './components/presentation/LoadingAnimation' */
 import withAuthorization from './utils/withAuthorization'
-
+import ModifyGallery from './components/ModifyGallery'
 
 
 
@@ -80,9 +80,9 @@ img4 = 'featured4.jpg'
     <Route exact path="/modify-user/:id" component={withAuthorization(ModifyUser)} />
    <Route exact path="/modify-business/:id" component={withAuthorization(ModifyBusiness)} />
    <Route exact path="/notifications/:userId" component={Notifications} />
+   <Route exact path="/modify-gallery" component={ModifyGallery} />
    {/*   */}
   </Switch>
-
       </div>
     );
   }
