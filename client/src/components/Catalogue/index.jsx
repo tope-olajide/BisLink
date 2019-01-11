@@ -74,14 +74,14 @@ class BusinessList extends Component {
     if (this.state.isLoading) {
       return (
         <div>
-          <NavigationBar />
+          <NavigationBar homePage ="active" />
           <LoadingAnimation />
         </div>
       );
     } else if (this.state.isError) {
       return (
         <div>
-          <NavigationBar />
+          <NavigationBar homePage ="active"/>
           <h1>An Error has occured</h1>
         </div>
       );

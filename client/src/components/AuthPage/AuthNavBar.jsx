@@ -73,7 +73,7 @@ class NavigationBar extends React.Component {
         () => {
           toastNotification(["success"],`Welcome <br/><em>${this.state.username}</em>`);
           setTimeout(() => {
-            window.location = "/businesses/";
+            window.location = "/";
           }, 300);
         },
         error => {
@@ -101,7 +101,7 @@ class NavigationBar extends React.Component {
       .then(() => {
         toastNotification(['success'], `Welcome back <br/><em>${this.state.usernameOrEmail}</em>`);
         setTimeout(() => {
-          window.location = '/businesses/';
+          window.location = '/';
         }, 300);
       },
       (error) => {

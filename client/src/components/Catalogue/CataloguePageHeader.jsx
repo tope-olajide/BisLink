@@ -6,7 +6,7 @@ class CataloguePageHeader extends Component {
   render() {
       return (
      <div>
-        <NavBar />
+        <NavBar homePage ="active" />
       <div className="biz-header">
         <h1 className="hero-title"> Discover great places in Nigeria</h1>
         <p className="hero-paragraph">

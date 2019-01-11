@@ -1,28 +1,13 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink, Container,
-  Modal,
-  ModalBody,
-  Row,
-  Col,
-  Input,
-  Button
+import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink,
 } from "mdbreact";
-/* import "./styles/LoginForm.css"; */
-import { connect } from 'react-redux';
-import {signIn, signUp} from "../../actions/authActions";
-import { validateUser } from "../../utils/validator";
+
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       collapse: false,
-      fullname: "",
-      username: "",
-      email: "",
-      password: "",
-      usernameOrEmail: "",
-      confirmPassword: ""
     };
     this.onClick = this.onClick.bind(this);
   }
@@ -45,42 +30,39 @@ class NavigationBar extends React.Component {
           <NavbarToggler onClick={this.onClick} />
           <Collapse isOpen={this.state.collapse} navbar>
             <NavbarNav left>
-              <NavItem active ={this.props.nactive}> 
-                <NavLink to="/">
+              <NavItem active = {this.props.homePage} > 
+                <NavLink to="/"> 
                   <FontAwesomeIcon icon="home" />
-                  HOME
-                </NavLink>
+                  HOME </NavLink>
               </NavItem>
-              <NavItem active ={this.props.business}> 
-                <NavLink to="/businesses">
-                  <FontAwesomeIcon icon="briefcase" />
-                  CATALOGUE
+              <NavItem>
+                <NavLink to="#">
+                  <FontAwesomeIcon icon="search" /> SEARCH
                 </NavLink>
               </NavItem>
             </NavbarNav>
             <NavbarNav right>
-              <NavItem>
-                <NavLink to="#">
-                  <FontAwesomeIcon icon="search" />
-                  SEARCH
-                </NavLink>
-              </NavItem>
-              <NavItem>
+
+              <NavItem active ={this.props.addBusiness}>
                 <NavLink to="register-business">
-                  <FontAwesomeIcon icon="folder-plus" />
-                  ADD BUSINESS
+                  <FontAwesomeIcon icon="folder-plus" /> ADD BUSINESS
+                </NavLink>
+              </NavItem>
+              <NavItem active ={this.props.myProfile}>
+                <NavLink to="view-profile">
+                  <FontAwesomeIcon icon="folder-plus" /> MY PROFILE
+                </NavLink>
+              </NavItem>
+              <NavItem active ={this.props.notifications}>
+                <NavLink to="notifications">
+                  <FontAwesomeIcon icon="folder-plus" /> NOTIFICATIONS
                 </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="#">
-                  <FontAwesomeIcon icon="user-plus" />
-                  SIGN UP
-                </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="#">
-                  <FontAwesomeIcon icon="user" />
-                  LOGOUT
+                <NavLink to="auth">
+                  <FontAwesomeIcon icon="user" /> LOGOUT
                 </NavLink>
               </NavItem>
             </NavbarNav>
@@ -90,4 +72,4 @@ class NavigationBar extends React.Component {
     );
   }
 }
-export default connect(null, {signUp, signIn})(NavigationBar);
+export default NavigationBar

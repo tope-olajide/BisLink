@@ -97,7 +97,7 @@ class BusinessList extends Component {
   render() {
     return (
       <div>
-        <NavBar business="active" />
+        <NavBar  addBusiness = "active"/>
         <AddBusiness
           files={this.state}
           onDrop={this.onDrop}
