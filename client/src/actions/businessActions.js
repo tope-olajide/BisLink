@@ -16,15 +16,16 @@ const setHeaderToken = {
         authorization:token
     }
 }
-export function fetchAllBusinesses() {
-    return dispatch => axios.get(`${url}`,setHeaderToken)
+export function fetchBusinesses(page, limit) {
+    return dispatch => axios.get(`${url}?page=${page}&limit=${limit}`,setHeaderToken)
         .then((response) => {
             const {
-                businesses
+                businesses,totalPages
             } = response.data;
+            const pagedBusiness = {businesses,totalPages}
             dispatch({
                 type: FETCH_ALL_BUSINESSES,
-                businesses
+                pagedBusiness
             });
         });
 }

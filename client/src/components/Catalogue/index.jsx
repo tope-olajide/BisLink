@@ -3,26 +3,28 @@ import CataloguePage from "./CataloguePage";
 import CataloguePageHeader from "./CataloguePageHeader";
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
-import { fetchAllBusinesses } from "../../actions/businessActions";
+import { fetchBusinesses } from "../../actions/businessActions";
 import NavigationBar from "../commons/NavigationBar";
 import { connect } from "react-redux";
+import Pagination from "react-js-pagination";
 
 class BusinessList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
-      isError: false
+      isError: false,
+      activePage: 1
     };
   }
   componentDidMount() {
-    this.fetchBusiness();
+    this.handlePageChange()
   }
 
   fetchBusiness = () => {
     this.setState({ isLoading: true });
     this.props
-      .dispatch(fetchAllBusinesses())
+      .dispatch(fetchBusinesses())
       .then(() => {
         this.setState({
           isLoading: false,
@@ -42,6 +44,32 @@ class BusinessList extends Component {
        
       });
   };
+  handlePageChange = (pageNumber) => {
+    const limit = 9
+    console.log(`active page is ${pageNumber}`);
+    this.setState({activePage: pageNumber});
+    this.setState({ isLoading: true });
+    this.props
+      .dispatch(fetchBusinesses(pageNumber, limit))
+      .then(() => {
+        this.setState({
+          isLoading: false,
+          isError: false
+        });
+      })
+      .catch(error => {
+        this.setState({
+          isLoading: false,
+          isError: true
+        });
+        if (!error.response){
+            toastNotification(["error"],'Network Error!' )
+        }else {
+             toastNotification(["error"], error.response.data.message);
+        }
+       
+      });
+  }
   render() {
     if (this.state.isLoading) {
       return (
@@ -68,6 +96,7 @@ class BusinessList extends Component {
               ) : (
                 this.props.allBusinesses.map(business => {
                   return (
+                    <>
                     <CataloguePage
                       key={business.id}
                       id={business.id}
@@ -79,20 +108,39 @@ class BusinessList extends Component {
                       website={business.website}
                       image={business.businessImageUrl}
                     />
+
+                    </>
                   );
                 })
               )}
-            </div>{" "}
+
+            </div>
+            <div className =''> 
+            <Pagination
+          activePage={this.state.activePage}
+          itemsCountPerPage={9}
+          totalItemsCount={this.props.totalPages}
+          pageRangeDisplayed={5}
+          onChange={this.handlePageChange}
+          innerClass={'pagination pagination-lg'}
+          itemClass = {'page-item'}
+          linkClass={'page-link'}
+          disabledClass={'disabled'}
+          activeLinkClass={'active'}
+          activeClass={'active'}
+        /></div>
           </div>
+
         </>
       );
     }
   }
 }
 const mapStateToProps = state => {
-    console.log(state.businessReducer.allBusinesses)
+    console.log(state.businessReducer)
   return {
-    allBusinesses: state.businessReducer.allBusinesses
+    allBusinesses: state.businessReducer.allBusinesses.businesses,
+    totalPages:state.businessReducer.allBusinesses.totalPages
   };
 };
 /* export default connect(mapStateToProps)(BusinessList) */

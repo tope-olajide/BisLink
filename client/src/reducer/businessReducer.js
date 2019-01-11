@@ -28,7 +28,7 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case FETCH_ALL_BUSINESSES:
-        return {...state, allBusinesses: action.businesses }
+        return {...state, allBusinesses: action.pagedBusiness }
         case SET_BUSINESS_DETAILS:
         return { ...state, businessDetails: action.businessDetails };
         case FETCH_BUSINESS_REVIEWS:
