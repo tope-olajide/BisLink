@@ -11,8 +11,8 @@ const setHeaderToken = {
     }
 }
 
-export function fetchUsersProfile(userId) {
-    return dispatch => axios.get(`${url}profile/${userId}`, setHeaderToken)
+export function fetchUsersProfile() {
+    return dispatch => axios.get(`${url}profile`, setHeaderToken)
       .then((response) => {
         const {
           user

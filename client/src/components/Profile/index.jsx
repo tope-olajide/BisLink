@@ -17,10 +17,9 @@ class Profile extends Component {
         this.fetchProfile();
       }
       fetchProfile = () => {
-        const  userId  = this.props.match.params.userId;
         this.setState({ isLoading: true });
         this.props
-          .dispatch(fetchUsersProfile(userId))
+          .dispatch(fetchUsersProfile())
           .then(() => {
             this.setState({
               isLoading: false,
@@ -45,19 +44,20 @@ class Profile extends Component {
         if (this.state.isLoading) {
             return (
               <div>
-                <NavigationBar />
+                <NavigationBar myProfile='active' />
                 <LoadingAnimation />
               </div>
             );
           } else if (this.state.isError) {
             return (
               <div>
-                <NavigationBar />
+                <NavigationBar myProfile='active'/>
                 <h1>An Error has occured</h1>
               </div>
             );
           }
-        return (
+        return (<>
+          <NavigationBar myProfile='active' />
             <ProfilePage 
             about= {this.props.usersProfile.about}
             email= {this.props.usersProfile.email}
@@ -68,7 +68,7 @@ class Profile extends Component {
             myFollowersCount={this.props.usersProfile.myFollowersCount}
             myFolloweesCount={this.props.usersProfile.myFolloweesCount}
             myBusinesses={this.props.usersProfile.myBusinesses}
-             />
+             /></>
         )
     }
 }

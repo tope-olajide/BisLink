@@ -300,11 +300,9 @@ export default class Users {
     return this;
   }
   getUser({
-    params
+    user
   }, res) {
-    const {
-      userId
-    } = params;
+    const userId = user.id;
     User.findOne({
         attributes: ['id', 'fullname', 'about', 'location', 'username', 'email', 'ImageUrl'],
         where: {

@@ -28,10 +28,11 @@ import Profile from './components/Profile'
 import ModifyUser from './components/ModifyUser'
 import ModifyBusiness from './components/ModifyBusiness'
 import LoadingAnimation from './components/commons/LoadingAnimation'
-import Notifications from './components/Notifications/NotificationPage'
+import Notifications from './components/Notifications'
 /*import Loading from './components/presentation/LoadingAnimation' */
 import withAuthorization from './utils/withAuthorization'
 import ModifyGallery from './components/ModifyGallery'
+import BusinessSearch from './components/BusinessSearch'
 
 
 
@@ -72,14 +73,15 @@ img3 = 'featured3.jpg'
 img4 = 'featured4.jpg' 
 /> */}
   <Switch>
-    <Route exact path="/" component={AuthPage} />
+    <Route exact path="/auth" component={AuthPage} />
  <Route exact path="/register-business" component={withAuthorization(AddBusiness)} />
-    <Route exact path="/businesses" component={withAuthorization(BusinessList)} />
+    <Route exact path="/" component={withAuthorization(BusinessList)} />
+    <Route exact path="/businesses/search" component={withAuthorization(BusinessSearch)} />
     <Route exact path="/business-details/:businessId" component={withAuthorization(BusinessDetails)} />
-    <Route exact path="/view-profile/:userId" component={withAuthorization(Profile)} />
+    <Route exact path="/view-profile" component={withAuthorization(Profile)} />
     <Route exact path="/modify-user/:id" component={withAuthorization(ModifyUser)} />
    <Route exact path="/modify-business/:id" component={withAuthorization(ModifyBusiness)} />
-   <Route exact path="/notifications/:userId" component={Notifications} />
+   <Route exact path="/notifications" component={Notifications} />
    <Route exact path="/modify-gallery" component={ModifyGallery} />
    {/*   */}
   </Switch>
