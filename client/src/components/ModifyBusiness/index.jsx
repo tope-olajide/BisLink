@@ -36,6 +36,13 @@ class ModifyBusiness extends Component {
         this.setState({ [key]: value });
       }
       handleFormSubmit = files => {
+        if (this.state.filesToBeSent.length < 1) {
+          this.props.onAddUser(this.state);
+          alert("saved to database successfully");
+        }
+      else{
+
+      
         alert("Loading....");
         // start loading animation
         // Push all the axios request promise into a single array
@@ -85,7 +92,7 @@ class ModifyBusiness extends Component {
           .catch(function(err) {
             alert(err);
           });
-      };
+      }};
     render () {
         return (
           <div>

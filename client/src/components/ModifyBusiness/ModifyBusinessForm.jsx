@@ -76,7 +76,7 @@ class RegisterBusinessPage extends Component {
               <div className="col-md-6">
                 <Input
                   label="Business name"
-                  icon="building"
+                  icon="briefcase"
                   onChange={event => {
                     this.props.handleInputChange(
                       "businessName",
@@ -88,7 +88,7 @@ class RegisterBusinessPage extends Component {
               <div className="col-md-6">
                 <Input
                   label="Tag Line"
-                  icon="building"
+                  icon="asterisk"
                   onChange={event => {
                     this.props.handleInputChange(
                       "tagline",
@@ -100,7 +100,7 @@ class RegisterBusinessPage extends Component {
             </div>
             <Input
               label="Email Address"
-              icon="building"
+              icon="envelope"
               onChange={event => {
                 this.props.handleInputChange("email", event.target.value);
               }}
@@ -117,7 +117,7 @@ class RegisterBusinessPage extends Component {
               <div className="col-md-6">
                 <Input
                   label="Phone Number"
-                  icon="building"
+                  icon="phone"
                   onChange={event => {
                     this.props.handleInputChange(
                       "phoneNumber1",
@@ -129,7 +129,7 @@ class RegisterBusinessPage extends Component {
               <div className="col-md-6">
                 <Input
                   label="Business Category"
-                  icon="building"
+                  icon="tag"
                   onChange={event => {
                     this.props.handleInputChange(
                       "category",
@@ -142,13 +142,14 @@ class RegisterBusinessPage extends Component {
 
             <Input
               label="Website"
-              icon="building"
+              icon="internet-explorer"
               onChange={event => {
                 this.props.handleInputChange("website", event.target.value);
               }}
             />
             <Input
               type="textarea"
+              className="mt-5"
               label="Business descriptions"
               icon="pencil"
               rows="3"

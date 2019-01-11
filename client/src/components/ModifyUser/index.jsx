@@ -34,8 +34,8 @@ class ModifyUser extends Component {
         alert("Loading....");
         // start loading animation
         // Push all the axios request promise into a single array
-        const uploaders = this.state.profile.map( file => {
-          console.log(file);
+     
+          const file = this.state.profile[0]
           // Initial FormData
           const formData = new FormData();
     
@@ -60,25 +60,16 @@ class ModifyUser extends Component {
                 imageId: data.public_id
               });
               console.log(data);
+              this.props.dispatch(updateProfile(this.state))
+              alert("saved to database successfully");
             })
             .catch(function(err) {
               alert("error " + err);
             });
-        });
+    
     
         // Once all the files are uploaded
-        axios
-          .all(uploaders)
-          .then(data => {
-            alert(
-              "Success!!!: Upload picture successfully, now saving to database"
-            );
-            this.props.dispatch(updateProfile(this.state))
-            alert("saved to database successfully");
-          })
-          .catch(function(err) {
-            alert(err);
-          });
+
       };
       componentWillUnmount() {
         //  revoke the data uris to avoid memory leaks
