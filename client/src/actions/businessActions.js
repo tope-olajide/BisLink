@@ -34,8 +34,7 @@ export function fetchBusinessDetails(businessId) {
     return dispatch =>
         axios.get(`${url}/${businessId}`,setHeaderToken)
         .then((response) => {
-            const  {business} = response.data;
-            const {infoCount} = response.data;
+            const  {business, infoCount} = response.data;
             const businessDetails = {business, infoCount}
             dispatch({
                 type: SET_BUSINESS_DETAILS,

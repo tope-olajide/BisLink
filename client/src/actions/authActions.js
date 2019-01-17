@@ -67,6 +67,6 @@ export function signUp(userData) {
     return (dispatch) => {
       localStorage.removeItem('token');
       dispatch(setCurrentUser({}));
-      window.location = '/';
+      window.location = '/auth';
     };
   }

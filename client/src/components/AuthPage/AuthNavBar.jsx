@@ -127,7 +127,7 @@ class NavigationBar extends React.Component {
   render() {
     return (
       <div>
-        <Navbar color="black" dark className="zindex" expand="md" scrolling>
+        <Navbar color="black" dark expand="md" scrolling>
           <NavbarBrand href="/">
             <strong>
               <FontAwesomeIcon icon="" size="1x" />
@@ -170,9 +170,9 @@ class NavigationBar extends React.Component {
             </NavbarNav>
           </Collapse>
         </Navbar>
-        <div className="modal-margin">
+        <div>
           <Modal
-            className="mt-5 "
+            className="mt-5"
             isOpen={this.state.modal6}
             toggle={() => this.toggle(6)}
             side

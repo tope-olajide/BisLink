@@ -42,15 +42,19 @@ user.get('/favourite/:userId', newFavourite.getFavBusinesses);
 user.route('/follow/:userId')
   .post(newFollower.followUser)
   .delete(newFollower.unFollowUser);
-
-  user.route('/notifications')
-   .get(newNotification.getUnreadNotifications);
-  
-  user.route('/notification/:notificationId')
-  .get(newNotification.viewNotification);
   
   user.route('/notifications/all')
   .get(newNotification.getAllNotifications);
+  user.route('/notifications/:notificationId')
+  .get(newNotification.viewNotification);
+
+  user.route('/notifications')
+   .get(newNotification.getUnreadNotifications);
+
+
   
+
+  
+
 export default user;
 
