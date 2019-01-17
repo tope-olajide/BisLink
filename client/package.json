@@ -9,7 +9,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/react-fontawesome": "^0.1.3",
     "eslint-config-airbnb-base": "^13.1.0",
-    "mdbreact": "^4.8.2",
+    "mdbreact": "^4.8.7",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
     "react-graceful-image": "^1.2.9",
