@@ -5,21 +5,21 @@ import {
         allNotifications: {
             notifications: {}
         },
-        newNotification: {
+        unreadNotification: {
             notifications: {}
         },
         viewNotificationDetails:{
-            notificationDetails
+            notificationDetails:{}
         }
     }
     export default (state = initialState, action) => {
         switch (action.type) {
             case NEW_NOTIFICATIONS:
-            return {...state, unreadNotification: action.unreadNotification }
+            return {...state, unreadNotification: action.unreadNotificationsPlusCount }
             case NOTIFICATION_DETAILS:
             return { ...state, viewNotificationDetails: action.notification };
             case ALL_NOTIFICATIONS:
-            return { ...state, allNotifications: action.allNotifications };
+            return { ...state, allNotifications: action.allNotificationsPlusCount };
             default: return state;
         }
     }

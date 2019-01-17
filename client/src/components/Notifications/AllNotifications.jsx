@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import {
-    MDBContainer,Container,
+    MDBContainer,
     MDBBadge,
-    MDBCol,Button, Modal, ModalBody, ModalHeader, ModalFooter
+    MDBCol
   } from "mdbreact";
-  import { fetchAllNewNotifications,fetchAllNotifications } from "../../actions/notificationAction";
+  import {fetchAllNotifications } from "../../actions/notificationAction";
 import NavigationBar from "../commons/NavigationBar";
 import NotificationList from './NotificationList'
 import toastNotification from "./../../utils/toastNotification";
@@ -16,11 +16,19 @@ class Notifications extends Component {
         this.state = {
           isLoading: false,
           isError: false,
-          modal: false
+          isNewNotification:'active',
+          isAllNotification:false,
+          modal4: false,
         };
       }
       componentDidMount() {
-        this.fetchNewNotifications();
+        this.fetchAllNotifications();
+      }
+      toggle(nr) {
+        let modalNumber = 'modal' + nr
+        this.setState({
+          [modalNumber]: !this.state[modalNumber]
+        });
       }
       fetchAllNotifications =() =>{
         this.setState({ isLoading: true });
@@ -45,53 +53,18 @@ class Notifications extends Component {
            
           });
       }
-
-
-    
-
-
-      fetchNewNotifications = () => {
-        this.setState({ isLoading: true });
-        this.props
-          .dispatch(fetchAllNewNotifications())
-          .then(() => {
-            this.setState({
-              isLoading: false,
-              isError: false
-            });
-          })
-          .catch(error => {
-            this.setState({
-              isLoading: false,
-              isError: true
-            });
-            if (!error.response){
-                toastNotification(["error"],'Network Error!' )
-            }else {
-                 toastNotification(["error"], error.response.data.message);
-            }
-           
-          });
-      }
   render() {
-    
-
-    if (this.props.newNotifications){
-
-const formatDate = (unformatedDate) => {
-const  date = new Date(unformatedDate)
-const day = date.getDate()
-const month = date.getMonth()+1;
-const year = date.getFullYear();
-return `${day}/${month}/${year}`
-      }
-
-    
+    if (this.props.allNotifications){
+      const formatDate = (unformatedDate) => {
+        const  date = new Date(unformatedDate)
+        const day = date.getDate()
+        const month = date.getMonth()+1;
+        const year = date.getFullYear();
+        return `${day}/${month}/${year}`
+              }
     return (
     <>
-    <NavigationBar notifications="active" handleSearch = {this.toggle} />
-    <Button onClick={this.toggle}>Modal</Button>
-
+    <NavigationBar notifications="active" />
             <MDBContainer
           style={{
             width: "70%","margin-left": "auto","margin-right": "auto"}}
@@ -100,27 +73,27 @@ return `${day}/${month}/${year}`
             style={{ "margin-left": "auto", "margin-right": "auto" }}
             className="mt-4 col-md-9 p-2 mb-5">
             <ul class="nav nav-tabs nav-fill ml-2">
-              <li class="nav-item" onClick={this.toggle}>
-                <a class="nav-link active hover d-flex justify-content-between align-items-center "
-                  href="#"> New
+              <li class="nav-item">
+                <a class="nav-link  hover d-flex justify-content-between align-items-center "
+                  href="/notifications"> New
                   <MDBBadge color="primary" pill>
-                    {this.props.newNotifications.length}
+                {this.props.allNotificationsCount}
                   </MDBBadge>
                 </a>
               </li>
               <li class="nav-item">
                 <a
-                  class="nav-link  d-flex justify-content-between align-items-center "
-                  href="notifications/all">
+                  class="nav-link active d-flex justify-content-between align-items-center "
+                  href="#">
                   All
                   <MDBBadge color="primary" pill>
-                    {this.props.allNotificationsCount}
+                    {this.props.allNotifications.length}
                   </MDBBadge>
                 </a>
               </li>
             </ul>
             {
-              this.props.newNotifications.map((notification)=>{
+              this.props.allNotifications.map((notification)=>{
                 return <NotificationList 
             key = {notification.id}
             id = {notification.id}
@@ -130,14 +103,7 @@ return `${day}/${month}/${year}`
               }) 
            
             }
-    
     </MDBCol>
-
-
-
-        </MDBContainer>
-        <MDBContainer>
-
         </MDBContainer>
     </>
         
@@ -146,13 +112,12 @@ return `${day}/${month}/${year}`
   else {
     return (null)
   }
-  }
+}
 }
 const mapStateToProps = state => {
-    console.log(state.notificationsReducer)
+    console.log(state.notificationsReducer.allNotifications.newNotificationsCount)
     return {
-      newNotifications: state.notificationsReducer.unreadNotification.unreadNotifications,
-      allNotificationsCount: state.notificationsReducer.unreadNotification.allNotificationsCount
-    }
-  }
+      allNotifications: state.notificationsReducer.allNotifications.allNotifications,
+      allNotificationsCount: state.notificationsReducer.allNotifications.newNotificationsCount
+    }}
 export default connect(mapStateToProps)(Notifications);

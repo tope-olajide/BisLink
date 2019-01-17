@@ -1,10 +1,8 @@
 import {
-  Follower,
-  Business,
-  User,
+
   Notification
 } from '../models';
-
+      var sequelize= require('../models');
 import {
   validateNotificationOwner
 } from '../middleware/userValidation';
@@ -15,23 +13,34 @@ export default class Notifications {
     const userId = user.id;
     Notification
       .findAll({
+        attributes:['id', 'title','message','createdAt'],
         where: {
           userId
         }
       })
       .then((allNotifications) => {
+        Notification.count({
+          where: {
+            userId,
+            notificationState: 'unseen'
+          }
+        }).then((newNotificationsCount) =>{
         if (allNotifications.length < 1) {
-          return res.status(404).json({
+          return res.status(200).json({
             success: true,
             message: 'No notifications found!',
-            allNotifications: []
+            allNotifications: [],
+            newNotificationsCount
           });
         }
         return res.status(200).json({
           success: true,
           message: 'notifications found',
-          allNotifications
+          allNotifications,
+          newNotificationsCount
         });
+        })
+
       })
       .catch(( /* error */ ) => res.status(500).json({
         success: false,
@@ -93,24 +102,33 @@ export default class Notifications {
   }, res) {
     const userId = user.id;
     Notification
-      .findOne({
+      .findAll({
+        attributes:['id', 'title','message','createdAt'],
         where: {
-          id: userId,
+          userId,
           notificationState: 'unseen'
         }
       }).then((unreadNotifications) => {
-        if (unreadNotifications) {
+        Notification.count({
+          where: {
+            userId
+          }
+        }).then((allNotificationsCount) =>{
+       if (unreadNotifications) {
           res.status(200).json({
             success: true,
             message: 'unread notification found',
-            unreadNotifications
+            unreadNotifications,
+            allNotificationsCount
           })
         }
-        return res.status(404).json({
+        return res.status(200).json({
           success: true,
           message: 'You currently do not have any unread notifications',
-          unreadNotification: []
+          unreadNotifications: [],
+          allNotificationsCount
         });
+        })
       }).catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: 'Error fetching unread notification'

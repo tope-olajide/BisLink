@@ -14,11 +14,12 @@ export function fetchAllNewNotifications() {
     return dispatch => axios.get(`${url}`,setHeaderToken)
         .then((response) => {
             const {
-                unreadNotification
+                unreadNotifications,allNotificationsCount
             } = response.data;
+            const unreadNotificationsPlusCount = {unreadNotifications,allNotificationsCount }
             dispatch({
                 type: NEW_NOTIFICATIONS,
-                unreadNotification
+                unreadNotificationsPlusCount
             });
         });
 }
@@ -38,11 +39,12 @@ export function fetchAllNotifications() {
     return dispatch => axios.get(`${url}/all`,setHeaderToken)
         .then((response) => {
             const {
-                allNotifications
+                allNotifications,newNotificationsCount
             } = response.data;
+         const  allNotificationsPlusCount = {allNotifications, newNotificationsCount}
             dispatch({
                 type: ALL_NOTIFICATIONS,
-                allNotifications
+                allNotificationsPlusCount
             });
         });
 }

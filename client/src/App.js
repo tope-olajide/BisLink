@@ -33,6 +33,8 @@ import Notifications from './components/Notifications'
 import withAuthorization from './utils/withAuthorization'
 import ModifyGallery from './components/ModifyGallery'
 import BusinessSearch from './components/BusinessSearch'
+import AllNotifications from './components/Notifications/AllNotifications'
+import NotificationDetails from './components/Notifications/NotificationDetails'
 
 
 
@@ -72,19 +74,21 @@ img2 = 'featured2.jpg'
 img3 = 'featured3.jpg' 
 img4 = 'featured4.jpg' 
 /> */}
-  <Switch>
+<Switch>
     <Route exact path="/auth" component={AuthPage} />
  <Route exact path="/register-business" component={withAuthorization(AddBusiness)} />
     <Route exact path="/" component={withAuthorization(BusinessList)} />
     <Route exact path="/businesses/search" component={withAuthorization(BusinessSearch)} />
-    <Route exact path="/business-details/:businessId" component={withAuthorization(BusinessDetails)} />
+    <Route path="/business-details/:businessId" component={withAuthorization(BusinessDetails)} />
     <Route exact path="/view-profile" component={withAuthorization(Profile)} />
-    <Route exact path="/modify-user/:id" component={withAuthorization(ModifyUser)} />
-   <Route exact path="/modify-business/:id" component={withAuthorization(ModifyBusiness)} />
-   <Route exact path="/notifications" component={Notifications} />
-   <Route exact path="/modify-gallery" component={ModifyGallery} />
-   {/*   */}
-  </Switch>
+    <Route  path="/modify-user/:id" component={withAuthorization(ModifyUser)} />
+   <Route  path="/modify-business/:id" component={withAuthorization(ModifyBusiness)} />
+   <Route exact path="/notifications" component={withAuthorization (Notifications)} />
+   <Route exact path="/notifications/all" component={withAuthorization (AllNotifications)} />
+
+   <Route exact  path="/notifications/:notificationId" component={withAuthorization (NotificationDetails)} />
+   <Route exact path="/modify-gallery" component={withAuthorization (ModifyGallery)} />
+</Switch>
       </div>
     );
   }

@@ -18,24 +18,10 @@ import {
     Provider
 } from 'react-redux';
 import reducer from './reducer'
-/* import {
-    library
-} from '@fortawesome/fontawesome-svg-core'
-import {
-    faHome,
-    faBriefcase,
-    faSearch,
-    faFolderPlus,
-    faUserPlus,
-    faSignInAlt,
-    faMapMarker,
-    faMobile,
-    faLink,
-    faHeartbeat
-} from '@fortawesome/free-solid-svg-icons'
- */
-import './index.css';
+
+
 import './styles/toastr.css';
+
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 const store = createStore(
