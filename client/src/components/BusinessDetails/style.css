@@ -256,14 +256,21 @@ i:hover {
   text-align: center
 }
 
-.footer p {
-  text-align: center;
-  color: #ffffff;
-  margin: 70px auto 70px auto
+.footer-search-form{
+  margin-top:50px;
+  margin-left:50px;
+ 
+}
+.copyright-content{
+  margin-top:70px;
+  margin-left: 250px;
 }
 
 .footer {
-  margin-top: 50px
+  margin-top: 50px;
+  bottom:0;
+  left: 0;
+  right: 0;color: #ffffff; 
 }
 
 .edit-profile-btn {

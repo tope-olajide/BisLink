@@ -3,6 +3,7 @@ import CataloguePage from "./CataloguePage";
 import CataloguePageHeader from "./CataloguePageHeader";
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
+import Footer from "../commons/Footer";
 import { fetchBusinesses } from "../../actions/businessActions";
 import NavigationBar from "../commons/NavigationBar";
 import { connect } from "react-redux";
@@ -130,7 +131,7 @@ class BusinessList extends Component {
           activeClass={'active'}
         /></div>
           </div>
-
+<Footer />
         </>
       );
     }

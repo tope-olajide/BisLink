@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import { updateProfile } from "../../actions/authActions";
 import EditProfileForm from './EditProfileForm';
+import NavBar from './../commons/NavigationBar';
+import Footer from "../commons/Footer";
 import { connect } from "react-redux";
 class ModifyUser extends Component {
     constructor() {
@@ -87,7 +89,7 @@ class ModifyUser extends Component {
         onDrop={this.onDrop}
         handleFormSubmit={this.handleFormSubmit}
         handleInputChange={this.handleInputChange}
-      />
+      /><Footer />
     </div>
         )
     }

@@ -4,6 +4,7 @@ import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
 import { fetchUsersProfile } from "../../actions/userAction";
 import NavigationBar from "../commons/NavigationBar";
+import Footer from "../commons/Footer";
 import { connect } from "react-redux";
 class Profile extends Component {
     constructor(props) {
@@ -56,7 +57,8 @@ class Profile extends Component {
               </div>
             );
           }
-        return (<>
+        return (
+        <>
           <NavigationBar myProfile='active' />
             <ProfilePage 
             about= {this.props.usersProfile.about}
@@ -68,7 +70,9 @@ class Profile extends Component {
             myFollowersCount={this.props.usersProfile.myFollowersCount}
             myFolloweesCount={this.props.usersProfile.myFolloweesCount}
             myBusinesses={this.props.usersProfile.myBusinesses}
-             /></>
+             />
+             <Footer />
+             </>
         )
     }
 }

@@ -1,8 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse,Button, NavItem, NavLink,Modal, ModalBody, ModalHeader, ModalFooter
+import './search.css'
+import {Navbar, Col, NavbarBrand, NavbarNav, NavbarToggler, Collapse,Button, NavItem, NavLink
 } from "mdbreact";
-
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
@@ -16,12 +16,7 @@ class NavigationBar extends React.Component {
       collapse: !this.state.collapse
     });
   }
-  toggle = () => {
-    this.setState({
-      modal: !this.state.modal
-    });
-   
-  }
+
 
   render() {
     return (
@@ -41,7 +36,7 @@ class NavigationBar extends React.Component {
                   <FontAwesomeIcon icon="home" /> HOME </NavLink>
               </NavItem>
               <NavItem>
-                <NavLink to="#" onClick = {(evt) => {evt.preventDefault(); this.toggle()}}>
+                <NavLink to="#footer" >
                   <FontAwesomeIcon icon="search" /> SEARCH
                 </NavLink>
               </NavItem>
@@ -72,16 +67,7 @@ class NavigationBar extends React.Component {
             </NavbarNav>
           </Collapse>
         </Navbar>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} size="lg"className="mt-5" >
-          <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
-          <ModalBody >
-            (...)
-          </ModalBody>
-          <ModalFooter>
-            <Button color="secondary" onclick={(e) => {this.toggle(e); }}>Close</Button>{' '}
-            <Button color="primary">Save changes</Button>
-          </ModalFooter>
-        </Modal>
+
       </div>
     );
   }

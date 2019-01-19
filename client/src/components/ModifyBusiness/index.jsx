@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from 'axios'
 import ModifyBusinessForm from './ModifyBusinessForm';
 import NavBar from './../commons/NavigationBar';
+import Footer from "../commons/Footer";
 class ModifyBusiness extends Component {
     constructor() {
       super();
@@ -111,7 +112,9 @@ class ModifyBusiness extends Component {
           onDrop={this.onDrop}
           handleFormSubmit={this.handleFormSubmit}
           handleInputChange={this.handleInputChange}
- /></div>
+ />
+ <Footer />
+ </div>
         )
     }
 }

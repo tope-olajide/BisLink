@@ -9,7 +9,6 @@ import {Navbar, NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLin
   Input,
   Button
 } from "mdbreact";
-/* import "./styles/LoginForm.css"; */
 import { connect } from 'react-redux';
 import { signIn, signUp } from "../../actions/authActions";
 import { validateUser } from "../../utils/validator";
@@ -136,28 +135,9 @@ class NavigationBar extends React.Component {
           </NavbarBrand>
           <NavbarToggler onClick={this.onClick} />
           <Collapse isOpen={this.state.collapse} navbar>
-            <NavbarNav left>
-              <NavItem>
-                <NavLink to="/">
-                  <FontAwesomeIcon icon="home" /> HOME</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="/businesses">
-                  <FontAwesomeIcon icon="briefcase" /> CATALOGUE
-                </NavLink>
-              </NavItem>
-            </NavbarNav>
+             
             <NavbarNav right>
-              <NavItem>
-                <NavLink to="#">
-                  <FontAwesomeIcon icon="search" /> SEARCH
-                </NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink to="register-business">
-                  <FontAwesomeIcon icon="folder-plus" /> ADD BUSINESS
-                </NavLink>
-              </NavItem>
+
               <NavItem>
                 <NavLink to="#" onClick={() => this.toggle(7)}>
                   <FontAwesomeIcon icon="user-plus" /> SIGN UP

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios from "axios";
 import AddBusiness from "./../AddBusiness/RegisterBusinessPage";
 import NavBar from "./../commons/NavigationBar";
+import Footer from "../commons/Footer";
 class BusinessList extends Component {
   constructor() {
     super();
@@ -104,6 +105,7 @@ class BusinessList extends Component {
           handleFormSubmit={this.handleFormSubmit}
           handleInputChange={this.handleInputChange}
         />
+        <Footer />
       </div>
     );
   }

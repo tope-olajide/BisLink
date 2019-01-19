@@ -8,6 +8,7 @@ import {
 import NavigationBar from "../commons/NavigationBar";
 import NotificationList from './NotificationList'
 import toastNotification from "./../../utils/toastNotification";
+import Footer from "../commons/Footer";
 import LoadingAnimation from "../commons/LoadingAnimation";
 import { connect } from "react-redux";
 class Notifications extends Component {
@@ -105,6 +106,7 @@ class Notifications extends Component {
             }
     </MDBCol>
         </MDBContainer>
+        <Footer />
     </>
         
     );

@@ -8,7 +8,7 @@ import {
 import NavigationBar from "../commons/NavigationBar";
 import NotificationPage from './NotificationList'
 import toastNotification from "./../../utils/toastNotification";
-import LoadingAnimation from "../commons/LoadingAnimation";
+import LoadingAnimation from "../commons/LoadingAnimation";import Footer from "../commons/Footer";
 import { connect } from "react-redux";
 class Notifications extends Component {
   componentDidMount() {
@@ -67,6 +67,7 @@ class Notifications extends Component {
 </blockquote>
     </MDBCol>
         </MDBContainer>
+        <Footer />
     </>
         
     );

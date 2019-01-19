@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BusinessDetailsPage from "./BusinessDetailsPage";
 import BusinesssSlider from "./BusinessSlider";
+import Footer from "../commons/Footer";
 import {
   fetchBusinessDetails,
   fetchBusinessReviews,
@@ -120,6 +121,7 @@ class BusinessDetails extends Component {
           {console.log(this.props.businessDetails)}
           {console.log(this.props.infoCount)}
           {console.log(this.props.businessReviews)}
+          <Footer />
         </div>
       );
     }
