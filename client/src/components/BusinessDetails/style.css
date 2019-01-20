@@ -24,7 +24,8 @@ ul {
 .card {
 
   z-index: 999;
-  margin: 10px
+  margin: 10px;
+
 }
 
 .modal-dialog {
@@ -271,6 +272,7 @@ i:hover {
   bottom:0;
   left: 0;
   right: 0;color: #ffffff; 
+
 }
 
 .edit-profile-btn {

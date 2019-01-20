@@ -30,6 +30,21 @@ export function fetchBusinesses(page, limit) {
         });
 }
 
+
+export function businessSearch(name, location, page, limit) {
+    return dispatch => axios.get(`${url}?name=${name}&location=${location}&page=${page}&limit=${limit}`,setHeaderToken)
+        .then((response) => {
+            const {
+                businesses,totalPages
+            } = response.data;
+            const pagedBusiness = {businesses,totalPages}
+            dispatch({
+                type: FETCH_ALL_BUSINESSES,
+                pagedBusiness
+            });
+        });
+}
+
 export function fetchBusinessDetails(businessId) {
     return dispatch =>
         axios.get(`${url}/${businessId}`,setHeaderToken)

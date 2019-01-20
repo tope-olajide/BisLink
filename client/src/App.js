@@ -78,16 +78,15 @@ img4 = 'featured4.jpg'
     <Route exact path="/auth" component={AuthPage} />
  <Route exact path="/register-business" component={withAuthorization(AddBusiness)} />
     <Route exact path="/" component={withAuthorization(BusinessList)} />
-    <Route exact path="/businesses/search" component={withAuthorization(BusinessSearch)} />
     <Route path="/business-details/:businessId" component={withAuthorization(BusinessDetails)} />
     <Route exact path="/view-profile" component={withAuthorization(Profile)} />
     <Route  path="/modify-user/:id" component={withAuthorization(ModifyUser)} />
    <Route  path="/modify-business/:id" component={withAuthorization(ModifyBusiness)} />
    <Route exact path="/notifications" component={withAuthorization (Notifications)} />
    <Route exact path="/notifications/all" component={withAuthorization (AllNotifications)} />
-
    <Route exact  path="/notifications/:notificationId" component={withAuthorization (NotificationDetails)} />
    <Route exact path="/modify-gallery" component={withAuthorization (ModifyGallery)} />
+   <Route exact path="/businesses/search/business-name=:businessName?/location=:businessLocation?" component={withAuthorization (BusinessSearch)} />
 </Switch>
       </div>
     );

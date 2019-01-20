@@ -1,6 +1,6 @@
 import { Business, User } from '../models';
 export default class BusinessSearch {
-    searchByBusinessName ({ query }) {
+    searchByBusinessName ({ query,res }) {
         const limit = Number(query.limit) || 9;
         const currentPage = Number(query.page) || 1;
         const offset = (currentPage - 1) * limit;
@@ -10,7 +10,7 @@ export default class BusinessSearch {
             businessName: { $iLike: `%${name}%` }}
             Business
             .findAndCountAll({
-              where: {searchQuery},
+              where: searchQuery,
               include: [
                 { model: User, attributes: ['fullname'] }
               ],
@@ -34,7 +34,7 @@ export default class BusinessSearch {
             })
     }
 
-    searchInLocation ({ query }) {
+    searchBusinessInLocation ({ query }, res) {
         const limit = Number(query.limit) || 9;
         const currentPage = Number(query.page) || 1;
         const offset = (currentPage - 1) * limit;
@@ -43,11 +43,11 @@ export default class BusinessSearch {
         const {location} = query;
         const searchQuery = {
             businessName: { $iLike: `%${name}%` }, 
-            location:  { $iLike: `%${location}%` }
+            businessAddress1:  { $iLike: `%${location}%` }
         }
         Business
         .findAndCountAll({
-          where: {searchQuery},
+          where: searchQuery,
           include: [
             { model: User, attributes: ['fullname'] }
           ],
@@ -71,17 +71,18 @@ export default class BusinessSearch {
         })
 
 }
-searchAllLocation ({ query }) {
+searchAllLocation ({ query },res) {
     const limit = Number(query.limit) || 9;
     const currentPage = Number(query.page) || 1;
     const offset = (currentPage - 1) * limit;
 
     const {location} = query;
+    
     const searchQuery = {
-        location:  { $iLike: `%${location}%` }}
+      businessAddress1:  { $iLike: `%${location}%` }}
         Business
         .findAndCountAll({
-          where: {searchQuery},
+          where: searchQuery,
           include: [
             { model: User, attributes: ['fullname'] }
           ],

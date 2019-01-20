@@ -1,13 +1,29 @@
 import React, {Component} from "react";
-import { FormInline, Input, Button } from "mdbreact";
+import { Input, Button } from "mdbreact";
 
 class Footer extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+      isError: false,
+      businessName: " ",
+      businessLocation: " "
+    };
+  }
+  saveToState(key, value) {
+    this.setState({ [key]: value });
+    console.log(value);
+  }
+  handleBusinessSearch =() => {
+    window.location = `/businesses/search/business-name=${this.state.businessName}/location=${this.state.businessLocation}`;
+  }
   render() {
     return (
       <div id="footer">
 <nav class=" footer bottom navbar-expand-sm navbar-dark bg-dark">
 
-<div className = 'container-fluid '>
+<div className = 'container-fluid'>
 
 
 <div className = 'row mt-5'>
@@ -20,23 +36,29 @@ class Footer extends Component {
                 icon="user"
                 group
                 type="text"
-                validate
-                error="wrong"
-                success="right"
+                onChange={event => {
+                  this.saveToState(
+                    "businessName",
+                    event.target.value
+                  );
+                }}
               />
               <Input
                 label="Your name"
                 icon="user"
                 group
                 type="text"
-                validate
-                error="wrong"
-                success="right"
+                onChange={event => {
+                  this.saveToState(
+                    "businessLocation",
+                    event.target.value
+                  );
+                }}
               />
             
             </div>
             <div className="text-center mb-4">
-              <Button color="primary">Search</Button>
+              <Button color="primary"onClick ={this.handleBusinessSearch} >Search</Button>
             </div>
           </form></div>
           <div className = 'col-7'> 

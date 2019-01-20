@@ -10,7 +10,7 @@ import {
 import {
   validateUserRight
 } from '../middleware/userValidation';
-
+import searchBusiness from './searchBusiness'
 const isNamePicked = (userId, businessName) => {
   const promise = new Promise((resolve) => {
     Business
@@ -369,9 +369,28 @@ export default class Businesses {
     return this;
   }
   getAllBusinesses(req, res) {
+    const newSearchBusiness = new searchBusiness()
+
     const limit = Number(req.query.limit) || 9;
     const currentPage = Number(req.query.page) || 1;
     const offset = (currentPage - 1) * limit;
+
+    if (req.query.sort === 'popular') {
+      newSearchBusiness.sortByMostPopular(req, res);
+    }
+    else if (req.query.sort === 'recent') {
+      newSearchBusiness.sortByMostRecent(req, res);
+    }
+    else if (!req.query.location ||req.query.location==='undefined' ) {
+      newSearchBusiness.searchByBusinessName(req, res);
+    }
+    else if (!req.query.name || req.query.name==='undefined') {
+      newSearchBusiness.searchAllLocation(req, res);
+    } 
+    else if (req.query.name && req.query.location) {
+      newSearchBusiness.searchBusinessInLocation(req, res);
+    }
+    else{
     Business
       .findAndCountAll({
         include: [{
@@ -403,7 +422,7 @@ export default class Businesses {
         success: false,
         message: 'Error fetching all businesses',
         error
-      }));
+      }))};
 
     return this;
   }

@@ -35,8 +35,8 @@ class NavigationBar extends React.Component {
                 <NavLink to="/"> 
                   <FontAwesomeIcon icon="home" /> HOME </NavLink>
               </NavItem>
-              <NavItem>
-                <NavLink to="#footer" >
+              <NavItem active = {this.props.homePage}>
+                <NavLink to="#footer" scroll={el => el.scrollIntoView({ behavior: 'instant', block: 'end' })}>
                   <FontAwesomeIcon icon="search" /> SEARCH
                 </NavLink>
               </NavItem>

@@ -22,29 +22,6 @@ class BusinessList extends Component {
     this.handlePageChange()
   }
 
-  fetchBusiness = () => {
-    this.setState({ isLoading: true });
-    this.props
-      .dispatch(fetchBusinesses())
-      .then(() => {
-        this.setState({
-          isLoading: false,
-          isError: false
-        });
-      })
-      .catch(error => {
-        this.setState({
-          isLoading: false,
-          isError: true
-        });
-        if (!error.response){
-            toastNotification(["error"],'Network Error!' )
-        }else {
-             toastNotification(["error"], error.response.data.message);
-        }
-       
-      });
-  };
   handlePageChange = (pageNumber) => {
     const limit = 9
     console.log(`active page is ${pageNumber}`);
