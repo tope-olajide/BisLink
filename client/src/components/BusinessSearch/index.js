@@ -22,14 +22,14 @@ class searchBusiness extends Component {
   }
 
   handlePageChange = (pageNumber) => {
-    const {businessName} = this.props.match.params;
-    const {businessLocation} = this.props.match.params;
+    const {name} = this.props.match.params;
+    const {location} = this.props.match.params;
     const limit = 9
     console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
     this.setState({ isLoading: true });
     this.props
-      .dispatch(businessSearch(businessName, businessLocation, pageNumber, limit))
+      .dispatch(businessSearch(name, location, this.state.activePage, limit))
       .then(() => {
         this.setState({
           isLoading: false,
