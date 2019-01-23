@@ -16,11 +16,11 @@ class Footer extends Component {
     console.log(value);
   }
   handleBusinessSearch =() => {
-    window.location = `/businesses/search/business-name=${this.state.businessName}/location=${this.state.businessLocation}`;
+    window.location = `/businesses/search/name=${this.state.businessName}/location=${this.state.businessLocation}`;
   }
   render() {
     return (
-      <div id="footer">
+      <div ref={this.props.myRef} id="footer">
 <nav class=" footer bottom navbar-expand-sm navbar-dark bg-dark">
 
 <div className = 'container-fluid'>
