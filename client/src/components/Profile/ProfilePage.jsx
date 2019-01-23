@@ -1,10 +1,8 @@
 import React, { Component } from "react";
 import ProfileTab from "./ProfileTab";
+import { Button } from "mdbreact";
 import Image from "react-graceful-image";import "./ProfilePage.css";
 class ProfilePage extends Component {
-
- 
- 
   render() {
     return (
       <div>
@@ -41,12 +39,11 @@ class ProfilePage extends Component {
               <p class="user-info">
             {this.props.about}
               </p>
-              <button
-                class=" mb-5 btn btn-outline-dark  bg-dark btn-rounded btn-block my-4 "
-                type="button" onClick={() => this.toggle(6)} 
+              <Button className='centra'
+                 onClick={() => window.location = '/modify-user'} 
               >
                 Edit profile
-              </button>
+              </Button>
             </div>
             <div class="dashboard-section col-md-8">
               <br />
