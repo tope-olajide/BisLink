@@ -6,6 +6,7 @@ import {Navbar, Col, NavbarBrand, NavbarNav, NavbarToggler, Collapse,Button, Nav
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {
       collapse: false,
     };
@@ -35,8 +36,8 @@ class NavigationBar extends React.Component {
                 <NavLink to="/"> 
                   <FontAwesomeIcon icon="home" /> HOME </NavLink>
               </NavItem>
-              <NavItem active = {this.props.homePage}>
-                <NavLink to="#footer" scroll={el => el.scrollIntoView({ behavior: 'instant', block: 'end' })}>
+              <NavItem active = {this.props.search} >
+                <NavLink to="/#" onClick={this.props.scrollToMyRef}>
                   <FontAwesomeIcon icon="search" /> SEARCH
                 </NavLink>
               </NavItem>
