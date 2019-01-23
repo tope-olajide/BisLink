@@ -1,12 +1,9 @@
 import React, { Component } from "react";
 import {
-  MDBListGroup,
-  MDBListGroupItem,
-
-} from "mdbreact";import { Link } from 'react-router-dom';
+  MDBListGroup, MDBListGroupItem 
+} from "mdbreact";
+import { Link } from 'react-router-dom';
 class NotificationList extends Component {
-
-
   render() {
     return (
       <><MDBListGroup className="px-0"><Link to={`/notifications/${this.props.id}`}>
@@ -20,8 +17,7 @@ class NotificationList extends Component {
                 </div>
               </MDBListGroupItem>{" "}</Link>
               <br />
-            </MDBListGroup>
-
+         </MDBListGroup>
       </>
     );
   }
