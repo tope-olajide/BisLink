@@ -381,15 +381,15 @@ export default class Businesses {
     else if (req.query.sort === 'recent') {
       newSearchBusiness.sortByMostRecent(req, res);
     }
-    else if (!req.query.location ||req.query.location==='undefined' ) {
-      newSearchBusiness.searchByBusinessName(req, res);
+    else if (req.query.name === 'undefined'){
+      newSearchBusiness.searchAllLocation(req, res)
     }
-    else if (!req.query.name || req.query.name==='undefined') {
-      newSearchBusiness.searchAllLocation(req, res);
-    } 
-    else if (req.query.name && req.query.location) {
-      newSearchBusiness.searchBusinessInLocation(req, res);
+    else if (req.query.location === 'undefined'){
+      newSearchBusiness.searchBusinessName(req, res)
     }
+/*   else if ((req.query.name !== 'undefined') || (req.query.location !== 'undefined')){
+    newSearchBusiness.searchBusinessInLocation(req, res)
+  } */
     else{
     Business
       .findAndCountAll({
