@@ -63,9 +63,6 @@ class EditProfileForm extends Component {
           <section>
             <div className="dropzone">
               <Dropzone accept="image/*"style={dropZoneStyle} onDrop={this.props.onDrop}>
-              
-                {" "}
-                {/* this.props.onDrop (files) */}
                 <h4>
                   Try dropping your profile picture here, or click to select the picture
                   you want to upload.
