@@ -1,6 +1,6 @@
 import { Business, User } from '../models';
 export default class BusinessSearch {
-    searchByBusinessName ({ query,res }) {
+    searchBusinessName ({ query,res }) {
         const limit = Number(query.limit) || 9;
         const currentPage = Number(query.page) || 1;
         const offset = (currentPage - 1) * limit;
