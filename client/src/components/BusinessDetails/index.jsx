@@ -128,6 +128,7 @@ class BusinessDetails extends Component {
   }
 }
 const mapStateToProps = state => {
+  console.log(state.businessReducer)
   return {
     businessDetails: state.businessReducer.businessDetails.business,
     infoCount: state.businessReducer.businessDetails.infoCount,
