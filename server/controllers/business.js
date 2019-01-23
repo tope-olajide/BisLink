@@ -1,7 +1,7 @@
 import {
   Business,
   User,
-  Follower
+  Follower,Upvote,Downvote
 } from '../models';
 import {
   validateBusiness
@@ -469,14 +469,13 @@ export default class Businesses {
                 followerId: business.User.id
               }
             }).then((followingCount) => {
-
               infoCount.followingCount = followingCount
-              res.status(200).json({
+                res.status(200).json({
                 success: true,
                 message: 'business found',
                 business,
                 infoCount
-              })
+                })
             })
           })
         })
