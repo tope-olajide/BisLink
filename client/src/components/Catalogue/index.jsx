@@ -17,11 +17,15 @@ class BusinessList extends Component {
       isError: false,
       activePage: 1
     };
+    this.myRef = React.createRef()
   }
   componentDidMount() {
     this.handlePageChange()
   }
-
+  scrollToMyRef = (e) => {
+    e.preventDefault();
+    window.scrollTo(0, this.myRef.current.offsetTop) 
+  } 
   handlePageChange = (pageNumber) => {
     const limit = 9
     console.log(`active page is ${pageNumber}`);
@@ -52,7 +56,7 @@ class BusinessList extends Component {
     if (this.state.isLoading) {
       return (
         <div>
-          <NavigationBar homePage ="active" />
+          <NavigationBar homePage ="active" scrollToMyRef={this.scrollToMyRef} />
           <LoadingAnimation />
         </div>
       );
@@ -65,7 +69,7 @@ class BusinessList extends Component {
       );
     } else {
       return (
-        <>
+        <><NavigationBar homePage ="active" scrollToMyRef={this.scrollToMyRef} />
           <CataloguePageHeader />
           <div className="container content-container">
             <div className="row card-container">
@@ -108,7 +112,7 @@ class BusinessList extends Component {
           activeClass={'active'}
         /></div>
           </div>
-<Footer />
+<Footer myRef={this.myRef}/>
         </>
       );
     }
