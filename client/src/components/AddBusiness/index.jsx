@@ -14,6 +14,7 @@ class BusinessList extends Component {
       website: "",
       category: "",
       businessImageUrl: "",
+      businessImageArray:[],
       businessImageId: "",
       businessDescription: "",
       files: [],
@@ -69,11 +70,15 @@ class BusinessList extends Component {
           const { data } = response;
           console.log(data);
           const { secure_url, public_id } = data;
-          this.setState({ businessImageUrl: [...{ secure_url, public_id }] });
+          this.setState(prevState => ({
+            businessImageArray: [...prevState.businessImageArray, {imageUrl: secure_url, imageId: public_id}]
+          }))
+          console.log(this.state.businessImageArray)
         })
         .catch((err)=> {
-          alert("error " + 'unable to upload '+ file);
-          this.setState({ imageUploadError: true });
+          alert("error " + err);
+
+       
         });
     });
 
@@ -82,19 +87,22 @@ class BusinessList extends Component {
     axios
       .all(uploaders)
       .then(data => {
-        if (this.state.imageUploadError === true){
-          alert('unable to upload image')
-        } else{
+
         alert(
           "Success!!!: Upload picture successfully, now saving to database"
         );
+        const imgUrlToString = JSON.stringify(this.state.businessImageArray)
+        this.setState({businessImageUrl:imgUrlToString})
+        console.log(this.state.businessImageUrl)
+        console.log(typeof this.state.businessImageUrl)
+
         this.props.onAddUser(this.state);
-        alert("saved to database successfully")};
+        alert("saved to database successfully");
       })
       .catch(function(err) {
         alert(err);
       });
-  };
+  }
   render() {
     return (
       <div>
