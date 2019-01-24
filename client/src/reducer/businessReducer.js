@@ -6,7 +6,8 @@ import {
     EDIT_BUSINESS,
     FETCH_BUSINESS_REVIEWS,
     ADD_BUSINESS_REVIEW,
-    UPVOTE,
+    UPVOTE_BUSINESS,
+    DOWNVOTE_BUSINESS
 } from '../actions/type'
 
 const initialState = {
@@ -36,7 +37,7 @@ export default (state = initialState, action) => {
         return { ...state, fetchBusinessReviews: action.reviews };
         case ADD_BUSINESS_REVIEW:
         return { ...state, businessDetails: action.addBusinessReview };
-        case UPVOTE:
+        case UPVOTE_BUSINESS:
         return {
           ...state,
           businessDetails: {
@@ -47,7 +48,17 @@ export default (state = initialState, action) => {
               }
           }
         };
-        
+        case DOWNVOTE_BUSINESS:
+        return {
+          ...state,
+          businessDetails: {
+              business:{
+                  ...state.businessDetails.business,
+                  upvotes: action.business.upvotes,
+                  downvotes: action.business.downvotes                 
+              }
+          }
+        };
         case ADD_BUSINESS:
         return {...state, myBusinesses: action.businesses };
         case SET_MY_BUSINESSES:
