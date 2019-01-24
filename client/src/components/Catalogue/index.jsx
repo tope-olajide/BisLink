@@ -77,6 +77,15 @@ class BusinessList extends Component {
                 <div>No Business</div>
               ) : (
                 this.props.allBusinesses.map(business => {
+                  const setDefaultBizImage = (defaultImage, imageGallery)=>{
+                    if (defaultImage){
+                      return defaultImage
+                    }
+                    else{
+                      const temporaryDefaultImg = JSON.parse(imageGallery)
+                      return temporaryDefaultImg[0]
+                    }
+                  }
                   return (
                     <>
                     <CataloguePage
@@ -88,7 +97,7 @@ class BusinessList extends Component {
                       businessAddress={business.businessAddress1}
                       phoneNumber={business.phoneNumber1}
                       website={business.website}
-                      image={business.businessImageUrl}
+                      image={setDefaultBizImage(business.businessImageId,business.businessImageUrl)}
                     />
 
                     </>
