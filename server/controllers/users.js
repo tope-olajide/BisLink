@@ -169,10 +169,10 @@ export default class Users {
     user
   }, res) {
     const userId = user.id;
+    const username = user.username;
     const {
       fullname,
       email,
-      username,
       phoneNumber,
       location,
       about,
@@ -279,7 +279,7 @@ export default class Users {
         }
 
         if (!newEncryption.verifyHash(oldPassword, userFound.password)) {
-          return res.status(401).json({
+          return res.status(401).json ({
             success: false,
             message: 'Incorrect Password'
           });
@@ -292,7 +292,7 @@ export default class Users {
           message: 'Password Changed Successfully'
         }));
       })
-      .catch(( /* error */ ) => res.status(500).json({
+      .catch((  ) => res.status(500).json({
         success: false,
         message: 'An error occured'
       }));
@@ -304,7 +304,7 @@ export default class Users {
   }, res) {
     const userId = user.id;
     User.findOne({
-        attributes: ['id', 'fullname', 'about', 'location', 'username', 'email', 'ImageUrl'],
+        attributes: ['id', 'fullname', 'about', 'location', 'phoneNumber', 'username', 'email', 'ImageUrl'],
         where: {
           id: userId
         }
@@ -323,7 +323,7 @@ export default class Users {
           location,
           username,
           email,
-          ImageUrl
+          ImageUrl,phoneNumber
         } = userFound;
 
         const userInfo = {
@@ -333,7 +333,7 @@ export default class Users {
           location,
           username,
           email,
-          ImageUrl
+          ImageUrl,phoneNumber
         };
         Business.findAndCountAll({
           where: {
