@@ -37,7 +37,7 @@ export function signUp(userData) {
       });
   }
   export function updateProfile(userData) {
-    return dispatch => axios.put(`${url}profile`, userData)
+    return dispatch => axios.put(`${url}profile`, userData, setHeaderToken)
       .then((response) => {
         const {
           user: { token }
