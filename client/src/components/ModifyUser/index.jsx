@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import axios from "axios";
 import { updateProfile } from "../../actions/authActions";
 import EditProfileForm from './EditProfileForm';
-import NavBar from './../commons/NavigationBar';
+import toastNotification from "./../../utils/toastNotification";
+import LoadingAnimation from "../commons/LoadingAnimation";
+import { fetchUsersProfile } from "../../actions/userAction";
+import NavigationBar from './../commons/NavigationBar';
 import Footer from "../commons/Footer";
 import { connect } from "react-redux";
 class ModifyUser extends Component {
@@ -10,8 +13,10 @@ class ModifyUser extends Component {
         super();
         this.state = {
           fullname: "",
-          username: "",
           email: "",
+          description:"",
+          location :"",
+          phoneNumber :"",
           files: [],
           profile: [],
           imageUrl: "",
@@ -20,6 +25,40 @@ class ModifyUser extends Component {
         this.onDrop = this.onDrop.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
       }
+ 
+      componentDidMount() {
+        this.fetchProfile()
+        
+      }
+      fetchProfile = () => {
+        this.setState({ isLoading: true });
+        this.props
+          .dispatch(fetchUsersProfile())
+          .then(() => {
+            this.setState({
+              isLoading: false,
+              isError: false,
+              fullname:this.props.usersProfile.fullname, 
+              email : this.props.usersProfile.email,
+              phoneNumber:this.props.usersProfile.phoneNumber,
+              location:this.props.usersProfile.location,
+              description:this.props.usersProfile.about,
+            }); 
+          })
+          .catch(error => {
+            this.setState({
+              isLoading: false,
+              isError: true
+            });
+            if (!error.response){
+                toastNotification(["error"],'Network Error!' )
+            }else {
+                 toastNotification(["error"], error.response.data.message);
+            }
+           
+          });
+      }
+ 
       onDrop(files) {
         this.setState({
           profile: files,
@@ -32,6 +71,7 @@ class ModifyUser extends Component {
       handleInputChange(key, value) {
         this.setState({ [key]: value });
       }
+
       handleFormSubmit = () => {
         alert("Loading....");
         // start loading animation
@@ -39,6 +79,9 @@ class ModifyUser extends Component {
      
           const file = this.state.profile[0]
           // Initial FormData
+          if (file){
+
+         
           const formData = new FormData();
     
           formData.append("upload_preset", "sijxpjkn");
@@ -63,14 +106,27 @@ class ModifyUser extends Component {
               });
               console.log(data);
               this.props.dispatch(updateProfile(this.state))
-              alert("saved to database successfully");
+              .then(()=>{
+                alert("saved to database successfully");
+              })            
+              .catch(function(err) {
+                alert("error " + err);
+              });
             })
             .catch(function(err) {
               alert("error " + err);
             });
     
-    
+          }
         // Once all the files are uploaded
+        else {
+          const {fullname, email, description, location, phoneNumber } = this.state
+          this.props.dispatch(updateProfile( {fullname, email, description, location, phoneNumber})).then(()=>{
+            alert("saved to database successfully without pictures");
+          }).catch(function(err) {
+            alert("else error " + err);
+          });
+        }
 
       };
       componentWillUnmount() {
@@ -82,16 +138,45 @@ class ModifyUser extends Component {
         }
       }
     render () {
+
+      if (this.state.isLoading) {
+        return (
+          <div>
+            <NavigationBar  />
+            <LoadingAnimation />
+          </div>
+        );
+      } else if (this.state.isError) {
+        return (
+          <div>
+            <NavigationBar />
+            <h1>An Error has occured</h1>
+          </div>
+        );
+      }else{
         return (
       <div>
       <EditProfileForm 
+     defaultFullname = {this.state.fullname} 
+        defaultEmail = {this.props.usersProfile.email}
+        defaultPhoneNumber ={this.props.usersProfile.phoneNumber}
+        defaultLocation={this.props.usersProfile.location}
+        defaultDesription={this.props.usersProfile.about}
         files={this.state}
         onDrop={this.onDrop}
         handleFormSubmit={this.handleFormSubmit}
         handleInputChange={this.handleInputChange}
       /><Footer />
     </div>
-        )
+    
+        )        
+      }
+
     }
 }
-export default connect()(ModifyUser);
+const mapStateToProps = state => {
+  console.log(state.authReducer.usersProfile)
+  return {
+    usersProfile: state.authReducer.usersProfile
+  }}
+export default connect(mapStateToProps)(ModifyUser);

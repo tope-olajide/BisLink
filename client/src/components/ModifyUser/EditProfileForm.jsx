@@ -76,26 +76,22 @@ class EditProfileForm extends Component {
           <div className="grey-text">
             <Input
               label="Fullname"
-              icon=""
+              default={this.props.defaultFullname}
               type="text"
               onChange={event => {
                 this.props.handleInputChange("fullname", event.target.value);
               }}
             />
-            <Input label="Username" icon="" onChange={event => {
-              this.props.handleInputChange("username", event.target.value);
-            }} />
-            <Input label="Email Address" icon="" onChange={event => {
+            <Input label="Email Address" default={this.props.defaultEmail} onChange={event => {
               this.props.handleInputChange("email", event.target.value);
             }} />
-            <Input label="Phone Number" icon="" group type="text" onChange={event => {
+            <Input label="Phone Number" default={this.props.defaultPhoneNumber} group type="text" onChange={event => {
               this.props.handleInputChange("phoneNumber", event.target.value);
             }}/>
-            <Input label="Location" icon="" group type="text" onChange={event => {
+            <Input label="Location" default={this.props.defaultLocation} group type="text" onChange={event => {
               this.props.handleInputChange("location", event.target.value);
             }} />
-
-            <Input type="textarea" label="About Me"  rows="3"onChange={event => {
+            <Input type="textarea" default={this.props.defaultDesription} label="About Me"  rows="3"onChange={event => {
               this.props.handleInputChange("description", event.target.value);
             }}/>
           </div>
