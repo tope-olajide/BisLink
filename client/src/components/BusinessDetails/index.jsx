@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import BusinessDetailsPage from "./BusinessDetailsPage";
-import BusinesssSlider from "./BusinessSlider";
+import BusinessImageGallery from "./BusinessImageGallery";
 import Footer from "../commons/Footer";
 import {
   fetchBusinessDetails,
@@ -86,11 +86,7 @@ class BusinessDetails extends Component {
       return (
         <div>
           <NavigationBar />
-          <BusinesssSlider
-            img1="../featured1.jpg"
-            img2="../featured2.jpg"
-            img3="../featured3.jpg"
-            img4="../featured4.jpg"
+          <BusinessImageGallery
             businessName= {this.props.businessDetails.businessName}
             tagline= {this.props.businessDetails.tagline}
             upvotes= {this.props.businessDetails.upvotes}
