@@ -487,5 +487,58 @@ export default class Businesses {
 
     return this;
   }
+  deleteBusinessImage({
+    params,user
+  }, res) {
+    const {
+      businessImageId
+    } = params;
+  const {
+    businessId
+  } = params;
+  validateUserRight(businessId, user.id).then(() => {
+    Business.findOne({
+      where:{businessId}
+    }).then ((businessFound)=> {
+      const parsedImageArray = JSON.parse(businessFound.businessImageUrl)
+      const newImageGallery = parsedImageArray.filter((image)=>image.imageId !== businessImageId);
+      /* Cloudinary delete pictures online */
+      const modifiedImageGallery = JSON.stringify(newImageGallery)
+      businessFound.updateAttributes({
+        businessImageUrl:modifiedImageGallery
+      }).then(() => res.status(200).json({
+        success: true,
+        message: 'Password Changed Successfully',
+        businessImageUrl: modifiedImageGallery
+      }));
+    }).catch(( ) => res.status(500).json({
+      success: false,
+      message: 'An error occured'
+    }));
+  }).catch(({ status, message }) => {
+    res.status(status).json({
+      success: false,
+      message
+    });
+  });
+
+  }
+  setDefaultBusinessImage ({ params }, res) {
+  const { businessImageUrl } = params;
+  const { businessId } = params;
+  Business.findOne({
+    where:{businessId}
+  }).then ((businessFound)=> {
+    businessFound.updateAttributes({
+      businessImageId:businessImageUrl
+    }).then(() => res.status(200).json({
+      success: true,
+      message: 'default business image set successfully'
+    }));
+  }).catch(( ) => res.status(500).json({
+    success: false,
+    message: 'An error occured'
+  }));
+}
 
 }
