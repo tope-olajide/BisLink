@@ -1,7 +1,7 @@
 import {
   Business,
   User,
-  Follower,Upvote,Downvote
+  Follower,Upvote,Downvote, Favourite,Notification
 } from '../models';
 import {
   validateBusiness
@@ -47,9 +47,7 @@ export default class Businesses {
       businessName,
       tagline,
       businessAddress1,
-      businessAddress2,
       phoneNumber1,
-      phoneNumber2,
       website,
       category,
       businessDescription,
@@ -65,7 +63,7 @@ export default class Businesses {
             message: 'This business exist already'
           });
         }
-
+     const parsedbusinessImageUrl = JSON.parse(businessImageUrl)
         const validateBusinessError =
           validateBusiness({
             businessName,
@@ -83,14 +81,12 @@ export default class Businesses {
             businessName,
             tagline,
             businessAddress1,
-            businessAddress2,
             phoneNumber1,
-            phoneNumber2,
             website,
             category,
             businessDescription,
             businessImageUrl,
-            businessImageId,
+            businessImageId:parsedbusinessImageUrl[0],
             userId,
           })
           .then((business) => {
@@ -127,43 +123,64 @@ export default class Businesses {
     body
   }, res) {
     const updateBusiness = ({
+      businessId,
       businessName,
       tagline,
       businessAddress1,
-      businessAddress2,
       phoneNumber1,
-      phoneNumber2,
       website,
       category,
       businessDescription,
       businessImageUrl,
-      businessImageId,
       foundBusiness
     }) => {
+      if(businessImageUrl){
+          const uploadedImage = JSON.parse(businessImageUrl)
+          const oldImageGallery = JSON.parse(foundBusiness.businessImageUrl)
+          const newImageGallery = [...oldImageGallery, uploadedImage]
+          const updatedImageGallery = JSON.stringify(newImageGallery)
+          if(!foundBusiness.businessImageId){
+            foundBusiness.updateAttributes({
+              businessImageUrl:updatedImageGallery,
+              businessImageId:uploadedImage[0]
+            })
+            .catch(() => res.status(500).json({
+              success: false,
+              message: 'unable to save business images'
+            }));
+          }else{
+            foundBusiness.updateAttributes({
+              businessImageUrl:updatedImageGallery
+            })
+            .catch(() => res.status(500).json({
+              success: false,
+              message: 'unable to save business images'
+            }));           
+          }           
+
+
+      }
+
       foundBusiness.updateAttributes({
           businessName,
           tagline,
           businessAddress1,
-          businessAddress2,
           phoneNumber1,
-          phoneNumber2,
           website,
           category,
           businessDescription,
-          businessImageUrl,
-          businessImageId
         })
         .then((business) => {
           Favourite
             .findAll({
               where: {
-                businessId: business.Id
+                businessId
               },
               attributes: ['userId']
             }).then((userIds) => {
               const notificationAlert = {
-                title: `${user.username} has modified one of your favourite business`,
-                message: `one of your favourite business named: ${business.businessName} has been modified by its owner`
+                title: `${user.username} has modified your favourite business`,
+                message: `one of your favourite businesses named: ${business.businessName} has been modified by its owner`
               };
               const bizFavouriteUserIds = userIds.map((eachUser) => {
                 return {
@@ -172,20 +189,24 @@ export default class Businesses {
                   message: notificationAlert.message
                 }
               });
-              Notification.bulkCreate(bizFavouriteUserIds)
-            }).then((notifiedUsers) => {
-              res.status(200).json({
-                success: true,
-                message: 'Business record updated successfully',
-                business,
-                notifiedUsers
+              Notification.bulkCreate(bizFavouriteUserIds).then(() => {
+                res.status(200).json({
+                  success: true,
+                  message: 'Business record updated successfully',
+                  business,
+                  userIds
+                  
+                })
               })
-            })
+            })       
+
         })
-        .catch(( /* error */ ) => res.status(500).json({
+                    .catch(( error  ) => res.status(500).json({
           success: false,
+          error,
           message: 'Error updating business'
         }));
+
     };
     const userId = user.id;
     const {
@@ -195,14 +216,11 @@ export default class Businesses {
       businessName,
       tagline,
       businessAddress1,
-      businessAddress2,
       phoneNumber1,
-      phoneNumber2,
       website,
       category,
       businessDescription,
-      businessImageUrl,
-      businessImageId
+      businessImageUrl
     } = body
 
     validateUserRight(businessId, userId).then((foundBusiness) => {
@@ -220,17 +238,15 @@ export default class Businesses {
       }
       if (foundBusiness.businessName.toLowerCase() === businessName.toLowerCase()) {
         updateBusiness({
+          businessId,
           businessName,
           tagline,
           businessAddress1,
-          businessAddress2,
           phoneNumber1,
-          phoneNumber2,
           website,
           category,
           businessDescription,
           businessImageUrl,
-          businessImageId,
           foundBusiness
         });
       } else {
@@ -243,17 +259,15 @@ export default class Businesses {
               });
             }
             updateBusiness({
+              businessId,
               businessName,
               tagline,
               businessAddress1,
-              businessAddress2,
               phoneNumber1,
-              phoneNumber2,
               website,
               category,
               businessDescription,
               businessImageUrl,
-              businessImageId,
               foundBusiness
             });
           });
@@ -375,7 +389,7 @@ export default class Businesses {
     const currentPage = Number(req.query.page) || 1;
     const offset = (currentPage - 1) * limit;
 
-    if (req.query.sort === 'popular') {
+/*     if (req.query.sort === 'popular') {
       newSearchBusiness.sortByMostPopular(req, res);
     }
     else if (req.query.sort === 'recent') {
@@ -389,8 +403,8 @@ export default class Businesses {
     }
 /*   else if ((req.query.name !== 'undefined') || (req.query.location !== 'undefined')){
     newSearchBusiness.searchBusinessInLocation(req, res)
-  } */
-    else{
+  } 
+    else{ }*/
     Business
       .findAndCountAll({
         include: [{
@@ -422,7 +436,7 @@ export default class Businesses {
         success: false,
         message: 'Error fetching all businesses',
         error
-      }))};
+      }))
 
     return this;
   }
