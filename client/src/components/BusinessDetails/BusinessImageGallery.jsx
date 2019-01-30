@@ -44,9 +44,9 @@ class BusinessImageGallery extends Component {
                 <FontAwesomeIcon icon="thumbs-down" size="2x" />
                 <b>{this.props.downvotes}</b>
               </Button>
-              <Button>
-                {" "}
-                <FontAwesomeIcon icon={["far", "heart"]} size="2x" />
+              <Button onClick ={this.props.addToFavourite}>
+              <FontAwesomeIcon icon={this.props.spinner} spin size="2x" />
+                <FontAwesomeIcon icon={[this.props.favouriteIcon, "heart"]} size="2x" />
               </Button>
               <Button>
                 {" "}
