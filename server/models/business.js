@@ -18,17 +18,9 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     },
-    businessAddress2: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
     phoneNumber1: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    phoneNumber2: {
-      type: DataTypes.STRING,
-      allowNull: true,
     },
     website: {
       type: DataTypes.STRING,
@@ -39,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: true,
     },
     businessImageUrl: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: true,
     },    
     businessImageId: {
