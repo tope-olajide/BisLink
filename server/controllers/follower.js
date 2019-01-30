@@ -52,7 +52,7 @@ const notificationAlert = {
     const followerUsername = user.username
     const { userId } = params;
     const notificationAlert = {
-      title:`New Notification Alert: ${followerUsername} has ...`,
+      title:`${followerUsername} has unfollowed you`,
       message: `${followerUsername} has unfollowed you`
     }
     Follower
