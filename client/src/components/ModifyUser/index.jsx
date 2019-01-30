@@ -14,13 +14,13 @@ class ModifyUser extends Component {
         this.state = {
           fullname: "",
           email: "",
-          description:"",
+          about:"",
           location :"",
           phoneNumber :"",
           files: [],
           profile: [],
-          imageUrl: "",
-          imageId: ""
+          ImageUrl: "",
+          ImageId: ""
         };
         this.onDrop = this.onDrop.bind(this);
         this.handleInputChange = this.handleInputChange.bind(this);
@@ -42,7 +42,7 @@ class ModifyUser extends Component {
               email : this.props.usersProfile.email,
               phoneNumber:this.props.usersProfile.phoneNumber,
               location:this.props.usersProfile.location,
-              description:this.props.usersProfile.about,
+              about:this.props.usersProfile.about,
             }); 
           })
           .catch(error => {
@@ -101,8 +101,8 @@ class ModifyUser extends Component {
             .then(response => {
               const data = response.data;
               this.setState({
-                imageUrl: data.secure_url,
-                imageId: data.public_id
+                ImageUrl: data.secure_url,
+                ImageId: data.public_id
               });
               console.log(data);
               this.props.dispatch(updateProfile(this.state))
@@ -157,7 +157,7 @@ class ModifyUser extends Component {
         return (
       <div>
       <EditProfileForm 
-     defaultFullname = {this.state.fullname} 
+        defaultFullname = {this.state.fullname} 
         defaultEmail = {this.props.usersProfile.email}
         defaultPhoneNumber ={this.props.usersProfile.phoneNumber}
         defaultLocation={this.props.usersProfile.location}
