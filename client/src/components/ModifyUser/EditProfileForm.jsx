@@ -92,7 +92,7 @@ class EditProfileForm extends Component {
               this.props.handleInputChange("location", event.target.value);
             }} />
             <Input type="textarea" default={this.props.defaultDesription} label="About Me"  rows="3"onChange={event => {
-              this.props.handleInputChange("description", event.target.value);
+              this.props.handleInputChange("about", event.target.value);
             }}/>
           </div>
           <div className="text-center">
