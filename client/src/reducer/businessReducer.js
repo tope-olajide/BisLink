@@ -1,13 +1,12 @@
 import {
     ADD_BUSINESS,
     SET_BUSINESS_DETAILS,
-    SET_MY_BUSINESSES,
     FETCH_ALL_BUSINESSES,
-    EDIT_BUSINESS,
     FETCH_BUSINESS_REVIEWS,
     ADD_BUSINESS_REVIEW,
     UPVOTE_BUSINESS,
-    DOWNVOTE_BUSINESS
+    DOWNVOTE_BUSINESS,
+    MODIFY_BUSINESS
 } from '../actions/type'
 
 const initialState = {
@@ -60,11 +59,10 @@ export default (state = initialState, action) => {
           }
         };
         case ADD_BUSINESS:
-        return {...state, myBusinesses: action.businesses };
-        case SET_MY_BUSINESSES:
-        return { ...state, myBusinesses: action.businesses };
-        case EDIT_BUSINESS:
-        return { ...state, myBusinesses: action.businesses };
+        return {...state, [action.business.id]: action.business };
+        case MODIFY_BUSINESS:
+        return {...state, [action.business.id]: action.business };
+
         default: return state;
     }
 }
