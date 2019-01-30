@@ -279,7 +279,7 @@ export default class Users {
         }
 
         if (!newEncryption.verifyHash(oldPassword, userFound.password)) {
-          return res.status(401).json ({
+          return res.status(401).json({
             success: false,
             message: 'Incorrect Password'
           });
