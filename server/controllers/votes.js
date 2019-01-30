@@ -166,8 +166,8 @@ export default class Vote {
                     downvotes
                   } = business;
                   const notificationAlert = {
-                    title:`One of your business has been Downvoted `,
-                    message: `One of your business named: ${businessName} has been Downvoted by ${user.id} `
+                    title:`One of your businesses has been Downvoted `,
+                    message: `One of your businesses named: ${businessName} has been Downvoted by ${user.id} `
                   }
                   Notification
                   .create({ 
