@@ -17,7 +17,7 @@ export default class Favourites {
 const notificationAlert = {
   receiverId:business.userId,
   title:`${user.username} has added one of your business to his/her favourite`,
-  message: `${user.username} has added your business ${business.businessName}  to his/her favourite`
+  message: `${user.username} has added your business named: ${business.businessName}  to his/her favourite business collection`
 };
 Notification
           .create({
@@ -30,7 +30,8 @@ Notification
           return res.status(201).json({
             success: true,
             message: `Business with id: ${businessId} added to favourites!`,
-            addedBusiness
+            addedBusiness,
+            isFavourite: true
           });
         }
 
@@ -63,7 +64,8 @@ Notification
         if (status === 1) {
           res.status(200).json({
             success: true,
-            message: `Business with ID: ${businessId} Removed from Favourites`
+            message: `Business with ID: ${businessId} Removed from Favourites`,
+            isFavourite: false
           });
         }
       })
