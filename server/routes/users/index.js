@@ -26,7 +26,7 @@ user.put('/change-password', newUser.changePassword);
 user.get('/profile', newUser.getUser);
 user.get('/businesses', newBusiness.getUserBusiness);
 
-user.route('/business/favourite/:businessId')
+user.route('/favourite/:businessId')
 .post(newFavourite.addToFavourite)
 .delete(newFavourite.removeFromFavourites)
 .get(newFavourite.getFavBusiness);
