@@ -81,9 +81,12 @@ class BusinessList extends Component {
                     if (defaultImage){
                       return defaultImage
                     }
-                    else{
+                    else if (imageGallery){
                       const temporaryDefaultImg = JSON.parse(imageGallery)
                       return temporaryDefaultImg[0]
+                    }
+                    else{
+                      return ""
                     }
                   }
                   return (
@@ -97,7 +100,10 @@ class BusinessList extends Component {
                       businessAddress={business.businessAddress1}
                       phoneNumber={business.phoneNumber1}
                       website={business.website}
-                      image={setDefaultBizImage(business.businessImageId,business.businessImageUrl)}
+                      image={business.businessImageId}
+                      viewCount={business.viewCount}
+                      upvotes={business.upvotes}
+                      downvotes={business.downvotes}
                     />
 
                     </>
