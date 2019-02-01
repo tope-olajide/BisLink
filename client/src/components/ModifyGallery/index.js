@@ -1,15 +1,16 @@
 import React, { Component } from "react";
-import ModifyPictureGallery from './ModifyPictureGallery'
+import PictureGallery from './PictureGallery'
 import NavBar from './../commons/NavigationBar';
 import Footer from "../commons/Footer";
 class ModifyGallery extends Component {
     render () {
+        
         return (
 <div>
 <NavBar />
 <div className="container content-container">
     <div className="row card-container">
-    <ModifyPictureGallery
+    <PictureGallery
  
     />
     </div>
