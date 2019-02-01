@@ -1,4 +1,4 @@
-import { Favourite, Business, User } from '../models';
+import { Favourite, Business, User, Notification } from '../models';
 
 export default class Favourites {
 
