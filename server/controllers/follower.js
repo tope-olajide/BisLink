@@ -30,7 +30,8 @@ const notificationAlert = {
           return res.status(201).json({
             success: true,
             message: `you are now following ${userId} `,
-            addedFollower
+            addedFollower,
+            isFollowing:true
           })
         }
         return res.status(409).json({
@@ -81,7 +82,14 @@ const notificationAlert = {
 
           res.status(200).json({
             success: true,
-            message: `you have unfollowed ${userId}`
+            message: `you have unfollowed ${userId}`,
+            isFollowing:false
+          });
+        }else{
+          res.status(409).json({
+            success: false,
+            message: `you are not followed by ${userId}`,
+            isFollowing:false
           });
         }
       })
