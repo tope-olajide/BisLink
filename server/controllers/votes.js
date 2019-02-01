@@ -2,7 +2,7 @@ import {
   Upvote,
   Downvote,
   Business,
-  User
+  User,Notification
 } from '../models';
 
 
