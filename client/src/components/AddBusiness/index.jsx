@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-import AddBusiness from "./../AddBusiness/RegisterBusinessPage";
+import { addBusiness } from "../../actions/businessActions";
+import RegisterBusinessPage from "./../AddBusiness/RegisterBusinessPage";
 import NavBar from "./../commons/NavigationBar";
+import { connect } from "react-redux";
 import Footer from "../commons/Footer";
 class BusinessList extends Component {
   constructor() {
@@ -39,10 +41,9 @@ class BusinessList extends Component {
     this.setState({ [key]: value });
   }
   handleFormSubmit = files => {
-    if (this.state.filesToBeSent.length < 1) {
-      this.props.onAddUser(this.state);
-      alert("saved to database successfully");
-    }
+    if (this.state.filesToBeSent.length >= 1) {
+ 
+
     alert("Loading....");
     // start loading animation
     // Push all the axios request promise into a single array
@@ -87,27 +88,37 @@ class BusinessList extends Component {
     axios
       .all(uploaders)
       .then(data => {
-
         alert(
           "Success!!!: Upload picture successfully, now saving to database"
         );
-        const imgUrlToString = JSON.stringify(this.state.businessImageArray)
-        this.setState({businessImageUrl:imgUrlToString})
+        const imgArrayUrlToString = JSON.stringify(this.state.businessImageArray)
+        this.setState({businessImageUrl:imgArrayUrlToString})
         console.log(this.state.businessImageUrl)
         console.log(typeof this.state.businessImageUrl)
-
-        this.props.onAddUser(this.state);
-        alert("saved to database successfully");
+        this.props.dispatch(addBusiness(this.state)).then(()=>{
+          alert("saved to database successfully");
+        }).catch(function(err) {
+          alert(err);
+        })
+        
       })
       .catch(function(err) {
         alert(err);
-      });
+      })
+    }
+    else{
+    this.props.dispatch(addBusiness(this.state)).then(()=>{
+      alert("saved to database successfully");
+    }).catch(function(err) {
+      alert(err);
+    })
+  }
   }
   render() {
     return (
       <div>
         <NavBar  addBusiness = "active"/>
-        <AddBusiness
+        <RegisterBusinessPage
           files={this.state}
           onDrop={this.onDrop}
           handleFormSubmit={this.handleFormSubmit}
@@ -118,4 +129,4 @@ class BusinessList extends Component {
     );
   }
 }
-export default BusinessList;
+export default connect()(BusinessList);
