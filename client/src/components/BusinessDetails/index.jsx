@@ -7,6 +7,18 @@ import {
   fetchBusinessReviews,
   addBusinessReviews
 } from "../../actions/businessActions";
+import {
+  removeFromFavourite,
+  addToFavourite
+} from "../../actions/favouriteActions";
+import {
+  upvote,
+  downvote
+} from "../../actions/voteAction";
+import {
+  follow,
+  unfollow
+} from "../../actions/followActions";
 import LoadingAnimation from "../commons/LoadingAnimation";
 import toastNotification from "./../../utils/toastNotification";
 import { connect } from "react-redux";
@@ -19,13 +31,30 @@ class BusinessDetails extends Component {
       isError: false,
       title: "",
       content: "",
-      lightboxIsOpen:''
+      favouriteIcon: "",
+      isFavourite: true,
+      followButton:''
     };
   }
   componentDidMount() {
     const id = this.props.match.params.businessId;
     this.fetchBusinessDetails(id);
   }
+  setFavourite = favourite => {
+    if (favourite) {
+      this.setState({ favouriteIcon: "fas", isFavourite: true });
+    } else {
+      this.setState({ favouriteIcon: "far", isFavourite: false });
+    }
+  };
+setFollowButton=()=>{
+  if(this.props.infoCount.isFollowing){
+    this.setState({ followButton: "unfollow" });
+  }
+  else{
+    this.setState({ followButton: "follow" });
+  }
+}
   fetchBusinessDetails = id => {
     console.log(id);
     this.props
@@ -36,6 +65,8 @@ class BusinessDetails extends Component {
             isLoading: false,
             isError: false
           });
+          this.setFavourite(this.props.infoCount.isUserFavourite);
+this.setFollowButton()
         });
       })
       .catch(error => {
@@ -67,6 +98,103 @@ class BusinessDetails extends Component {
         alert(error);
       });
   };
+  followUser=()=>{
+    const userId = this.props.businessDetails.User.id
+    if(this.props.infoCount.isFollowing){
+      this.props
+        .dispatch(unfollow(userId))
+        .then(() => {
+         /*  this.setState({ favouriteIcon: "fas", isFavourite: true }); */
+          alert("success");
+          this.setFollowButton()
+        })
+        .catch(error => {
+          alert(error);
+          this.setFollowButton()
+        });
+    } else {
+      this.props
+        .dispatch(follow(userId))
+        .then(() => {
+  /*         this.setState({ favouriteIcon: "far", isFavourite: false }); */
+          alert("success");
+          this.setFollowButton()
+        })
+        .catch(error => {
+          alert(error);
+          this.setFollowButton()
+        });
+    }
+  }
+  addToFavourite = () => {
+    const id = this.props.match.params.businessId;
+    if (!this.state.isFavourite) {
+      this.props
+        .dispatch(addToFavourite(id))
+        .then(() => {
+          this.setState({ favouriteIcon: "fas", isFavourite: true });
+          alert("success");
+        })
+        .catch(error => {
+          alert(error);
+        });
+    } else {
+      this.props
+        .dispatch(removeFromFavourite(id))
+        .then(() => {
+          this.setState({ favouriteIcon: "far", isFavourite: false });
+          alert("success");
+        })
+        .catch(error => {
+          alert(error);
+        });
+    }
+    /*    if (this.state.favouriteIcon=='fas'){
+    this.setState({ favouriteIcon: 'far' }) }
+    else{
+      this.setState({ favouriteIcon: 'fas' })
+    } */
+  };
+  removeFromFavourites = () => {
+    const id = this.props.match.params.businessId;
+    this.props
+      .dispatch(removeFromFavourite(id))
+      .then(() => {
+        this.setState({ favouriteIcon: "fas", isFavourite: true });
+        alert("success");
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+  upvoteBusiness = () => {
+    const id = this.props.match.params.businessId;
+    this.props
+      .dispatch(upvote(id))
+      .then(() => {
+        
+        alert("success");
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+  downvoteBusiness = () => {
+    const id = this.props.match.params.businessId;
+    this.props
+      .dispatch(downvote(id))
+      .then(() => {
+        
+        alert("success");
+      })
+      .catch(error => {
+        alert(error);
+      });
+  };
+  editBusiness=()=>{
+    const id = this.props.match.params.businessId;
+    window.location = `/modify-business/${id}`;
+  }
   render() {
     if (this.state.isLoading) {
       return (
@@ -87,18 +215,25 @@ class BusinessDetails extends Component {
         <div>
           <NavigationBar />
           <BusinessImageGallery
-            businessName= {this.props.businessDetails.businessName}
-            tagline= {this.props.businessDetails.tagline}
-            upvotes= {this.props.businessDetails.upvotes}
-            downvotes= {this.props.businessDetails.downvotes}
-            viewCount= {this.props.businessDetails.viewCount}
+            businessName={this.props.businessDetails.businessName}
+            tagline={this.props.businessDetails.tagline}
+            upvotes={this.props.businessDetails.upvotes}
+            downvotes={this.props.businessDetails.downvotes}
+            viewCount={this.props.businessDetails.viewCount}
+            favouriteIcon={this.state.favouriteIcon}
+            addToFavourite={this.addToFavourite}
+            isBusinessOwner={this.props.infoCount.isBusinessOwner}
+            removeFromFavourites={this.removeFromFavourites}
+            upvoteBusiness={this.upvoteBusiness}
+            downvoteBusiness={this.downvoteBusiness}
+            editBusiness={this.editBusiness}
           />
           <BusinessDetailsPage
             saveToState={this.saveToState}
             handleReviewSubmit={this.addBusinessReviews}
             businessDescription={this.props.businessDetails.businessDescription}
-            reviewLength={this.props.businessReviews.length}
-            reviews={this.props.businessReviews}
+            reviewLength={this.props.businessReview.length}
+            reviews={this.props.businessReview}
             title={this.state.title}
             content={this.state.content}
             businessAddress1={this.props.businessDetails.businessAddress1}
@@ -113,10 +248,13 @@ class BusinessDetails extends Component {
             followersCount={this.props.infoCount.followersCount}
             followingCount={this.props.infoCount.followingCount}
             isBusinessOwner={this.props.infoCount.isBusinessOwner}
+            followUser={this.followUser}
+            followButton={this.state.followButton}
           />
           {console.log(this.props.businessDetails)}
           {console.log(this.props.infoCount)}
-          {console.log(this.props.businessReviews)}
+          {console.log(this.props.businessReview)}
+          
           <Footer />
         </div>
       );
@@ -124,11 +262,11 @@ class BusinessDetails extends Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state.businessReducer)
+  console.log(state.reviewReducer.reviews);
   return {
     businessDetails: state.businessReducer.businessDetails.business,
     infoCount: state.businessReducer.businessDetails.infoCount,
-    businessReviews: state.businessReducer.fetchBusinessReviews
+    businessReview: state.reviewReducer.reviews
   };
 };
 export default connect(mapStateToProps)(BusinessDetails);
