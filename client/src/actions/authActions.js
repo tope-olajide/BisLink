@@ -21,6 +21,7 @@ export function signUp(userData) {
       .then((response) => {
         const { token } = response.data;
         localStorage.setItem('token', token);
+        axios.defaults.headers.common['authorization'] = token;
         dispatch(setCurrentUser(jsonwebtoken
           .decode(localStorage.getItem('token'))));
       });
@@ -31,13 +32,12 @@ export function signUp(userData) {
         const { token } = response.data;
         localStorage.setItem('token', token);
         axios.defaults.headers.common['authorization'] = token;
-
         dispatch(setCurrentUser(jsonwebtoken
           .decode(localStorage.getItem('token'))));
       });
   }
   export function updateProfile(userData) {
-    return dispatch => axios.put(`${url}profile`, userData, setHeaderToken)
+    return dispatch => axios.put(`${url}profile`, userData)
       .then((response) => {
         const {
           user: { token }
