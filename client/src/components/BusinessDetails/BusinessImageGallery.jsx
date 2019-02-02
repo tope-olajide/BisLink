@@ -32,31 +32,35 @@ class BusinessImageGallery extends Component {
           <div className="row">
             <div className="col-md-6 mt-5">
               <h2>{this.props.businessName}</h2>
-              <p> {this.props.tagline} </p>
+              <p> {this.props.tagline} </p> <br />
+              <Button>
+                <h5>Write a Review </h5>
+              </Button>
             </div>
             <div className=" mt-4 col-md-6">
-              <Button>
+              <Button onClick={this.props.upvoteBusiness}>
                 <FontAwesomeIcon icon="thumbs-up" size="2x" />{" "}
                 <b>{this.props.upvotes}</b>
               </Button>
-              <Button>
-                {" "}
+
+              <Button onClick={this.props.downvoteBusiness}>
                 <FontAwesomeIcon icon="thumbs-down" size="2x" />
                 <b>{this.props.downvotes}</b>
               </Button>
+
               <Button onClick ={this.props.addToFavourite}>
               <FontAwesomeIcon icon={this.props.spinner} spin size="2x" />
                 <FontAwesomeIcon icon={[this.props.favouriteIcon, "heart"]} size="2x" />
-              </Button>
-              <Button>
-                {" "}
-                <h5>Write a Review </h5>
-              </Button>
-              {/* <Button > <FontAwesomeIcon icon="eye" size="2x" /> <b>10</b></Button> */}
+              </Button> <br />
               <Button disabled>
-                {" "}
                 <FontAwesomeIcon icon={["far", "eye"]} size="2x" />{" "}
                 {this.props.viewCount}
+              </Button>
+              <Button disabled={!this.props.isBusinessOwner}>
+                <FontAwesomeIcon icon="trash" size="2x" />
+              </Button>
+              <Button disabled={!this.props.isBusinessOwner} onClick={this.props.editBusiness}>
+                <FontAwesomeIcon icon="edit" size="2x" />
               </Button>
             </div>
           </div>
