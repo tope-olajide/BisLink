@@ -3,6 +3,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './search.css'
 import {Navbar, Col, NavbarBrand, NavbarNav, NavbarToggler, Collapse,Button, NavItem, NavLink
 } from "mdbreact";
+import { connect } from "react-redux";
+import {
+signOut
+} from "../../actions/authActions";
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
@@ -17,7 +21,9 @@ class NavigationBar extends React.Component {
       collapse: !this.state.collapse
     });
   }
-
+signOut=()=>{
+  this.props.dispatch(signOut())
+}
 
   render() {
     return (
@@ -61,16 +67,15 @@ class NavigationBar extends React.Component {
               <NavItem>
               </NavItem>
               <NavItem>
-                <NavLink to="/auth">
+                <NavLink to='#?' onClick={this.signOut}>
                   <FontAwesomeIcon icon="user" /> LOGOUT
                 </NavLink>
               </NavItem>
             </NavbarNav>
           </Collapse>
         </Navbar>
-
       </div>
     );
   }
 }
-export default NavigationBar
+export default connect()(NavigationBar);
