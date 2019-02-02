@@ -4,14 +4,8 @@ NEW_NOTIFICATIONS,NOTIFICATION_DETAILS,ALL_NOTIFICATIONS
 } from '../actions/type'
 const url = 'http://127.0.0.1:5000/api/user/notifications'
 
-const token = localStorage.getItem('token');
-const setHeaderToken = {
-    headers:{
-        authorization:token
-    }
-}
 export function fetchAllNewNotifications() {
-    return dispatch => axios.get(`${url}`,setHeaderToken)
+    return dispatch => axios.get(`${url}`)
         .then((response) => {
             const {
                 unreadNotifications,allNotificationsCount
@@ -24,7 +18,7 @@ export function fetchAllNewNotifications() {
         });
 }
 export function fetchSingleNotification(notificationId) {
-    return dispatch => axios.get(`${url}/${notificationId}`,setHeaderToken)
+    return dispatch => axios.get(`${url}/${notificationId}`)
         .then((response) => {
             const {
                 notification
@@ -36,7 +30,7 @@ export function fetchSingleNotification(notificationId) {
         });
 }
 export function fetchAllNotifications() {
-    return dispatch => axios.get(`${url}/all`,setHeaderToken)
+    return dispatch => axios.get(`${url}/all`)
         .then((response) => {
             const {
                 allNotifications,newNotificationsCount
