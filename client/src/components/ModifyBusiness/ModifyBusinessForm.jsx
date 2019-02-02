@@ -64,7 +64,7 @@ class RegisterBusinessPage extends Component {
         </div>
         <div className="biz-form-container mt-5">
                 <div className="  text-right ">
-             <Button onClick={this.props.handleFormSubmit} >
+             <Button onClick={this.props.modifyGallery} >
                   Modify Picture Gallery
                 </Button>
           </div>
