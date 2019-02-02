@@ -6,7 +6,7 @@ import {
     ADD_BUSINESS_REVIEW,
     UPVOTE_BUSINESS,
     DOWNVOTE_BUSINESS,
-    MODIFY_BUSINESS
+    MODIFY_BUSINESS,FOLLOW_USER,UNFOLLOW_USER
 } from '../actions/type'
 
 const initialState = {
@@ -32,14 +32,11 @@ export default (state = initialState, action) => {
         return {...state, allBusinesses: action.pagedBusiness }
         case SET_BUSINESS_DETAILS:
         return { ...state, businessDetails: action.businessDetails };
-        case FETCH_BUSINESS_REVIEWS:
-        return { ...state, fetchBusinessReviews: action.reviews };
-        case ADD_BUSINESS_REVIEW:
-        return { ...state, businessDetails: action.addBusinessReview };
         case UPVOTE_BUSINESS:
         return {
           ...state,
           businessDetails: {
+            ...state.businessDetails,
               business:{
                   ...state.businessDetails.business,
                   upvotes: action.business.upvotes,
@@ -51,10 +48,35 @@ export default (state = initialState, action) => {
         return {
           ...state,
           businessDetails: {
+            ...state.businessDetails,
               business:{
                   ...state.businessDetails.business,
                   upvotes: action.business.upvotes,
                   downvotes: action.business.downvotes                 
+              }
+          }
+        };
+        case FOLLOW_USER:
+        return {
+          ...state,
+          businessDetails: {
+            ...state.businessDetails,
+              infoCount:{
+                  ...state.businessDetails.infoCount,
+                  isFollowing: action.isFollowing,
+                  followersCount: state.businessDetails.infoCount.followersCount+1             
+              }
+          }
+        };
+        case UNFOLLOW_USER:
+        return {
+          ...state,
+          businessDetails: {
+            ...state.businessDetails,
+              infoCount:{
+                  ...state.businessDetails.infoCount,
+                  isFollowing: action.isFollowing,
+                  followersCount: state.businessDetails.infoCount.followersCount-1              
               }
           }
         };
