@@ -1,9 +1,9 @@
 import axios from 'axios';
 
 import {
-  UPVOTE, DOWNVOTE
-} from '../constants';
-const url = 'http://127.0.0.1:5000/api/business/'
+  UPVOTE_BUSINESS, DOWNVOTE_BUSINESS
+} from './type';
+const url = 'http://127.0.0.1:5000/api/business'
   const token = localStorage.getItem('token');
 const setHeaderToken = {
     headers:{
@@ -16,7 +16,7 @@ export function upvote(businessId) {
       .then((response) => {
         const { business } = response.data;
         dispatch({
-          type: UPVOTE,
+          type: UPVOTE_BUSINESS,
           business
         });
       });
@@ -26,9 +26,8 @@ export function upvote(businessId) {
       .then((response) => {
         const { business } = response.data;
         dispatch({
-          type: DOWNVOTE,
+          type: DOWNVOTE_BUSINESS,
           business
-
         });
       });
   }
