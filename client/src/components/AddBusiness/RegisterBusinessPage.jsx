@@ -96,13 +96,7 @@ class RegisterBusinessPage extends Component {
                 />
               </div>
             </div>
-            <Input
-              label="Email Address"
-              icon="envelope"
-              onChange={event => {
-                this.props.handleInputChange("email", event.target.value);
-              }}
-            />
+ 
             <Input
               label="Business Address"
               className="mt-5"
@@ -152,7 +146,7 @@ class RegisterBusinessPage extends Component {
               icon="pencil"
               rows="3"
               onChange={event => {
-                this.props.handleInputChange("fullname", event.target.value);
+                this.props.handleInputChange("businessDescription", event.target.value);
               }}
             />
             <section>
