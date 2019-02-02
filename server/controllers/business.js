@@ -484,12 +484,32 @@ export default class Businesses {
               }
             }).then((followingCount) => {
               infoCount.followingCount = followingCount
+              Favourite
+              .findOne({
+                where: { userId, businessId }
+              }).then((favourites)=>{
+                if (favourites){
+                  infoCount.isUserFavourite = true
+                }
+                else {
+                  infoCount.isUserFavourite = false;
+                }
+                Follower
+                .findOne({
+                  where: { userId:business.User.id, followerId:userId }
+                }).then((isFollowing)=>{
+                  if (isFollowing){
+                    infoCount.isFollowing = true;
+                  }
+                  else{
+                    infoCount.isFollowing = false;
+                  }
                 res.status(200).json({
                 success: true,
                 message: 'business found',
                 business,
                 infoCount
-                })
+                })}) })
             })
           })
         })
@@ -501,6 +521,34 @@ export default class Businesses {
 
     return this;
   }
+  fetchBusinessPictures ({ params, user }, res) {
+    const { businessId } = params;
+    validateUserRight(businessId, user.id).then((foundBusiness) => {
+if(foundBusiness.businessImageUrl){
+  const businessPictures = JSON.parse(foundBusiness.businessImageUrl)
+  res.status(200).json({
+    success: true,
+    message: 'Business Pictures Found',
+    businessPictures
+  })
+}
+else{
+  res.status(404).json({
+    success: true,
+    message: 'No Business Picture Found',
+    businessPictures:[]
+  })
+}
+    })
+    .catch(({ status, message }) => {
+    res.status(status).json({
+      success: false,
+      message
+    });
+  });
+  }
+
+
   deleteBusinessImage({
     params,user
   }, res) {
