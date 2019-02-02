@@ -6,7 +6,7 @@ import {
     DELETE_BUSINESS,
     EDIT_BUSINESS,
     FETCH_ALL_BUSINESSES,
-    ADD_BUSINESS_REVIEW,FETCH_BUSINESS_REVIEWS
+    ADD_BUSINESS_REVIEW,FETCH_BUSINESS_REVIEWS,MODIFY_BUSINESS,ADD_TO_FAVOURITE
 } from '../actions/type'
 const url = 'http://127.0.0.1:5000/api/business'
 
@@ -16,8 +16,9 @@ const setHeaderToken = {
         authorization:token
     }
 }
+
 export function fetchBusinesses(page, limit) {
-    return dispatch => axios.get(`${url}?page=${page}&limit=${limit}`,setHeaderToken)
+    return dispatch => axios.get(`${url}?page=${page}&limit=${limit}`)
         .then((response) => {
             const {
                 businesses,totalPages
@@ -32,7 +33,7 @@ export function fetchBusinesses(page, limit) {
 
 
 export function businessSearch(name, location, page, limit) {
-    return dispatch => axios.get(`${url}?name=${name}&location=${location}&page=${page}&limit=${limit}`,setHeaderToken)
+    return dispatch => axios.get(`${url}?name=${name}&location=${location}&page=${page}&limit=${limit}`)
         .then((response) => {
             const {
                 businesses,totalPages
@@ -47,7 +48,7 @@ export function businessSearch(name, location, page, limit) {
 
 export function fetchBusinessDetails(businessId) {
     return dispatch =>
-        axios.get(`${url}/${businessId}`,setHeaderToken)
+        axios.get(`${url}/${businessId}`)
         .then((response) => {
             const  {business, infoCount} = response.data;
             const businessDetails = {business, infoCount}
@@ -60,10 +61,9 @@ export function fetchBusinessDetails(businessId) {
 
 export function fetchBusinessReviews(businessId) {
     return dispatch =>
-        axios.get(`${url}/${businessId}/reviews`,setHeaderToken)
+        axios.get(`${url}/${businessId}/reviews`)
         .then((response) => {
             const  {reviews} = response.data;
-           
             dispatch({
                 type: FETCH_BUSINESS_REVIEWS,
                 reviews
@@ -73,7 +73,7 @@ export function fetchBusinessReviews(businessId) {
 
 export function addBusinessReviews(businessId, userReview) {
     return dispatch =>
-        axios.post(`${url}/${businessId}/reviews`, userReview, setHeaderToken)
+        axios.post(`${url}/${businessId}/reviews`, userReview)
         .then((response) => {
             const  {reviews} = response.data;
             dispatch({
@@ -82,12 +82,6 @@ export function addBusinessReviews(businessId, userReview) {
             });
         });
 }
-
-  
-
-
-
-
 
 
 export function addBusiness(businessData) {
@@ -98,6 +92,18 @@ export function addBusiness(businessData) {
             } = response.data;
             dispatch({
                 type: ADD_BUSINESS,
+                business
+            });
+        });
+}
+export function modifyBusiness(businessData,businessId) {
+    return dispatch => axios.put(`${url}/${businessId}`, businessData)
+        .then((response) => {
+            const {
+                business
+            } = response.data;
+            dispatch({
+                type: MODIFY_BUSINESS,
                 business
             });
         });
