@@ -1,7 +1,7 @@
 import {
   Business,
   User,
-  Follower,Upvote,Downvote, Favourite,Notification
+  Follower, Favourite,Notification
 } from '../models';
 import {
   validateBusiness
@@ -51,8 +51,7 @@ export default class Businesses {
       website,
       category,
       businessDescription,
-      businessImageUrl,
-      businessImageId
+      businessImageUrl
     } = body
 
     isNamePicked(userId, businessName)
@@ -86,7 +85,7 @@ export default class Businesses {
             category,
             businessDescription,
             businessImageUrl,
-            businessImageId:parsedbusinessImageUrl[0],
+            defaultBusinessImageUrl:parsedbusinessImageUrl[0],
             userId,
           })
           .then((business) => {
@@ -139,10 +138,10 @@ export default class Businesses {
           const oldImageGallery = JSON.parse(foundBusiness.businessImageUrl)
           const newImageGallery = [...oldImageGallery, uploadedImage]
           const updatedImageGallery = JSON.stringify(newImageGallery)
-          if(!foundBusiness.businessImageId){
+          if(!foundBusiness.defaultBusinessImageUrl){
             foundBusiness.updateAttributes({
               businessImageUrl:updatedImageGallery,
-              businessImageId:uploadedImage[0]
+              defaultBusinessImageUrl:uploadedImage[0]
             })
             .catch(() => res.status(500).json({
               success: false,
@@ -383,28 +382,10 @@ export default class Businesses {
     return this;
   }
   getAllBusinesses(req, res) {
-    const newSearchBusiness = new searchBusiness()
-
     const limit = Number(req.query.limit) || 9;
     const currentPage = Number(req.query.page) || 1;
     const offset = (currentPage - 1) * limit;
-
-/*     if (req.query.sort === 'popular') {
-      newSearchBusiness.sortByMostPopular(req, res);
-    }
-    else if (req.query.sort === 'recent') {
-      newSearchBusiness.sortByMostRecent(req, res);
-    }
-    else if (req.query.name === 'undefined'){
-      newSearchBusiness.searchAllLocation(req, res)
-    }
-    else if (req.query.location === 'undefined'){
-      newSearchBusiness.searchBusinessName(req, res)
-    }
-/*   else if ((req.query.name !== 'undefined') || (req.query.location !== 'undefined')){
-    newSearchBusiness.searchBusinessInLocation(req, res)
-  } 
-    else{ }*/
+  
     Business
       .findAndCountAll({
         include: [{
@@ -437,7 +418,7 @@ export default class Businesses {
         message: 'Error fetching all businesses',
         error
       }))
-
+    
     return this;
   }
   getBusinessDetails({
@@ -521,15 +502,36 @@ export default class Businesses {
 
     return this;
   }
+searchForBusinesses(req,res) {
+  const newSearchBusiness = new searchBusiness()
+
+  if (req.query.sort === 'popular') {
+    newSearchBusiness.sortByMostPopular(req, res);
+  }
+  else if (req.query.sort === 'recent') {
+    newSearchBusiness.sortByMostRecent(req, res);
+  }
+  else if (req.query.name === 'undefined' ||req.query.name === ' ' ){
+    newSearchBusiness.searchAllLocation(req, res)
+  }
+  else if (req.query.location === 'undefined'){
+    newSearchBusiness.searchBusinessName(req, res)
+  }
+else {
+  newSearchBusiness.searchBusinessInLocation(req, res)
+} 
+}
   fetchBusinessPictures ({ params, user }, res) {
+    const userId = user.id;
     const { businessId } = params;
-    validateUserRight(businessId, user.id).then((foundBusiness) => {
-if(foundBusiness.businessImageUrl){
+    validateUserRight(businessId, userId).then((foundBusiness) => {
+      const imageGalleries = foundBusiness.businessImageUrl
+if(imageGalleries){
   const businessPictures = JSON.parse(foundBusiness.businessImageUrl)
   res.status(200).json({
     success: true,
     message: 'Business Pictures Found',
-    businessPictures
+    businessPictures:businessPictures
   })
 }
 else{
@@ -540,43 +542,37 @@ else{
   })
 }
     })
-    .catch(({ status, message }) => {
-    res.status(status).json({
-      success: false,
+.catch(({
+      status,
       message
+    }) => {
+      res.status(status).json({
+        success: false,
+        message
+      });
     });
-  });
   }
 
 
-  deleteBusinessImage({
-    params,user
-  }, res) {
-    const {
-      businessImageId
-    } = params;
+  deleteBusinessImage({ params,user,query}, res) {
+    const {businessImageId} = query;
   const {
     businessId
   } = params;
-  validateUserRight(businessId, user.id).then(() => {
-    Business.findOne({
-      where:{businessId}
-    }).then ((businessFound)=> {
-      const parsedImageArray = JSON.parse(businessFound.businessImageUrl)
-      const newImageGallery = parsedImageArray.filter((image)=>image.imageId !== businessImageId);
+  validateUserRight(businessId, user.id).then((foundBusiness) => {
+      const parsedImageArray = JSON.parse(foundBusiness.businessImageUrl)
+      const filteredImageGallery = parsedImageArray.filter((image)=>image.imageId !== businessImageId);
       /* Cloudinary delete pictures online */
-      const modifiedImageGallery = JSON.stringify(newImageGallery)
-      businessFound.updateAttributes({
+      const modifiedImageGallery = JSON.stringify(filteredImageGallery)
+      foundBusiness.updateAttributes({
         businessImageUrl:modifiedImageGallery
       }).then(() => res.status(200).json({
         success: true,
-        message: 'Password Changed Successfully',
-        businessImageUrl: modifiedImageGallery
-      }));
-    }).catch(( ) => res.status(500).json({
-      success: false,
-      message: 'An error occured'
-    }));
+        message: 'Image Gallery Modified Successfully',
+        businessPictures: filteredImageGallery,
+        businessId:businessImageId,
+        parsedImageArray
+      }))
   }).catch(({ status, message }) => {
     res.status(status).json({
       success: false,
@@ -585,22 +581,23 @@ else{
   });
 
   }
-  setDefaultBusinessImage ({ params }, res) {
-  const { businessImageUrl } = params;
+  setDefaultBusinessImage ({ params, query, user }, res) {
+    const {businessImageUrl} = query;
   const { businessId } = params;
-  Business.findOne({
-    where:{businessId}
-  }).then ((businessFound)=> {
-    businessFound.updateAttributes({
-      businessImageId:businessImageUrl
+  validateUserRight(businessId, user.id).then((foundBusiness) => {
+    foundBusiness.updateAttributes({
+      defaultBusinessImageUrl:businessImageUrl
     }).then(() => res.status(200).json({
       success: true,
-      message: 'default business image set successfully'
+      message: 'default business image set successfully',
+      defaultBusinessImage:businessImageUrl
     }));
-  }).catch(( ) => res.status(500).json({
-    success: false,
-    message: 'An error occured'
-  }));
+  }).catch(({ status, message }) => {
+    res.status(status).json({
+      success: false,
+      message
+    });
+  });
 }
 
 }
