@@ -2,6 +2,12 @@ import React, { Component } from "react";
 import { Button } from "mdbreact";
 import Image from "react-graceful-image";
 class PictureGallery extends Component {
+    deleteImage=()=>{
+        this.props.deleteBusinessPicture( this.props.id)
+    }
+    setDefaultImage = ()=>{
+        this.props.setDefaultBusinessImage(this.props.image)
+    }
     render () {
         return (
             <>
@@ -13,8 +19,8 @@ class PictureGallery extends Component {
                   alt="Card image cap"
                 />
                 <div className="text-center card-body">
-                  <Button>Delete</Button>
-                  <Button>Set as Default</Button>
+                  <Button onClick={this.deleteImage}>Delete</Button>
+                  <Button onClick={this.setDefaultImage}>Set as Default</Button>
               </div>
               </div>
               </div>
