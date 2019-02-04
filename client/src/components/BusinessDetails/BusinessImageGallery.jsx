@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class BusinessImageGallery extends Component {
   render() {
-    /* const addTransformationToUrl = url => {
+     const addTransformationToUrl = url => {
       const orignalTransformations = "w_1000,h_600,c_fit";
       const thumbTransformations = "w_250,h_150,c_fit";
       const urlDivider = "/image/upload/";
@@ -20,14 +20,16 @@ class BusinessImageGallery extends Component {
         original: originalTransformedUrl,
         thumbnail: thumbTransformedUrl
       };
-    };
-    const imageGalleryUrl = this.props.businessImageUrl.map(imageUrl => {
-      return addTransformationToUrl(imageUrl);
+    }; 
+     const imageGalleryUrl = this.props.businessImageUrl.map(businessImage => {
+      return addTransformationToUrl(businessImage.imageUrl);
     });
-    const images = imageGalleryUrl; */
+    const images = imageGalleryUrl; 
+ 
+console.log(this.props.businessImageUrl)
     return (
       <div className="card p-5 mt-0">
-        {/* <ImageGallery items={images} /> */}
+          <ImageGallery items={images} />  
         <div className="container mt-0">
           <div className="row">
             <div className="col-md-6 mt-5">
