@@ -17,7 +17,6 @@ class BusinessList extends Component {
       category: "",
       businessImageUrl: "",
       businessImageArray:[],
-      businessImageId: "",
       businessDescription: "",
       files: [],
       filesToBeSent: [],
