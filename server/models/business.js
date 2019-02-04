@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: true,
     },    
-    businessImageId: {
-      type: DataTypes.STRING,
+    defaultBusinessImageUrl: {
+      type: DataTypes.TEXT,
       allowNull: true,
     },
     businessDescription: {
