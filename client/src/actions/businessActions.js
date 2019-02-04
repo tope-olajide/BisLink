@@ -6,7 +6,7 @@ import {
     DELETE_BUSINESS,
     EDIT_BUSINESS,
     FETCH_ALL_BUSINESSES,
-    ADD_BUSINESS_REVIEW,FETCH_BUSINESS_REVIEWS,MODIFY_BUSINESS,ADD_TO_FAVOURITE
+    ADD_BUSINESS_REVIEW,FETCH_BUSINESS_REVIEWS,MODIFY_BUSINESS
 } from '../actions/type'
 const url = 'http://127.0.0.1:5000/api/business'
 
@@ -33,7 +33,7 @@ export function fetchBusinesses(page, limit) {
 
 
 export function businessSearch(name, location, page, limit) {
-    return dispatch => axios.get(`${url}?name=${name}&location=${location}&page=${page}&limit=${limit}`)
+    return dispatch => axios.get(`${url}/search?name=${name}&location=${location}&page=${page}&limit=${limit}`)
         .then((response) => {
             const {
                 businesses,totalPages
