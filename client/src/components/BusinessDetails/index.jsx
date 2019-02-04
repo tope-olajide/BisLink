@@ -195,6 +195,9 @@ this.setFollowButton()
     const id = this.props.match.params.businessId;
     window.location = `/modify-business/${id}`;
   }
+  parseImageGallery=()=>{
+    return JSON.parse(this.props.businessDetails.businessImageUrl)
+  }
   render() {
     if (this.state.isLoading) {
       return (
@@ -227,6 +230,8 @@ this.setFollowButton()
             upvoteBusiness={this.upvoteBusiness}
             downvoteBusiness={this.downvoteBusiness}
             editBusiness={this.editBusiness}
+            businessImageUrl={this.parseImageGallery()}
+            
           />
           <BusinessDetailsPage
             saveToState={this.saveToState}
