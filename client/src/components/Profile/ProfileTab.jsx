@@ -41,7 +41,7 @@ class ProfileTab extends Component {
                       businessAddress={business.businessAddress1}
                       phoneNumber={business.phoneNumber1}
                       website={business.website}
-                      image={business.businessImageUrl}
+                      image={business.defaultBusinessImageUrl}
           />         
  
 })
@@ -63,7 +63,7 @@ class ProfileTab extends Component {
                       businessAddress={business.businessAddress1}
                       phoneNumber={business.phoneNumber1}
                       website={business.website}
-                      image={business.businessImageUrl} />
+                      image={business.defaultBusinessImageUrl} />
         })
                   } 
        </div> </div>
