@@ -6,8 +6,7 @@ class MyFavouritesTabPanel extends Component {
     render () {
         return (
             <>
-             
-            <div className="col-md-4"><Link to={`/business-details/${this.props.id}`}>
+           <div className="col-md-6"><Link to={`/business-details/${this.props.id}`}>
               <div className="card  mb-5 mb-5 ml-0 mr-0 shadow-md rounded-0">
                 <Image
                   className="card-img-top rounded-0"
