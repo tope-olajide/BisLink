@@ -44,8 +44,8 @@ class CataloguePage extends Component {
                       <div className="fav-icon">
                         {" "}
                         <FontAwesomeIcon icon={["far", "eye"]} />{" "} {this.props.viewCount}
-                        <FontAwesomeIcon icon="thumbs-up" />{" "}<b>{this.props.upvotes}</b>
-                        <FontAwesomeIcon icon="thumbs-down" /><b>{this.props.downvotes}</b>
+{/*                         <FontAwesomeIcon icon="thumbs-up" />{" "}<b>{this.props.upvotes}</b>
+                        <FontAwesomeIcon icon="thumbs-down" /><b>{this.props.downvotes}</b> */}
                       </div>
                       <p>View Business</p>
                     </div>
