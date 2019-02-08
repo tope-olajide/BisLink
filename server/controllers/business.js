@@ -134,9 +134,12 @@ export default class Businesses {
       foundBusiness
     }) => {
       if(businessImageUrl){
+        let oldImageGallery=[];
+        if (foundBusiness.businessImageUrl){
+          oldImageGallery=JSON.parse(foundBusiness.businessImageUrl)
+        }
           const uploadedImage = JSON.parse(businessImageUrl)
-          const oldImageGallery = JSON.parse(foundBusiness.businessImageUrl)
-          const newImageGallery = [...oldImageGallery, uploadedImage]
+          const newImageGallery = oldImageGallery.concat(uploadedImage)
           const updatedImageGallery = JSON.stringify(newImageGallery)
           if(!foundBusiness.defaultBusinessImageUrl){
             foundBusiness.updateAttributes({
@@ -146,6 +149,7 @@ export default class Businesses {
             .catch(() => res.status(500).json({
               success: false,
               message: 'unable to save business images'
+
             }));
           }else{
             foundBusiness.updateAttributes({
@@ -156,8 +160,6 @@ export default class Businesses {
               message: 'unable to save business images'
             }));           
           }           
-
-
       }
 
       foundBusiness.updateAttributes({
@@ -275,10 +277,19 @@ export default class Businesses {
       status,
       message
     }) => {
-      res.status(status).json({
+      if( status>=100 && status <600){
+             res.status(status).json({
         success: false,
         message
-      });
+      }); 
+      }
+      else{
+        res.status(500).json({
+          success: false,
+          message
+        }); 
+      }
+
     });
     return this;
   }
