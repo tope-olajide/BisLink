@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 import { Button } from "mdbreact";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class BusinessImageGallery extends Component {
   render() {
-     const addTransformationToUrl = url => {
-      const orignalTransformations = "w_1000,h_600,c_fit";
-      const thumbTransformations = "w_250,h_150,c_fit";
+       const addTransformationToUrl = url => {
+      const orignalTransformations = "w_1150,h_420,c_fit,c_pad,b_black/";
+      const thumbTransformations = "w_350,h_250/";
       const urlDivider = "/image/upload/";
       const dividedUrl = url.split(urlDivider);
       const originalTransformedUrl = dividedUrl.join(
@@ -18,18 +19,21 @@ class BusinessImageGallery extends Component {
       );
       return {
         original: originalTransformedUrl,
-        thumbnail: thumbTransformedUrl
+        thumbnail: thumbTransformedUrl,
       };
     }; 
      const imageGalleryUrl = this.props.businessImageUrl.map(businessImage => {
       return addTransformationToUrl(businessImage.imageUrl);
     });
-    const images = imageGalleryUrl; 
+    const images = imageGalleryUrl;   
  
 console.log(this.props.businessImageUrl)
     return (
-      <div className="card p-5 mt-0">
-          <ImageGallery items={images} />  
+      <div className="card pt-2 pb-5 mt-0">
+      <div className=" gallery-container border border p-1">
+           <ImageGallery 
+          items={images} 
+          thumbnailPosition={'bottom'} />   </div> 
         <div className="container mt-0">
           <div className="row">
             <div className="col-md-6 mt-5">
