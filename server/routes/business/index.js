@@ -17,10 +17,18 @@ user.route('/')
   .post(newBusiness.createBusiness)
   .get(newBusiness.getAllBusinesses)
 
+user.route('/search')
+  .get(newBusiness.searchForBusinesses)
+
 user.route('/:businessId')
   .put(newBusiness.modifyBusiness)
   .delete(newBusiness.deleteBusiness)
   .get(newBusiness.getBusinessDetails);
+
+user.route('/:businessId/galleries')
+.put(newBusiness.setDefaultBusinessImage)
+.delete(newBusiness.deleteBusinessImage)
+.get(newBusiness.fetchBusinessPictures)
 
 user.route('/:businessId/upvotes')
   .post(newVote.upvoteBusiness)
