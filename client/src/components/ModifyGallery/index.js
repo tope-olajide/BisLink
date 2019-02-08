@@ -53,8 +53,7 @@ class ModifyGallery extends Component {
         const id = this.props.match.params.businessId;
         this.props
           .dispatch(deletePicture(id,businessImageId))
-          .then(() => {
- alert('success')
+          .then(() => { alert('success')
           })
           .catch(error => {
           alert(error)
@@ -70,7 +69,7 @@ class ModifyGallery extends Component {
 <div className="container content-container">
     <div className="row card-container">
 {this.props.businessPictures.map((picture)=>{
-    if(picture.length !==0){
+    if(picture.length !==0&&picture.imageUrl){
     return (
         <>
     <PictureGallery

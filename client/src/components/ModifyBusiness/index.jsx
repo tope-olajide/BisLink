@@ -104,14 +104,16 @@ class ModifyBusiness extends Component {
         formData.append("timestamp", (Date.now() / 1000) | 0);
   
         // Make an AJAX upload request using Axios
-        return axios
-          .post(
-            "https://api.cloudinary.com/v1_1/temitope/image/upload",
-            formData,
-            {
-              headers: { "X-Requested-With": "XMLHttpRequest" }
-            }
-          )
+        return axios({
+          method:'post',
+          url: "https://api.cloudinary.com/v1_1/temitope/image/upload",
+          data:formData,
+          headers: {'X-Requested-With': 'XMLHttpRequest'},
+          transformRequest: [(data, headers) => {
+            delete headers.common.authorization
+            return data
+        }]
+        })
           .then(response => {
             console.log(response)
             const { data } = response;
@@ -124,6 +126,7 @@ class ModifyBusiness extends Component {
           })
           .catch((err)=> {
             alert("error " + err);
+            this.setState({imageUploadError:true})
  });
       });
   
@@ -132,7 +135,12 @@ class ModifyBusiness extends Component {
       axios
         .all(uploaders)
         .then(data => {
- 
+ if(this.state.imageUploadError){
+   return
+ }
+ else{
+   
+
           alert(
             "Success!!!: Upload picture successfully, now saving to database"
           );
@@ -143,7 +151,7 @@ class ModifyBusiness extends Component {
 
           this.props.dispatch(modifyBusiness(this.state, businessId)).then(()=>{
             alert("saved to database successfully");
-          })
+          }) }
           
         })
         .catch(function(err) {
@@ -151,8 +159,7 @@ class ModifyBusiness extends Component {
         })
       }
         else{
-          const {businessName, businessAddress1, businessDescription, businessImageUrl, tagline,phoneNumber1,category } = this.state
-          this.props.dispatch(modifyBusiness({businessName, businessAddress1, businessDescription, businessImageUrl, tagline,phoneNumber1,category }, businessId)).then(()=>{
+          this.props.dispatch(modifyBusiness((this.state), businessId)).then(()=>{
             alert("saved to database successfully");
           })        
           .catch(function(err) {
