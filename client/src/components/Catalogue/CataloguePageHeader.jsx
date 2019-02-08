@@ -6,22 +6,22 @@ class CataloguePageHeader extends Component {
   render() {
       return (
      <div>
-      <div className="biz-header">
+      <div className="biz-header"></div>
       <div className='hero-caption'>
 <h1 className="hero-title"> Discover great places in Nigeria</h1>
         <p className="hero-paragraph">
           Let's uncover the best places to eat, drink, and shop nearest to you.
-
         </p>
-        <FormInline className="hero-search-container">
-          <Input label="Business Name" icon="envelope" group type="text" />
-          <Input label="Location" icon="lock" group type="text" />
-          <Button>Search</Button>
-        </FormInline>
-        <p className='browse-by'><a href ='#'>Browse by popular</a> or <a href ='#'>Recently added</a></p>
-      </div>
-        
-      </div>
+        <div className=" row hero-search-container">
+        <div className="col-md-6 input-wrapper">
+			<input type="text" className='form-control' placeholder="Business name" />
+		</div>
+    <div className="col-md-6 input-wrapper"><input type="text" className='form-control' placeholder="Location" /></div>
+        </div>
+        <div className="text-center hero-search-button"><Button>Search</Button></div>
+        <div className='text-center mt-4'> <p className='browse-by d-inline'><a href ='#'>Browse by popular</a></p> <p className='browse-by d-inline px-2'>or</p><p  className='browse-by d-inline'> <a href ='#'>Recently added</a></p>
+       </div>
+       </div>
       <div>
         <h1 className="text-center my-5 featured-text">
           <FontAwesomeIcon icon="briefcase" /> Featured Places
