@@ -196,7 +196,8 @@ this.setFollowButton()
     window.location = `/modify-business/${id}`;
   }
   parseImageGallery=()=>{
-    return JSON.parse(this.props.businessDetails.businessImageUrl)
+    const parsedGallery= JSON.parse(this.props.businessDetails.businessImageUrl)
+    return parsedGallery 
   }
   render() {
     if (this.state.isLoading) {
