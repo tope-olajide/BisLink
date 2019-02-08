@@ -37,6 +37,7 @@ module.exports = (sequelize, DataTypes) => {
     defaultBusinessImageUrl: {
       type: DataTypes.TEXT,
       allowNull: true,
+      defaultValue: ''
     },
     businessDescription: {
       type: DataTypes.STRING,
