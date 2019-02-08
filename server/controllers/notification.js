@@ -65,12 +65,20 @@ export default class Notifications {
           success: true,
           message: 'notification found',
           notification
-        }))
-      })
-      .catch(( /* error */ ) => res.status(500).json({
+        }))      .catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: 'Error fetching notification'
       }));
+      }).catch(({
+        status,
+        message
+      }) => {
+        res.status(status).json({
+          success: false,
+          message
+        });
+      });
+
 
     return this;
   }
@@ -89,18 +97,27 @@ export default class Notifications {
       .then(() => res.status(200).json({
         success: true,
         message: 'notification deleted successfully',
-      }))
-      .catch(() => res.status(500).json({
+      }))      .catch(() => res.status(500).json({
         success: false,
         message: 'Error Deleting notification'
       }))
-})
+
+}).catch(({
+  status,
+  message
+}) => {
+  res.status(status).json({
+    success: false,
+    message
+  });
+});
     return this;
   }
   getUnreadNotifications({
     user
   }, res) {
     const userId = user.id;
+      
     Notification
       .findAll({
         attributes:['id', 'title','message','createdAt'],
@@ -128,10 +145,11 @@ export default class Notifications {
           unreadNotifications: [],
           allNotificationsCount
         });
-        })
-      }).catch(( /* error */ ) => res.status(500).json({
+      })
+    }).catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: 'Error fetching unread notification'
       }));
+    
   }
 }
