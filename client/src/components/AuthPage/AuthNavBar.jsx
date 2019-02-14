@@ -152,7 +152,7 @@ class NavigationBar extends React.Component {
         </Navbar>
         <div>
           <Modal
-            className="mt-5"
+            className="mt-5 pt-2"
             isOpen={this.state.modal6}
             toggle={() => this.toggle(6)}
             side

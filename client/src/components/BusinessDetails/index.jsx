@@ -32,9 +32,19 @@ class BusinessDetails extends Component {
       title: "",
       content: "",
       favouriteIcon: "",
-      isFavourite: true,
-      followButton:''
+      isFavourite: '',
+      followButton:'',
+      spinnerIcon:'',
+      disableReviewButton:false
     };
+    this.reviewRef = React.createRef()
+  }
+
+  scrollToReview = () => {
+    window.scrollTo(0, this.reviewRef.current.offsetTop) 
+  }
+  toggleReviewButton =()=>{
+    this.setState({disableReviewButton: !this.state.disableReviewButton})
   }
   componentDidMount() {
     const id = this.props.match.params.businessId;
@@ -86,16 +96,22 @@ this.setFollowButton()
     console.log(value);
   };
   addBusinessReviews = () => {
-    alert("loading....");
+    this.toggleReviewButton()
+    toastNotification(['info'], ` ...submitting your reviewing`);
     const id = this.props.match.params.businessId;
-    console.log(id);
     this.props
       .dispatch(addBusinessReviews(id, this.state))
       .then(() => {
-        alert("success");
+        toastNotification(['success'], `Your review has been successfully added.`);
+        this.toggleReviewButton()
+        this.setState({title: "", content: ""})
       })
       .catch(error => {
-        alert(error);
+        if (!error.response) {
+          toastNotification(["error"], "Network Error!");
+        } else {
+        toastNotification(["error"], error.response.data.message);
+        this.toggleReviewButton()}
       });
   };
   followUser=()=>{
@@ -104,79 +120,88 @@ this.setFollowButton()
       this.props
         .dispatch(unfollow(userId))
         .then(() => {
-         /*  this.setState({ favouriteIcon: "fas", isFavourite: true }); */
-          alert("success");
-          this.setFollowButton()
+         this.setFollowButton()
+        
+          toastNotification(['success'], `You successfully unfollowed ${this.props.businessDetails.User.username} `);
         })
         .catch(error => {
-          alert(error);
-          this.setFollowButton()
+          if (!error.response) {
+            toastNotification(["error"], "Network Error!")
+            this.setFollowButton();
+          } else {
+          toastNotification(["error"], error.response.data.message);
+          this.setFollowButton()}
         });
     } else {
       this.props
         .dispatch(follow(userId))
         .then(() => {
-  /*         this.setState({ favouriteIcon: "far", isFavourite: false }); */
-          alert("success");
           this.setFollowButton()
+          toastNotification(['success'], `You are now following ${this.props.businessDetails.User.username} `);
+          
         })
         .catch(error => {
-          alert(error);
-          this.setFollowButton()
+          if (!error.response) {
+            toastNotification(["error"], "Network Error!")
+            this.setFollowButton();
+          } else {
+          toastNotification(["error"], error.response.data.message);
+          this.setFollowButton()}
         });
     }
   }
   addToFavourite = () => {
     const id = this.props.match.params.businessId;
-    if (!this.state.isFavourite) {
+    this.setState({
+      spinnerIcon:'spinner',
+      favouriteIcon: ''
+    })
+    if (!this.props.infoCount.isUserFavourite) {
       this.props
         .dispatch(addToFavourite(id))
         .then(() => {
-          this.setState({ favouriteIcon: "fas", isFavourite: true });
-          alert("success");
+          this.setState ({ favouriteIcon: "fas", isFavourite: true,spinnerIcon:'' });
+          toastNotification(['success'], `"${this.props.businessDetails.businessName}" has been successfully added to your Favourite`);
         })
         .catch(error => {
-          alert(error);
+          if (!error.response) {
+            toastNotification(["error"], "Network Error!");
+          } else {
+          toastNotification(["error"], `Unable to add "${this.props.businessDetails.businessName}" to your Favourite ${error}`);
+          this.setState ({ favouriteIcon: "far",spinnerIcon:'' })};
         });
     } else {
       this.props
         .dispatch(removeFromFavourite(id))
         .then(() => {
-          this.setState({ favouriteIcon: "far", isFavourite: false });
-          alert("success");
+          this.setState({ favouriteIcon: "far", isFavourite: false,spinnerIcon:'' });
+          toastNotification(['success'], `"${this.props.businessDetails.businessName}" has been successfully removed from your Favourite`);
         })
         .catch(error => {
-          alert(error);
+          if (!error.response) {
+            toastNotification(["error"], "Network Error!");
+          } else {
+          toastNotification(["error"], `Unable to remove "${this.props.businessDetails.businessName}" from your Favourite`);
+          this.setState ({ favouriteIcon: "fas",spinnerIcon:'' })};
         });
     }
-    /*    if (this.state.favouriteIcon=='fas'){
-    this.setState({ favouriteIcon: 'far' }) }
-    else{
-      this.setState({ favouriteIcon: 'fas' })
-    } */
+
   };
-  removeFromFavourites = () => {
-    const id = this.props.match.params.businessId;
-    this.props
-      .dispatch(removeFromFavourite(id))
-      .then(() => {
-        this.setState({ favouriteIcon: "fas", isFavourite: true });
-        alert("success");
-      })
-      .catch(error => {
-        alert(error);
-      });
-  };
+
   upvoteBusiness = () => {
     const id = this.props.match.params.businessId;
     this.props
       .dispatch(upvote(id))
       .then(() => {
         
-        alert("success");
+      
+        toastNotification(['success'], `"${this.props.businessDetails.businessName}" Upvoted successfully`);
       })
       .catch(error => {
-        alert(error);
+        if (!error.response) {
+          toastNotification(["error"], "Network Error!");
+        } else {
+        toastNotification(["error"], error.response.data.message)};
       });
   };
   downvoteBusiness = () => {
@@ -185,10 +210,13 @@ this.setFollowButton()
       .dispatch(downvote(id))
       .then(() => {
         
-        alert("success");
+        toastNotification(['success'], `"${this.props.businessDetails.businessName}" Downvoted successfully`);
       })
       .catch(error => {
-        alert(error);
+        if (!error.response) {
+          toastNotification(["error"], "Network Error!");
+        } else {
+        toastNotification(["error"], error.response.data.message)};
       });
   };
   editBusiness=()=>{
@@ -196,8 +224,13 @@ this.setFollowButton()
     window.location = `/modify-business/${id}`;
   }
   parseImageGallery=()=>{
-    const parsedGallery= JSON.parse(this.props.businessDetails.businessImageUrl)
+    if(this.props.businessDetails.businessImageUrl){
+     const parsedGallery= JSON.parse(this.props.businessDetails.businessImageUrl)
     return parsedGallery 
+    }else{
+      return [{imageUrl:'https://res.cloudinary.com/temitope/image/upload/v1549260007/noimage_1.png',imageId:11}]
+    }
+    
   }
   render() {
     if (this.state.isLoading) {
@@ -225,13 +258,14 @@ this.setFollowButton()
             downvotes={this.props.businessDetails.downvotes}
             viewCount={this.props.businessDetails.viewCount}
             favouriteIcon={this.state.favouriteIcon}
+            spinnerIcon={this.state.spinnerIcon}
             addToFavourite={this.addToFavourite}
             isBusinessOwner={this.props.infoCount.isBusinessOwner}
-            removeFromFavourites={this.removeFromFavourites}
             upvoteBusiness={this.upvoteBusiness}
             downvoteBusiness={this.downvoteBusiness}
             editBusiness={this.editBusiness}
             businessImageUrl={this.parseImageGallery()}
+            scrollToReview={this.scrollToReview}
             
           />
           <BusinessDetailsPage
@@ -240,8 +274,10 @@ this.setFollowButton()
             businessDescription={this.props.businessDetails.businessDescription}
             reviewLength={this.props.businessReview.length}
             reviews={this.props.businessReview}
+            disableReviewButton={this.state.disableReviewButton}
             title={this.state.title}
             content={this.state.content}
+            defaultImage={this.props.businessDetails.defaultBusinessImageUrl}
             businessAddress1={this.props.businessDetails.businessAddress1}
             phoneNumber1={this.props.businessDetails.phoneNumber1}
             website={this.props.businessDetails.website}
@@ -256,6 +292,8 @@ this.setFollowButton()
             isBusinessOwner={this.props.infoCount.isBusinessOwner}
             followUser={this.followUser}
             followButton={this.state.followButton}
+            reviewRef={this.reviewRef}
+            
           />
           {console.log(this.props.businessDetails)}
           {console.log(this.props.infoCount)}
