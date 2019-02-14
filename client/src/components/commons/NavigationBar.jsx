@@ -1,7 +1,8 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import './search.css'
-import {Navbar, Col, NavbarBrand, NavbarNav, NavbarToggler, Collapse,Button, NavItem, NavLink
+import {Navbar,  NavbarBrand, NavbarNav, NavbarToggler, Collapse, NavItem, NavLink,
+  MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter
 } from "mdbreact";
 import { connect } from "react-redux";
 import {
@@ -13,6 +14,9 @@ class NavigationBar extends React.Component {
 
     this.state = {
       collapse: false,
+      modal: false,
+      businessName: " ",
+      businessLocation: " "
     };
     this.onClick = this.onClick.bind(this);
   }
@@ -21,14 +25,60 @@ class NavigationBar extends React.Component {
       collapse: !this.state.collapse
     });
   }
+  toggleSearch = (e) => {
+    e.preventDefault();
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+  saveToState(key, value) {
+    this.setState({ [key]: value });
+    console.log(value);
+  }
+  handleBusinessSearch =() => {
+    window.location = `/businesses/search/name=${this.state.businessName}/location=${this.state.businessLocation}`;
+  }
+  toggle = (e) => {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
 signOut=()=>{
   this.props.dispatch(signOut())
 }
-
   render() {
     return (
       <div>
-        <Navbar color="black" dark className="zindex" expand="md" scrolling>
+        <MDBContainer>
+                <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
+                  <MDBModalHeader toggle={this.toggle}><FontAwesomeIcon icon="search" /> Business Search</MDBModalHeader>
+                  <MDBModalBody>
+                    <div className="col-md-12 search-input-wrapper">
+      <input type="text" className='form-control' placeholder="Business name"
+                    onChange={event => {
+                      this.saveToState(
+                        "businessName",
+                        event.target.value
+                      );
+                    }}/></div>
+    <div className="col-md-12 search-input-wrapper my-3"><input type="text" className='form-control' placeholder="Location" 
+    onChange={event => {
+      this.saveToState(
+        "businessLocation",
+        event.target.value
+      );
+    }}
+    /></div>
+                  </MDBModalBody>
+                  <MDBModalFooter>
+                    <MDBBtn color="unique" onClick={this.toggle}>Cancel</MDBBtn>
+                    <MDBBtn onClick ={this.handleBusinessSearch} color="unique">Search</MDBBtn>
+                  </MDBModalFooter>
+                </MDBModal>
+                
+              </MDBContainer> 
+        
+        <Navbar color="black" dark className="zindex" expand="lg" scrolling>
           <NavbarBrand href="/">
             <strong>
               <FontAwesomeIcon icon="" size="1x" />
@@ -43,7 +93,7 @@ signOut=()=>{
                   <FontAwesomeIcon icon="home" /> HOME </NavLink>
               </NavItem>
               <NavItem active = {this.props.search} >
-                <NavLink to="/#" onClick={this.props.scrollToMyRef}>
+                <NavLink to="/#" onClick={this.toggleSearch}  > {/* this.props.scrollToMyRef */}
                   <FontAwesomeIcon icon="search" /> SEARCH
                 </NavLink>
               </NavItem>
