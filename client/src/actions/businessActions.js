@@ -10,13 +10,6 @@ import {
 } from '../actions/type'
 const url = 'http://127.0.0.1:5000/api/business'
 
-const token = localStorage.getItem('token');
-const setHeaderToken = {
-    headers:{
-        authorization:token
-    }
-}
-
 export function fetchBusinesses(page, limit) {
     return dispatch => axios.get(`${url}?page=${page}&limit=${limit}`)
         .then((response) => {
@@ -45,7 +38,19 @@ export function businessSearch(name, location, page, limit) {
             });
         });
 }
-
+export function sortBusinessBy(sort, page, limit) {
+    return dispatch => axios.get(`${url}/search?sort=${sort}&page=${page}&limit=${limit}`)
+        .then((response) => {
+            const {
+                businesses,totalPages
+            } = response.data;
+            const pagedBusiness = {businesses,totalPages}
+            dispatch({
+                type: FETCH_ALL_BUSINESSES,
+                pagedBusiness
+            });
+        });
+}
 export function fetchBusinessDetails(businessId) {
     return dispatch =>
         axios.get(`${url}/${businessId}`)
