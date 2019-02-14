@@ -129,8 +129,6 @@ class ModifyBusiness extends Component {
             this.setState({imageUploadError:true})
  });
       });
-  
-  
       // Once all the files are uploaded
       axios
         .all(uploaders)
@@ -139,9 +137,7 @@ class ModifyBusiness extends Component {
    return
  }
  else{
-   
-
-          alert(
+   alert(
             "Success!!!: Upload picture successfully, now saving to database"
           );
           const imgUrlToString = JSON.stringify(this.state.businessImageArray)

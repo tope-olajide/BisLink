@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import "./RegisterBusinessForm.css";
 import { Input, Button } from "mdbreact";
 import Dropzone from "react-dropzone";
 const dropZoneStyle= {
@@ -62,7 +61,7 @@ class RegisterBusinessPage extends Component {
             </h1>
           </div>
         </div>
-        <div className="biz-form-container mt-5">
+        <div className="biz-form-container col-md-7 mt-5">
                 <div className="  text-right ">
              <Button onClick={this.props.modifyGallery} >
                   Modify Picture Gallery
@@ -70,7 +69,7 @@ class RegisterBusinessPage extends Component {
           </div>
         </div>
 
-        <div className="biz-form-container card  p-5">
+        <div className="biz-form-container  col-md-7 card p-5">
           <form>
             <div className="row">
               <div className="col-md-6">
