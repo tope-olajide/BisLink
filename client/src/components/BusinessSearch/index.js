@@ -1,12 +1,14 @@
 import React, {Component} from "react";
-import SearchBusinessPage from './searchBusiness'
+import BusinessCard from '../Catalogue/BusinessCard'
 import NavigationBar from "../commons/NavigationBar";
 import Footer from "../commons/Footer";
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
-import { businessSearch } from "../../actions/businessActions";
+import { businessSearch,sortBusinessBy } from "../../actions/businessActions";
 import { connect } from "react-redux";
 import Pagination from "react-js-pagination";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import CataloguePageHeader from './../Catalogue/CataloguePageHeader'
 class searchBusiness extends Component {
   constructor(props) {
     super(props);
@@ -22,13 +24,41 @@ class searchBusiness extends Component {
   }
 
   handlePageChange = (pageNumber) => {
-    const {name} = this.props.match.params;
-    const {location} = this.props.match.params;
-    const limit = 9
+    const {sort} = this.props.match.params;
     console.log(`active page is ${pageNumber}`);
     this.setState({activePage: pageNumber});
     this.setState({ isLoading: true });
-    this.props
+    this.searchOrSort(sort)
+
+  }
+   searchOrSort =(sort) =>{
+    const {name} = this.props.match.params;
+    const {location} = this.props.match.params;
+    const limit = 9
+    if(sort){
+      this.props
+      .dispatch(sortBusinessBy(sort, this.state.activePage, limit))
+      .then(() => {
+        this.setState({
+          isLoading: false,
+          isError: false
+        });
+      })
+      .catch(error => {
+        this.setState({
+          isLoading: false,
+          isError: true
+        });
+        if (!error.response){
+            toastNotification(["error"],'Network Error!' )
+        }else {
+             toastNotification(["error"], error.response.data.message);
+        }
+       
+      });
+    }
+    else{
+      this.props
       .dispatch(businessSearch(name, location, this.state.activePage, limit))
       .then(() => {
         this.setState({
@@ -48,7 +78,8 @@ class searchBusiness extends Component {
         }
        
       });
-  }
+    }
+   }
   render() {
     if (this.state.isLoading) {
       return (
@@ -67,6 +98,10 @@ class searchBusiness extends Component {
     }else {
       return (
         <>
+          <NavigationBar search ="active" />
+          <CataloguePageHeader />
+          <h1 className="text-center my-5 featured-text">
+          <FontAwesomeIcon icon="search" /> Search Results </h1>
           <div className="container content-container">
             <div className="row card-container">
               {!this.props.allBusinesses.length ? (
@@ -75,7 +110,7 @@ class searchBusiness extends Component {
                 this.props.allBusinesses.map(business => {
                   return (
                     <>
-                    <SearchBusinessPage
+                    <BusinessCard
                       key={business.id}
                       id={business.id}
                       businessName={business.businessName}
@@ -84,7 +119,10 @@ class searchBusiness extends Component {
                       businessAddress={business.businessAddress1}
                       phoneNumber={business.phoneNumber1}
                       website={business.website}
-                      image={business.businessImageUrl}
+                      image={business.defaultBusinessImageUrl}
+                      viewCount={business.viewCount}
+                       upvotes={business.upvotes}
+                      downvotes={business.downvotes}
                     />
 
                     </>
