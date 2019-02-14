@@ -29,7 +29,7 @@ class BusinessImageGallery extends Component {
  
 console.log(this.props.businessImageUrl)
     return (
-      <div className="card pt-2 pb-5 mt-0">
+      <div className="card shadow-sm pt-2 pb-5 mt-0">
       <div className=" gallery-container border border p-1">
            <ImageGallery 
           items={images} 
@@ -39,11 +39,11 @@ console.log(this.props.businessImageUrl)
             <div className="col-md-6 mt-5">
               <h2>{this.props.businessName}</h2>
               <p> {this.props.tagline} </p> <br />
-              <Button>
+              <Button onClick={this.props.scrollToReview}>
                 <h5>Write a Review </h5>
               </Button>
             </div>
-            <div className=" mt-4 col-md-6">
+            <div className="float-right mt-4 col-md-6">
               <Button onClick={this.props.upvoteBusiness}>
                 <FontAwesomeIcon icon="thumbs-up" size="2x" />{" "}
                 <b>{this.props.upvotes}</b>
@@ -55,7 +55,7 @@ console.log(this.props.businessImageUrl)
               </Button>
 
               <Button onClick ={this.props.addToFavourite}>
-              <FontAwesomeIcon icon={this.props.spinner} spin size="2x" />
+              <FontAwesomeIcon icon={this.props.spinnerIcon} spin size="2x" />
                 <FontAwesomeIcon icon={[this.props.favouriteIcon, "heart"]} size="2x" />
               </Button> <br />
               <Button disabled>
