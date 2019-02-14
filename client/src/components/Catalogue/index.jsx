@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CataloguePage from "./CataloguePage";
+import BusinessCard from "./BusinessCard";
 import CataloguePageHeader from "./CataloguePageHeader";
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
@@ -8,24 +8,32 @@ import { fetchBusinesses } from "../../actions/businessActions";
 import NavigationBar from "../commons/NavigationBar";
 import { connect } from "react-redux";
 import Pagination from "react-js-pagination";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class BusinessList extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isLoading: false,
       isError: false,
-      activePage: 1
+      activePage: 1,
+      businessName: " ",
+      businessLocation: " "
     };
     this.myRef = React.createRef()
   }
+
   componentDidMount() {
     this.handlePageChange()
   }
+
   scrollToMyRef = (e) => {
     e.preventDefault();
     window.scrollTo(0, this.myRef.current.offsetTop) 
   } 
+sortByPopular =(e) => {
+  e.preventDefault();
+    window.location = `/businesses/search/sort=popular`;
+  }
   handlePageChange = (pageNumber) => {
     const limit = 9
     console.log(`active page is ${pageNumber}`);
@@ -70,28 +78,23 @@ class BusinessList extends Component {
     } else {
       return (
         <><NavigationBar homePage ="active" scrollToMyRef={this.scrollToMyRef} />
-          <CataloguePageHeader />
+          <CataloguePageHeader 
+          />
+          <div>
+        <h1 className="text-center my-5 featured-text">
+          <FontAwesomeIcon icon="briefcase" /> Featured Places
+        </h1>
+      </div>
           <div className="container content-container">
             <div className="row card-container">
               {!this.props.allBusinesses.length ? (
                 <div>No Business</div>
               ) : (
                 this.props.allBusinesses.map(business => {
-                  const setDefaultBizImage = (defaultImage, imageGallery)=>{
-                    if (defaultImage){
-                      return defaultImage
-                    }
-                    else if (imageGallery){
-                      const temporaryDefaultImg = JSON.parse(imageGallery)
-                      return temporaryDefaultImg[0]
-                    }
-                    else{
-                      return ""
-                    }
-                  }
+ 
                   return (
                     <>
-                    <CataloguePage
+                    <BusinessCard
                       key={business.id}
                       id={business.id}
                       businessName={business.businessName}
@@ -102,8 +105,8 @@ class BusinessList extends Component {
                       website={business.website}
                       image={business.defaultBusinessImageUrl}
                       viewCount={business.viewCount}
-/*                       upvotes={business.upvotes}
-                      downvotes={business.downvotes} */
+                       upvotes={business.upvotes}
+                      downvotes={business.downvotes} 
                     />
                     </>
                   );
