@@ -57,7 +57,7 @@ class EditProfileForm extends Component {
         </div>
       </div>));
     return (
-      <div className="card col-md-5 p-4 my-3 centra">
+      <div className="card form__container-card col-md-6 p-4 my-3">
         <form>
          {/*  <h3 className="h3 text-center mt-4 mb-4">Edit Profile</h3> */}
           <section>
