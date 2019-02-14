@@ -59,12 +59,11 @@ class RegisterBusinessPage extends Component {
         <div className="register-business-header">
           <div className="hero-text">
             <h1>
-              Register your business now and let your customers connect with
-              you.
+              Register your business
             </h1>
           </div>
         </div>
-        <div className="biz-form-container card mt-5 p-5">
+        <div className="biz-form-container col-md-7 card mt-5 p-5">
 {/*           <h6 className="dark-text biz-form-title  text-center ">
             Register your business
           </h6> */}

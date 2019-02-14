@@ -9,6 +9,8 @@ class BusinessList extends Component {
   constructor() {
     super();
     this.state = {
+      isLoading: true,
+      isError: false,
       businessName: "",
       tagline: "",
       businessAddress1: "",
@@ -57,14 +59,16 @@ class BusinessList extends Component {
       formData.append("timestamp", (Date.now() / 1000) | 0);
 
       // Make an AJAX upload request using Axios
-      return axios
-        .post(
-          "https://api.cloudinary.com/v1_1/temitope/image/upload",
-          formData,
-          {
-            headers: { "X-Requested-With": "XMLHttpRequest" }
-          }
-        )
+      return axios({
+        method:'post',
+        url: "https://api.cloudinary.com/v1_1/temitope/image/upload",
+        data:formData,
+        headers: {'X-Requested-With': 'XMLHttpRequest'},
+        transformRequest: [(data, headers) => {
+          delete headers.common.authorization
+          return data
+      }]
+      })
         .then(response => {
           console.log(response)
           const { data } = response;
@@ -77,28 +81,30 @@ class BusinessList extends Component {
         })
         .catch((err)=> {
           alert("error " + err);
-
-       
-        });
+          this.setState({imageUploadError:true})
+});
     });
 
 
     // Once all the files are uploaded
     axios
-      .all(uploaders)
-      .then(data => {
-        alert(
-          "Success!!!: Upload picture successfully, now saving to database"
-        );
-        const imgArrayUrlToString = JSON.stringify(this.state.businessImageArray)
-        this.setState({businessImageUrl:imgArrayUrlToString})
-        console.log(this.state.businessImageUrl)
-        console.log(typeof this.state.businessImageUrl)
+    .all(uploaders)
+    .then(data => {
+if(this.state.imageUploadError){
+return
+}
+else{
+alert(
+        "Success!!!: Upload picture successfully, now saving to database"
+      );
+      const imgUrlToString = JSON.stringify(this.state.businessImageArray)
+      this.setState({businessImageUrl:imgUrlToString})
+      console.log(this.state.businessImageUrl)
+      console.log(typeof this.state.businessImageUrl)
+
         this.props.dispatch(addBusiness(this.state)).then(()=>{
           alert("saved to database successfully");
-        }).catch(function(err) {
-          alert(err);
-        })
+        }) }
         
       })
       .catch(function(err) {

@@ -15,7 +15,7 @@ import {
     faLink,
     faHeartbeat,
     faSpinner,faMapMarkerAlt,faMobileAlt,
-    faHeart, faThumbsDown, faThumbsUp,faEye,faTag,faTrash,faEdit
+    faHeart, faThumbsDown, faThumbsUp,faEye,faTag,faTrash,faEdit,faBell
 } from '@fortawesome/free-solid-svg-icons'
 
 import {faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
@@ -35,6 +35,7 @@ import ModifyGallery from './components/ModifyGallery'
 import BusinessSearch from './components/BusinessSearch'
 import AllNotifications from './components/Notifications/AllNotifications'
 import NotificationDetails from './components/Notifications/NotificationDetails'
+import SeenNotification from './components/Notifications/ReadNotifications'
 
 
 
@@ -50,7 +51,7 @@ library.add(
   faLink,
   faHeartbeat,faSpinner, faMapMarkerAlt, faMobileAlt,
   faHeart,faHeartRegular,
-  faThumbsDown, faThumbsUp,faEye,faEyeRegular,faTag,faTrash,faEdit
+  faThumbsDown, faThumbsUp,faEye,faEyeRegular,faTag,faTrash,faEdit,faBell
 
 )
 class App extends Component {
@@ -84,9 +85,12 @@ img4 = 'featured4.jpg'
    <Route  path="/modify-business/:businessId" component={withAuthorization(ModifyBusiness)} />
    <Route exact path="/notifications" component={withAuthorization (Notifications)} />
    <Route exact path="/notifications/all" component={withAuthorization (AllNotifications)} />
+   <Route exact path="/notifications/seen" component={withAuthorization (SeenNotification)} />
    <Route exact  path="/notifications/:notificationId" component={withAuthorization (NotificationDetails)} />
    <Route exact path="/modify-gallery/:businessId" component={withAuthorization (ModifyGallery)} />
    <Route exact path="/businesses/search/name=:name?/location=:location?" component={withAuthorization (BusinessSearch)} />
+   <Route exact path="/businesses/search/sort=:sort?" component={withAuthorization (BusinessSearch)} />
+   
 </Switch>
       </div>
     );
