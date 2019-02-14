@@ -120,8 +120,8 @@ class ModifyUser extends Component {
           }
         // Once all the files are uploaded
         else {
-          const {fullname, email, description, location, phoneNumber } = this.state
-          this.props.dispatch(updateProfile( {fullname, email, description, location, phoneNumber})).then(()=>{
+          const {fullname, email, about, location, phoneNumber, } = this.state
+          this.props.dispatch(updateProfile( {fullname, email, about, location, phoneNumber})).then(()=>{
             alert("saved to database successfully without pictures");
           }).catch(function(err) {
             alert("else error " + err);
@@ -129,14 +129,7 @@ class ModifyUser extends Component {
         }
 
       };
-      componentWillUnmount() {
-        //  revoke the data uris to avoid memory leaks
-        const { files } = this.state;
-        for (let i = files.length; i >= 0; i--) {
-          const file = files[i];
-          URL.revokeObjectURL(file.preview);
-        }
-      }
+
     render () {
 
       if (this.state.isLoading) {
@@ -156,6 +149,7 @@ class ModifyUser extends Component {
       }else{
         return (
       <div>
+        <NavigationBar />
       <EditProfileForm 
         defaultFullname = {this.state.fullname} 
         defaultEmail = {this.props.usersProfile.email}
