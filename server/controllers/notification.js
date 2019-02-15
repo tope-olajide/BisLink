@@ -2,7 +2,7 @@ import {
 
   Notification
 } from '../models';
-      var sequelize= require('../models');
+
 import {
   validateNotificationOwner
 } from '../middleware/userValidation';
@@ -16,7 +16,9 @@ export default class Notifications {
         attributes:['id', 'title','message','createdAt'],
         where: {
           userId
-        }
+        },order: [
+          ['createdAt', 'DESC']
+        ]
       })
       .then((allNotifications) => {
         Notification.count({
@@ -25,21 +27,31 @@ export default class Notifications {
             notificationState: 'unseen'
           }
         }).then((newNotificationsCount) =>{
+          Notification.count({
+            where: {
+              userId,
+              notificationState: 'seen'
+            }
+          }).then((readNotificationsCount)=>{
+
+         
         if (allNotifications.length < 1) {
           return res.status(200).json({
             success: true,
             message: 'No notifications found!',
             allNotifications: [],
-            newNotificationsCount
+            newNotificationsCount,
+            readNotificationsCount
           });
         }
         return res.status(200).json({
           success: true,
           message: 'notifications found',
           allNotifications,
-          newNotificationsCount
+          newNotificationsCount,
+          readNotificationsCount
         });
-        })
+        }) })
 
       })
       .catch(( /* error */ ) => res.status(500).json({
@@ -61,11 +73,36 @@ export default class Notifications {
       validateNotificationOwner(notificationId, userId).then((notificationFound) => {
         notificationFound.updateAttributes({
           notificationState: 'seen'
-        }).then(notification => res.status(200).json({
+        }).then((notification) => {
+          Notification.count({
+            where: {
+              userId,
+              notificationState: 'seen'
+            }
+          }).then((readNotificationsCount)=>{
+            Notification.count({
+              where: {
+                userId,
+                notificationState: 'unseen'
+              }
+            }).then((unreadNotificationsCount)=>{
+
+           
+            Notification.count({
+              where: {
+                userId,
+              }
+            }).then((allNotificationsCount)=>{
+          
+          res.status(200).json({
           success: true,
           message: 'notification found',
-          notification
-        }))      .catch(( /* error */ ) => res.status(500).json({
+          notification:notification.message,
+          readNotificationsCount,
+          allNotificationsCount,unreadNotificationsCount
+
+        })})}) }) })    
+        .catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: 'Error fetching notification'
       }));
@@ -124,32 +161,113 @@ export default class Notifications {
         where: {
           userId,
           notificationState: 'unseen'
-        }
+        },order: [
+          ['createdAt', 'DESC']
+        ]
       }).then((unreadNotifications) => {
         Notification.count({
           where: {
             userId
           }
         }).then((allNotificationsCount) =>{
+          Notification.count({
+            where: {
+              userId,
+              notificationState: 'seen'
+            }
+          }).then((readNotificationsCount)=>{
+
+          
        if (unreadNotifications) {
           res.status(200).json({
             success: true,
             message: 'unread notification found',
             unreadNotifications,
-            allNotificationsCount
+            allNotificationsCount,
+            readNotificationsCount
           })
         }
         return res.status(200).json({
           success: true,
           message: 'You currently do not have any unread notifications',
           unreadNotifications: [],
-          allNotificationsCount
+          allNotificationsCount,
+          readNotificationsCount
         });
-      })
+      })})
     }).catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: 'Error fetching unread notification'
       }));
     
   }
-}
+  getReadNotifications({
+    user
+  }, res) {
+    const userId = user.id;
+      
+    Notification
+      .findAll({
+        attributes:['id', 'title','message','createdAt'],
+        where: {
+          userId,
+          notificationState: 'seen'
+        }
+      }).then((readNotifications) => {
+        Notification.count({
+          where: {
+            userId
+          }
+        }).then((allNotificationsCount) =>{
+          Notification.count({
+            where: {
+              userId,
+              notificationState: 'unseen'
+            }
+          }).then((unreadNotificationsCount)=>{
+
+          
+       if (readNotifications) {
+          res.status(200).json({
+            success: true,
+            message: 'read notification found',
+            readNotifications,
+            allNotificationsCount,
+            unreadNotificationsCount
+          })
+        }
+        return res.status(200).json({
+          success: true,
+          message: 'You currently do not have any seen notifications ',
+          readNotifications: [],
+          allNotificationsCount
+        });
+      })})
+    }).catch(( /* error */ ) => res.status(500).json({
+        success: false,
+        message: 'Error fetching unread notification'
+      }));
+    
+  }
+  markAllNotificationsAsRead ({user},res){
+    const userId = user.id;
+  Notification
+  .findAll({
+    attributes:['id', 'title','message','createdAt'],
+    where: {
+      userId,
+      notificationState: 'unseen'
+    }
+  }).then((unSeenNotifications) => {
+    unSeenNotifications.updateAttributes({
+      notificationState: 'seen'
+    })
+  }).then(() => res.status(200).json({
+    success: true,
+    message: 'All unread notifications marked as read',
+    notification
+  }))      .catch(( /* error */ ) => res.status(500).json({
+  success: false,
+  message: 'Error fetching notification'
+}));
+} }
