@@ -45,7 +45,8 @@ export default class Reviews {
             where: {
               id: businessId
             }
-          }).then((business) => {
+          }).then(businessModel => businessModel.increment('reviewCount'))
+          .then((business) => {
             const notificationAlert = {
               receiverId: business.userId,
               title: `${user.username} has reviewed one of your businesses`,
@@ -70,7 +71,9 @@ export default class Reviews {
             order: [
               ['id', 'DESC']
             ]
-          }).then((reviews)=>{
+          })
+          .then((reviews)=>{
+            
           return res.status(201).json({
           success: true,
           message: 'New review created',
