@@ -1,9 +1,419 @@
+/*------------------------------------------------------------------
+Website Name: BisLink
+Version: 1.0
+Author: Temitope D O
+-------------------------------------------------------------------*/
+/* ==============================================================
+   GLOBAL STYLES
+   ============================================================== */
 body {
   margin: 0;
   padding: 0;
-/*   font-family: sans-serif; */
+  background: #f3f4f7;
 }
 html {
   min-height: 100%;
   position: relative
+}
+.input-wrapper input::placeholder {
+  color: rgb(196, 168, 168)
+}
+.input-wrapper input[type="text"] {
+  background: transparent;
+  border: none;
+  border: 1px solid #ffff;
+  outline: none;
+  border-radius: 0;
+  color: #ffffff
+}
+/* ==============================================================
+   CATALOGUE COMPONENT STYLES
+   ============================================================== */
+  /* medium to large devices devices{768 pixels and up to 1079} */
+  @media screen and (min-width: 768px)and (max-width:1079px)  {
+    .input-wrapper input[type="text"] {
+    background: transparent;
+    border: none;
+    border: 1px solid #ffff;
+    outline: none;
+    border-radius: 0;
+    color: #ffffff
+}
+.input-wrapper input::placeholder {
+    color: rgb(196, 168, 168)
+}
+
+.hero-caption {
+    width: 100%;
+    position: absolute;
+    top: 150px;
+}
+.hero-title {
+    text-align: center;
+    color: white;
+    font-size: 4.6em;
+    font-weight: 300;
+    width: 98%;
+    margin-left: auto;
+    margin-right: auto
+}
+.hero-paragraph {
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto
+}
+.hero-search-container {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto
+}
+.input-wrapper{
+    margin-bottom: 15px;
+}
+.browse-by,
+.browse-by a {
+    text-align: center;
+    color: rgb(182, 229, 229);
+    font-size: 19px;
+    margin-top: 30px;
+    font-weight: 300
+}
+.browse-by :hover {
+    color: rgb(153, 144, 144);
+    text-decoration: underline;
+}
+  }
+ 
+/* small devices{600 pixels and up to 768} */
+@media screen and (min-width: 600px) and (max-width:768px) {
+
+    .hero-caption {
+        width: 100%;
+        position: absolute;
+        top: 100px;
+    }
+    .hero-title {
+        text-align: center;
+        color: white;
+        font-size: 3.8em;
+        font-weight: 300;
+        width: 94%;
+        margin-left: auto;
+        margin-right: auto
+    }
+    .hero-paragraph {
+        text-align: center;
+        color: white;
+        font-size: 28px;
+        margin-top: 15px;
+        margin-bottom: 30px;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto
+    }
+    .hero-search-container {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto
+    }
+    .input-wrapper{
+        margin-bottom: 15px;
+    }
+    .browse-by,
+    .browse-by a {
+        text-align: center;
+        color: rgb(182, 229, 229);
+        font-size: 19px;
+        margin-top: 30px;
+        font-weight: 300
+    }
+    .browse-by :hover {
+        color: rgb(153, 144, 144);
+        text-decoration: underline;
+    }
+}
+/* extra small devicess{600 pixels and down} */
+@media screen and (max-width: 600px) {
+
+    .hero-caption {
+        width: 100%;
+        position: absolute;
+        top: 120px;
+    }
+    
+    .hero-title {
+        text-align: center;
+        color: white;
+        font-size: 2.5em;
+        font-weight: 300;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto
+    }
+    
+    .hero-paragraph {
+        text-align: center;
+        color: white;
+        font-size: 22px;
+        margin-top: 15px;
+        margin-bottom: 30px;
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto
+    }
+    
+    .hero-search-container {
+        width: 60%;
+        margin-left: auto;
+        margin-right: auto
+    }
+    .input-wrapper{
+        margin-bottom: 15px;
+    }
+    
+    .browse-by,
+    .browse-by a {
+        text-align: center;
+        color: rgb(182, 229, 229);
+        font-size: 15px;
+        margin-top: 30px;
+        font-weight: 300
+    }
+    .browse-by :hover {
+        color: rgb(153, 144, 144);
+        text-decoration: underline;
+    }
+
+
+}
+
+.featured-text {
+    font-size: 2.9em
+}
+
+
+
+.category,
+.biz-address {
+    text-transform: capitalize
+}
+
+
+/* ==============================================================
+   BUSINESS CARD STYLES
+   ============================================================== */
+   .card-container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto
+}
+.biz-name {
+  margin-bottom: 3px;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: rgb(97, 83, 83);
+  text-transform: capitalize
+}
+
+.card-body ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.card-body ul li {
+    margin-top: 9px
+}
+
+
+.card-bottom {
+    margin-top: 8px
+}
+
+.card-contents p {
+    display: inline;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2BBBAD
+
+}
+
+.card-bottom .view-icon{
+    float: right;
+    margin: 0 20px;
+    color: #2BBBAD
+}
+
+.card-bottom .trash-icon {
+    float: right;
+
+}
+
+.card-bottom .edit-icon {
+    float: right;
+    margin: 0 20px
+}
+
+.card p {
+    display: inline;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2BBBAD
+}
+
+.card-bottom p {
+    color: rgb(247, 4, 4);
+    text-transform: uppercase;
+    font-size: 13px;
+    cursor: pointer;
+}
+.space-text{
+	margin-right: 10px
+  }
+.card-icon{
+  color: #2BBBAD
+}
+.card{
+  border-radius: 0%;
+}
+/* ==============================================================
+   REGISTER AND EDIT-BUSINESS FORM STYLES
+   ============================================================== */
+   .biz-form-container{
+    margin-left:auto;
+    margin-right: auto;
+  }
+   @media screen and (max-width: 780px){
+.biz-form-container{
+  width: 80%;
+  margin-left:auto;
+  margin-right: auto;
+}
+.biz-form-title {
+   font-size: 30px;
+   font-weight: 600;
+border-bottom: 2px solid black;
+padding: 10px;
+}     
+   }
+
+   /* ==============================================================
+   PROFILE STYLES
+     ============================================================== */
+ .profile-text {
+  text-align: center;
+  line-height: 0px;text-transform: capitalize
+}
+
+.table {
+  text-align: center;
+
+}
+
+.dashboard-containers {
+  width: 90%;
+  margin: auto auto;
+  background: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.10), 0 3px 6px rgba(0, 0, 0, 0.10);
+}
+
+.user-info {
+  width: 85%;
+  margin: auto auto;
+  text-align: center
+}
+/* ==============================================================
+   BUSINESS-DETAILS STYLES
+============================================================== */
+     .review {
+      margin-left: 5px;
+    }
+ 
+    .cat-review {
+      margin-top: 0px
+    }
+    
+    .review-card {
+      margin-left: 0px;
+    }
+    .commenter-avatar img {
+      width: 60px;
+      margin: 0px auto auto;
+      border: 1px solid #ffffff;
+      border-radius: 50%
+    }
+    
+    .commenter-avatar {
+    
+      text-align: center
+    }  
+  
+    
+.space-nav{
+    margin-right: 30px
+}
+/* ==============================================================
+   NAV STYLES
+   ============================================================== */
+.zindex{
+  z-index: 999;
+}
+.search-input-wrapper input[type="text"] {
+    background: transparent;
+    border: none;
+    border: 2px solid rgb(7, 22, 87);
+    outline: none;
+    border-radius: 0;
+    color: #181616
+}
+.search-input-wrapper input::placeholder {
+    color: rgb(71, 67, 67)
+}
+/* ==============================================================
+   EDIT-PROFILE STYLES
+   ============================================================== */
+.form__container-card {
+margin-left: auto;
+margin-right: auto
+}
+
+/* ==============================================================
+   FOOTER STYLES
+   ============================================================== */
+.footer-search-form{
+  margin-top:50px;
+  margin-left:50px;
+}
+
+.copyright-content{
+  margin-top:70px;
+float: right;
+margin-right: 0px
+}
+
+.footer {
+  margin-top: 50px;
+  bottom:0;
+  left: 0;
+  right: 0;color: #ffffff; 
+
+}
+@media screen and (max-width: 768px)  {
+  .footer-search-form{
+    margin-top:50px;
+    margin-left:auto;
+    margin-right: auto;
+    width: 78%
+  }
+  
+  .copyright-content{
+    width: 85%;
+    margin-left:auto;
+    margin-right: auto
+  } 
 }
