@@ -106,8 +106,8 @@ searchAllLocation ({ query },res) {
         })
     }
     sortByMostRecent({ query }, res) {
-        const limit = Number(req.query.limit) || 9;
-        const currentPage = Number(req.query.page) || 1;
+        const limit = Number(query.limit) || 9;
+        const currentPage = Number(query.page) || 1;
         const offset = (currentPage - 1) * limit;
         Business
           .findAndCountAll({
