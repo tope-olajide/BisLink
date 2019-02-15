@@ -47,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       defaultValue: 0,
     },
+    reviewCount: {
+      type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
     upvotes: {
       type: DataTypes.INTEGER,
       allowNull: true,
