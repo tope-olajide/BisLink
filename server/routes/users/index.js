@@ -45,11 +45,13 @@ user.route('/follow/:userId')
   
   user.route('/notifications/all')
   .get(newNotification.getAllNotifications);
+  user.route('/notifications/seen')
+  .get(newNotification.getReadNotifications)
   user.route('/notifications/:notificationId')
   .get(newNotification.viewNotification);
-
   user.route('/notifications')
    .get(newNotification.getUnreadNotifications);
+
 
 
   
