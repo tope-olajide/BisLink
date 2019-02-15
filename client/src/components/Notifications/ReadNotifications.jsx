@@ -7,15 +7,15 @@ import {
 } from "mdbreact";
 import {
   fetchAllNewNotifications,
-  fetchAllNotifications
+  fetchAllReadNotifications
 } from "../../actions/notificationAction";
 import NavigationBar from "../commons/NavigationBar";
 import Footer from "../commons/Footer";
 import NotificationList from "./NotificationList";
-import toastNotification from "./../../utils/toastNotification";
+import toastNotification from "../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
 import { connect } from "react-redux";
-class Notifications extends Component {
+class SeenNotifications extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,12 +24,12 @@ class Notifications extends Component {
     };
   }
   componentDidMount() {
-    this.fetchNewNotifications();
+    this.fetchAllReadNotifications();
   }
-  fetchAllNotifications = () => {
+  fetchAllReadNotifications = () => {
     this.setState({ isLoading: true });
     this.props
-      .dispatch(fetchAllNotifications())
+      .dispatch(fetchAllReadNotifications())
       .then(() => {
         this.setState({
           isLoading: false,
@@ -71,7 +71,7 @@ class Notifications extends Component {
       });
   };
   render (){
-    if (this.props.newNotifications) {
+    if (this.props.readNotifications) {
       const formatDate = unformatedDate => {
         const date = new Date(unformatedDate);
         const day = date.getDate();
@@ -83,9 +83,6 @@ class Notifications extends Component {
       <>
       <NavigationBar />
 <div className="card p-5 text-center mt-4"style={{"width": "60%","margin-left": "auto","margin-right": "auto"}}>
-{/* <a href='#'><ul class="list-group col-m-4">
-  <li class="list-group-item active">Mark all as read</li>
-</ul></a> */}
 <ul class="nav nav-tabs ">
   <li class="nav-item">
     <a class="nav-link active" href="#"><h5>Notifications</h5></a>
@@ -95,11 +92,11 @@ class Notifications extends Component {
 <div className="row">
 <div className="col-md-4 text-left">
 <nav class="nav flex-column nav-pills nav-justified">
-  <a class="nav-link active d-flex justify-content-between align-items-center my-1" href="#">Unread <MDBBadge color="primary" pill>
-                {this.props.allNotificationsCount}
+  <a class="nav-link  d-flex justify-content-between align-items-center my-1" href="/notifications">Unread <MDBBadge color="primary" pill>
+                {this.props.unreadNotificationsCount}
                   </MDBBadge></a>
-  <a class="nav-link my-1 d-flex justify-content-between align-items-center" href="/notifications/seen">Read  <MDBBadge color="primary" pill>
-                     {this.props.readNotificationsCount} 
+  <a class="nav-link my-1 d-flex justify-content-between active align-items-center" href="#">Read  <MDBBadge color="primary" pill>
+                     {this.props.readNotifications.length} 
                   </MDBBadge></a>
   <a class="nav-link my-1 d-flex justify-content-between align-items-center" href="/notifications/all" >All Notifications <MDBBadge color="primary" pill>
                      {this.props.allNotificationsCount} 
@@ -109,7 +106,7 @@ class Notifications extends Component {
 </div>
 <div className="col-md-8 ">
 <MDBCol className="mt-0 mb-5">
-{this.props.newNotifications.map(notification => {
+{this.props.readNotifications.map(notification => {
                 return (
                   <NotificationList
                     key={notification.id}
@@ -134,13 +131,13 @@ class Notifications extends Component {
 const mapStateToProps = state => {
   console.log(state.notificationsReducer);
   return {
-    newNotifications:
-      state.notificationsReducer.unreadNotification.unreadNotifications,
+    unreadNotificationsCount:
+      state.notificationsReducer.readNotification.unreadNotificationsCount,
     allNotificationsCount:
-      state.notificationsReducer.unreadNotification.allNotificationsCount,
-      readNotificationsCount:
-      state.notificationsReducer.unreadNotification.readNotificationsCount
+      state.notificationsReducer.readNotification.allNotificationsCount,
+      readNotifications:
+      state.notificationsReducer.readNotification.readNotifications
   };
 };
-export default connect(mapStateToProps)(Notifications);
+export default connect(mapStateToProps)(SeenNotifications);
 
