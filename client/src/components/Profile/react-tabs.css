@@ -1,10 +1,12 @@
 .react-tabs {
   -webkit-tap-highlight-color: transparent;
+  width:100%;
 }
 
 .react-tabs__tab-list {
   margin: 0 0 10px;
   padding: 0px;
+  
 }
 
 .react-tabs__tab {
@@ -14,14 +16,20 @@
   bottom: -1px;
   position: relative;
   list-style: none;
-  padding: 6px 12px;
   cursor: pointer;
-  padding: 10px;
-  margin: 5px;
-  width: 350px;
+  padding: 5px;
+  margin-left:40px;
+  width:40%;
+
  
 }
-
+@media screen and  (max-width:980px) {
+  .react-tabs__tab {
+    margin-left:25px;
+    margin-right:auto;
+    width:90%;
+  }
+}
 .react-tabs__tab--selected {
   color:black;
   border-top: 0;

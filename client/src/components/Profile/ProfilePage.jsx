@@ -10,14 +10,15 @@ class ProfilePage extends Component {
         <div class="header" />
         <div class="dashboard-containers ">
           <div class="row">
-            <div class="profile-section col-md-4 ">
+            <div class="profile-section col-lg-4 ">
               <Image 
               src={this.props.ImageUrl}
+              alt={this.props.ImageUrl}
               className="profile-img" 
               height='200'
               />
               <div class=" profile-text">
-                <h5>{this.props.username}</h5>
+                <h4>{this.props.username}</h4>
                 <p>{this.props.location}</p>
               </div>
               <table class="table table-bordered">
@@ -39,13 +40,12 @@ class ProfilePage extends Component {
               <p class="user-info">
             {this.props.about}
               </p>
-              <Button className='centra'
-                 onClick={() => window.location = '/modify-user'} 
-              >
+              <div className ='text-center'>
+              <Button onClick={() => window.location = '/modify-user'} >
                 Edit profile
-              </Button>
+              </Button></div>
             </div>
-            <div class="dashboard-section col-md-8">
+            <div class="dashboard-section col-lg-8">
               <br />
               <ProfileTab
               />

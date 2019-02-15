@@ -5,6 +5,7 @@ import "./react-tabs.css";
 import "./ProfileTab.css";
 import MyBusinessTabPanel from "./MyBusinessTabPanel"
 import MyFavouritesTabPanel from "./MyFavouritesTabPanel"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class ProfileTab extends Component {
   constructor() {
     super();
@@ -12,8 +13,21 @@ class ProfileTab extends Component {
   }
   render() {
     const {myBusinesses,myFavourites} = this.props
-    if(!myBusinesses || !myFavourites){
-      return (null)
+    if(!myBusinesses){
+      return (
+      <>
+      <div className='text-center'>
+      <h3>You do not have any business yet, when you do they 'll appear here</h3>
+      </div>
+       </>)
+    }
+    if(!myFavourites){
+      return (
+        <>
+        <div className='text-center'>
+        <h3>You do not have any Favourite business yet, when you do they'll appear here</h3>
+        </div>
+         </>)
     }
     return (
       <Tabs
@@ -22,10 +36,10 @@ class ProfileTab extends Component {
       >
         <TabList>
           <Tab>
-            <p className="text-center ">BUSINESSES</p>
+            <h5 className="text-center "><FontAwesomeIcon className='card-icon mr-2' icon="briefcase" />MY BUSINESSES</h5>
           </Tab>
           <Tab>
-            <p className="text-center ">FAVOURITES</p>
+            <h5 className="text-center favourite-tab"><FontAwesomeIcon className='card-icon mr-2' icon="heart" />MY FAVOURITES</h5>
           </Tab>
         </TabList>
         <TabPanel>
