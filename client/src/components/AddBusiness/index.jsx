@@ -3,8 +3,10 @@ import axios from "axios";
 import { addBusiness } from "../../actions/businessActions";
 import RegisterBusinessPage from "./../AddBusiness/RegisterBusinessPage";
 import NavBar from "./../commons/NavigationBar";
-import { connect } from "react-redux";
 import Footer from "../commons/Footer";
+import toastNotification from "./../../utils/toastNotification";
+
+import { connect } from 'react-redux';
 class BusinessList extends Component {
   constructor() {
     super();
@@ -24,10 +26,27 @@ class BusinessList extends Component {
       filesToBeSent: [],
       imageUrl: "",
       imageUploadError: false,
-      imageId: ""
+      imageId: "",
+      uploadButtonState: false,
+      UploadBottonLabel: "Register Business",
+      loadingIcon :"",
     };
     this.onDrop = this.onDrop.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+  }
+  disableLoading = () => {
+    this.setState({
+      uploadButtonState: false,
+      UploadBottonLabel: "Register Business",
+      loadingIcon :"",
+    });
+  }
+  enableLoading  = () => {
+    this.setState({
+      uploadButtonState: true,
+      UploadBottonLabel: " ",
+      loadingIcon :"spinner"
+    });
   }
   onDrop(files) {
     this.setState({
@@ -42,17 +61,16 @@ class BusinessList extends Component {
     this.setState({ [key]: value });
   }
   handleFormSubmit = files => {
-    if (this.state.filesToBeSent.length >= 1) {
- 
-
-    alert("Loading....");
+    
+    if (this.state.filesToBeSent.length >= 1) 
+    {this.enableLoading();
+      toastNotification(["info"], `uploading pictures...`);
     // start loading animation
     // Push all the axios request promise into a single array
     const uploaders = this.state.filesToBeSent.map(file => {
       console.log(file);
       // Initial FormData
       const formData = new FormData();
-
       formData.append("upload_preset", "sijxpjkn");
       formData.append("api_key", "139423638121511");
       formData.append("file", file);
@@ -78,10 +96,12 @@ class BusinessList extends Component {
             businessImageArray: [...prevState.businessImageArray, {imageUrl: secure_url, imageId: public_id}]
           }))
           console.log(this.state.businessImageArray)
+          toastNotification(["info"], `${file} uploaded successfully!`);
         })
         .catch((err)=> {
-          alert("error " + err);
+          toastNotification(["error"], ` ${err}`);
           this.setState({imageUploadError:true})
+          this.disableLoading()
 });
     });
 
@@ -91,32 +111,41 @@ class BusinessList extends Component {
     .all(uploaders)
     .then(data => {
 if(this.state.imageUploadError){
-return
+  this.disableLoading()
+return toastNotification(["error"], `unable to upload pictures`);
+
 }
 else{
-alert(
-        "Success!!!: Upload picture successfully, now saving to database"
-      );
+      toastNotification(["info"], `All picures uploaded successfully, now saving to database `);
       const imgUrlToString = JSON.stringify(this.state.businessImageArray)
       this.setState({businessImageUrl:imgUrlToString})
       console.log(this.state.businessImageUrl)
       console.log(typeof this.state.businessImageUrl)
-
         this.props.dispatch(addBusiness(this.state)).then(()=>{
-          alert("saved to database successfully");
+          toastNotification(["success"], `saved to database successfully`);
+          this.disableLoading()
         }) }
-        
       })
       .catch(function(err) {
-        alert(err);
+        toastNotification(["error"], `  ${err.response.data.message}`);
+        
       })
+this.disableLoading()
     }
     else{
-    this.props.dispatch(addBusiness(this.state)).then(()=>{
-      alert("saved to database successfully");
+
+const {businessName,tagline,businessAddress1,phoneNumber1,website,category,businessDescription} =this.state;
+      this.enableLoading()
+      toastNotification(["info"], `saving...`);
+    this.props.dispatch(addBusiness({businessName,tagline,businessAddress1,phoneNumber1,website,category,businessDescription})).then(()=>{
+      toastNotification(["success"], `saved to database successfully`);
+      this.disableLoading()
     }).catch(function(err) {
-      alert(err);
+
+      toastNotification(["error"], ` ${err.response.data.message}`);
+      
     })
+    this.disableLoading()
   }
   }
   render() {
@@ -128,6 +157,9 @@ alert(
           onDrop={this.onDrop}
           handleFormSubmit={this.handleFormSubmit}
           handleInputChange={this.handleInputChange}
+          uploadButtonState={this.state.uploadButtonState}
+          UploadBottonLabel={this.state.UploadBottonLabel}
+          loadingIcon={this.state.loadingIcon}
         />
         <Footer />
       </div>

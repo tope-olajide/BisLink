@@ -135,9 +135,7 @@ class NavigationBar extends React.Component {
           </NavbarBrand>
           <NavbarToggler onClick={this.onClick} />
           <Collapse isOpen={this.state.collapse} navbar>
-             
             <NavbarNav right>
-
               <NavItem>
                 <NavLink to="#" onClick={() => this.toggle(7)}>
                   <FontAwesomeIcon icon="user-plus" /> SIGN UP

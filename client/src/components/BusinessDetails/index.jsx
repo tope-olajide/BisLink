@@ -11,14 +11,8 @@ import {
   removeFromFavourite,
   addToFavourite
 } from "../../actions/favouriteActions";
-import {
-  upvote,
-  downvote
-} from "../../actions/voteAction";
-import {
-  follow,
-  unfollow
-} from "../../actions/followActions";
+import { upvote, downvote } from "../../actions/voteAction";
+import { follow, unfollow } from "../../actions/followActions";
 import LoadingAnimation from "../commons/LoadingAnimation";
 import toastNotification from "./../../utils/toastNotification";
 import { connect } from "react-redux";
@@ -32,20 +26,20 @@ class BusinessDetails extends Component {
       title: "",
       content: "",
       favouriteIcon: "",
-      isFavourite: '',
-      followButton:'',
-      spinnerIcon:'',
-      disableReviewButton:false
+      isFavourite: "",
+      followButton: "",
+      spinnerIcon: "",
+      disableReviewButton: false
     };
-    this.reviewRef = React.createRef()
+    this.reviewRef = React.createRef();
   }
 
   scrollToReview = () => {
-    window.scrollTo(0, this.reviewRef.current.offsetTop) 
-  }
-  toggleReviewButton =()=>{
-    this.setState({disableReviewButton: !this.state.disableReviewButton})
-  }
+    window.scrollTo(0, this.reviewRef.current.offsetTop);
+  };
+  toggleReviewButton = () => {
+    this.setState({ disableReviewButton: !this.state.disableReviewButton });
+  };
   componentDidMount() {
     const id = this.props.match.params.businessId;
     this.fetchBusinessDetails(id);
@@ -57,14 +51,13 @@ class BusinessDetails extends Component {
       this.setState({ favouriteIcon: "far", isFavourite: false });
     }
   };
-setFollowButton=()=>{
-  if(this.props.infoCount.isFollowing){
-    this.setState({ followButton: "unfollow" });
-  }
-  else{
-    this.setState({ followButton: "follow" });
-  }
-}
+  setFollowButton = () => {
+    if (this.props.infoCount.isFollowing) {
+      this.setState({ followButton: "unfollow" });
+    } else {
+      this.setState({ followButton: "follow" });
+    }
+  };
   fetchBusinessDetails = id => {
     console.log(id);
     this.props
@@ -76,7 +69,7 @@ setFollowButton=()=>{
             isError: false
           });
           this.setFavourite(this.props.infoCount.isUserFavourite);
-this.setFollowButton()
+          this.setFollowButton();
         });
       })
       .catch(error => {
@@ -96,96 +89,138 @@ this.setFollowButton()
     console.log(value);
   };
   addBusinessReviews = () => {
-    this.toggleReviewButton()
-    toastNotification(['info'], ` ...submitting your reviewing`);
+    this.toggleReviewButton();
+    toastNotification(["info"], ` ...submitting your reviewing`);
     const id = this.props.match.params.businessId;
     this.props
       .dispatch(addBusinessReviews(id, this.state))
       .then(() => {
-        toastNotification(['success'], `Your review has been successfully added.`);
-        this.toggleReviewButton()
-        this.setState({title: "", content: ""})
+        toastNotification(
+          ["success"],
+          `Your review has been successfully added.`
+        );
+        this.toggleReviewButton();
+        this.setState({ title: "", content: "" });
       })
       .catch(error => {
         if (!error.response) {
           toastNotification(["error"], "Network Error!");
         } else {
-        toastNotification(["error"], error.response.data.message);
-        this.toggleReviewButton()}
+          toastNotification(["error"], error.response.data.message);
+          this.toggleReviewButton();
+        }
       });
   };
-  followUser=()=>{
-    const userId = this.props.businessDetails.User.id
-    if(this.props.infoCount.isFollowing){
+  followUser = () => {
+    const userId = this.props.businessDetails.User.id;
+    if (this.props.infoCount.isFollowing) {
       this.props
         .dispatch(unfollow(userId))
         .then(() => {
-         this.setFollowButton()
-        
-          toastNotification(['success'], `You successfully unfollowed ${this.props.businessDetails.User.username} `);
+          this.setFollowButton();
+
+          toastNotification(
+            ["success"],
+            `You successfully unfollowed ${
+              this.props.businessDetails.User.username
+            } `
+          );
         })
         .catch(error => {
           if (!error.response) {
-            toastNotification(["error"], "Network Error!")
+            toastNotification(["error"], "Network Error!");
             this.setFollowButton();
           } else {
-          toastNotification(["error"], error.response.data.message);
-          this.setFollowButton()}
+            toastNotification(["error"], error.response.data.message);
+            this.setFollowButton();
+          }
         });
     } else {
       this.props
         .dispatch(follow(userId))
         .then(() => {
-          this.setFollowButton()
-          toastNotification(['success'], `You are now following ${this.props.businessDetails.User.username} `);
-          
+          this.setFollowButton();
+          toastNotification(
+            ["success"],
+            `You are now following ${this.props.businessDetails.User.username} `
+          );
         })
         .catch(error => {
           if (!error.response) {
-            toastNotification(["error"], "Network Error!")
+            toastNotification(["error"], "Network Error!");
             this.setFollowButton();
           } else {
-          toastNotification(["error"], error.response.data.message);
-          this.setFollowButton()}
+            toastNotification(["error"], error.response.data.message);
+            this.setFollowButton();
+          }
         });
     }
-  }
+  };
   addToFavourite = () => {
     const id = this.props.match.params.businessId;
     this.setState({
-      spinnerIcon:'spinner',
-      favouriteIcon: ''
-    })
+      spinnerIcon: "spinner",
+      favouriteIcon: ""
+    });
     if (!this.props.infoCount.isUserFavourite) {
       this.props
         .dispatch(addToFavourite(id))
         .then(() => {
-          this.setState ({ favouriteIcon: "fas", isFavourite: true,spinnerIcon:'' });
-          toastNotification(['success'], `"${this.props.businessDetails.businessName}" has been successfully added to your Favourite`);
+          this.setState({
+            favouriteIcon: "fas",
+            isFavourite: true,
+            spinnerIcon: ""
+          });
+          toastNotification(
+            ["success"],
+            `"${
+              this.props.businessDetails.businessName
+            }" has been successfully added to your Favourite`
+          );
         })
         .catch(error => {
           if (!error.response) {
             toastNotification(["error"], "Network Error!");
           } else {
-          toastNotification(["error"], `Unable to add "${this.props.businessDetails.businessName}" to your Favourite ${error}`);
-          this.setState ({ favouriteIcon: "far",spinnerIcon:'' })};
+            toastNotification(
+              ["error"],
+              `Unable to add "${
+                this.props.businessDetails.businessName
+              }" to your Favourite ${error}`
+            );
+            this.setState({ favouriteIcon: "far", spinnerIcon: "" });
+          }
         });
     } else {
       this.props
         .dispatch(removeFromFavourite(id))
         .then(() => {
-          this.setState({ favouriteIcon: "far", isFavourite: false,spinnerIcon:'' });
-          toastNotification(['success'], `"${this.props.businessDetails.businessName}" has been successfully removed from your Favourite`);
+          this.setState({
+            favouriteIcon: "far",
+            isFavourite: false,
+            spinnerIcon: ""
+          });
+          toastNotification(
+            ["success"],
+            `"${
+              this.props.businessDetails.businessName
+            }" has been successfully removed from your Favourite`
+          );
         })
         .catch(error => {
           if (!error.response) {
             toastNotification(["error"], "Network Error!");
           } else {
-          toastNotification(["error"], `Unable to remove "${this.props.businessDetails.businessName}" from your Favourite`);
-          this.setState ({ favouriteIcon: "fas",spinnerIcon:'' })};
+            toastNotification(
+              ["error"],
+              `Unable to remove "${
+                this.props.businessDetails.businessName
+              }" from your Favourite`
+            );
+            this.setState({ favouriteIcon: "fas", spinnerIcon: "" });
+          }
         });
     }
-
   };
 
   upvoteBusiness = () => {
@@ -193,15 +228,17 @@ this.setFollowButton()
     this.props
       .dispatch(upvote(id))
       .then(() => {
-        
-      
-        toastNotification(['success'], `"${this.props.businessDetails.businessName}" Upvoted successfully`);
+        toastNotification(
+          ["success"],
+          `"${this.props.businessDetails.businessName}" Upvoted successfully`
+        );
       })
       .catch(error => {
         if (!error.response) {
           toastNotification(["error"], "Network Error!");
         } else {
-        toastNotification(["error"], error.response.data.message)};
+          toastNotification(["error"], error.response.data.message);
+        }
       });
   };
   downvoteBusiness = () => {
@@ -209,29 +246,39 @@ this.setFollowButton()
     this.props
       .dispatch(downvote(id))
       .then(() => {
-        
-        toastNotification(['success'], `"${this.props.businessDetails.businessName}" Downvoted successfully`);
+        toastNotification(
+          ["success"],
+          `"${this.props.businessDetails.businessName}" Downvoted successfully`
+        );
       })
       .catch(error => {
         if (!error.response) {
           toastNotification(["error"], "Network Error!");
         } else {
-        toastNotification(["error"], error.response.data.message)};
+          toastNotification(["error"], error.response.data.message);
+        }
       });
   };
-  editBusiness=()=>{
+  editBusiness = () => {
     const id = this.props.match.params.businessId;
     window.location = `/modify-business/${id}`;
-  }
-  parseImageGallery=()=>{
-    if(this.props.businessDetails.businessImageUrl){
-     const parsedGallery= JSON.parse(this.props.businessDetails.businessImageUrl)
-    return parsedGallery 
-    }else{
-      return [{imageUrl:'https://res.cloudinary.com/temitope/image/upload/v1549260007/noimage_1.png',imageId:11}]
+  };
+  parseImageGallery = () => {
+    if (this.props.businessDetails.businessImageUrl) {
+      const parsedGallery = JSON.parse(
+        this.props.businessDetails.businessImageUrl
+      );
+      return parsedGallery;
+    } else {
+      return [
+        {
+          imageUrl:
+            "https://res.cloudinary.com/temitope/image/upload/v1549260007/noimage_1.png",
+          imageId: 11
+        }
+      ];
     }
-    
-  }
+  };
   render() {
     if (this.state.isLoading) {
       return (
@@ -266,7 +313,6 @@ this.setFollowButton()
             editBusiness={this.editBusiness}
             businessImageUrl={this.parseImageGallery()}
             scrollToReview={this.scrollToReview}
-            
           />
           <BusinessDetailsPage
             saveToState={this.saveToState}
@@ -293,12 +339,11 @@ this.setFollowButton()
             followUser={this.followUser}
             followButton={this.state.followButton}
             reviewRef={this.reviewRef}
-            
           />
           {console.log(this.props.businessDetails)}
           {console.log(this.props.infoCount)}
           {console.log(this.props.businessReview)}
-          
+
           <Footer />
         </div>
       );

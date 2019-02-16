@@ -3,16 +3,17 @@ import "./RegisterBusinessPage.css";
 import "./RegisterBusinessForm.css";
 import { Input, Button } from "mdbreact";
 import Dropzone from "react-dropzone";
-const dropZoneStyle= {
-  width:200,
-  height:200,
-  marginLeft: 'auto',
-  marginRight:'auto',
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+const dropZoneStyle = {
+  width: 200,
+  height: 200,
+  marginLeft: "auto",
+  marginRight: "auto",
   borderWidth: 2,
-  borderColor: '#666',
-  borderStyle: 'dashed',
+  borderColor: "#666",
+  borderStyle: "dashed",
   borderRadius: 5
-}
+};
 const thumbsContainer = {
   display: "flex",
   flexDirection: "row",
@@ -46,7 +47,6 @@ const img = {
 class RegisterBusinessPage extends Component {
   render() {
     const { files } = this.props.files;
-
     const thumbs = files.map(file => (
       <div style={thumb}>
         <div style={thumbInner}>
@@ -58,17 +58,14 @@ class RegisterBusinessPage extends Component {
       <div>
         <div className="register-business-header">
           <div className="hero-text">
-            <h1>
-              Register your business
-            </h1>
+            <h1>Register your business</h1>
           </div>
         </div>
         <div className="biz-form-container col-md-7 card mt-5 p-5">
-{/*           <h6 className="dark-text biz-form-title  text-center ">
+          {/*           <h6 className="dark-text biz-form-title  text-center ">
             Register your business
           </h6> */}
-
-<form>
+          <form>
             <div className="row">
               <div className="col-md-6">
                 <Input
@@ -87,21 +84,20 @@ class RegisterBusinessPage extends Component {
                   label="Tag Line"
                   icon="asterisk"
                   onChange={event => {
-                    this.props.handleInputChange(
-                      "tagline",
-                      event.target.value
-                    );
+                    this.props.handleInputChange("tagline", event.target.value);
                   }}
                 />
               </div>
             </div>
- 
             <Input
               label="Business Address"
               className="mt-5"
               icon="building"
               onChange={event => {
-                this.props.handleInputChange("businessAddress1", event.target.value);
+                this.props.handleInputChange(
+                  "businessAddress1",
+                  event.target.value
+                );
               }}
             />
             <div className="row">
@@ -145,23 +141,28 @@ class RegisterBusinessPage extends Component {
               icon="pencil"
               rows="3"
               onChange={event => {
-                this.props.handleInputChange("businessDescription", event.target.value);
+                this.props.handleInputChange(
+                  "businessDescription",
+                  event.target.value
+                );
               }}
             />
             <section>
               <div className="dropzone">
-                <Dropzone accept="image/*" style={dropZoneStyle} onDrop={this.props.onDrop}>
+                <Dropzone
+                  accept="image/*"
+                  style={dropZoneStyle}
+                  onDrop={this.props.onDrop}
+                >
                   <h4>
-                    Try dropping all your business pictures here, or click to select the
-                    pictures you want to upload.
+                    Try dropping all your business pictures here, or click to
+                    select the pictures you want to upload.
                   </h4>
                 </Dropzone>
                 <aside style={thumbsContainer}>{thumbs}</aside>
               </div>
               <div className="text-center">
-                <Button onClick={this.props.handleFormSubmit} >
-                  Register Business
-                </Button>
+                <Button onClick={this.props.handleFormSubmit} disabled={this.props.uploadButtonState}>{this.props.UploadBottonLabel} <FontAwesomeIcon icon={this.props.loadingIcon} spin size='2x' /></Button>
               </div>
             </section>
           </form>

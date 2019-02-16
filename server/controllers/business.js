@@ -61,8 +61,7 @@ export default class Businesses {
             success: false,
             message: 'This business exist already'
           });
-        }
-     const parsedbusinessImageUrl = JSON.parse(businessImageUrl)
+        }  
         const validateBusinessError =
           validateBusiness({
             businessName,
@@ -75,7 +74,35 @@ export default class Businesses {
             message: validateBusinessError
           });
         }
-        Business
+        if(!businessImageUrl){
+          Business
+          .create({
+            businessName,
+            tagline,
+            businessAddress1,
+            phoneNumber1,
+            website,
+            category,
+            businessDescription,
+            userId,
+          })
+          .then((business) => {
+            res.status(201).json({
+              success: true,
+              message: 'New Business created',
+              business,
+              userId
+            });
+          })
+          .catch((error) => res.status(500).json({
+            success: false,
+            message: 'Error creating business',
+            error
+          }));
+        }
+        else{
+          const parsedbusinessImageUrl = JSON.parse(businessImageUrl)
+       Business
           .create({
             businessName,
             tagline,
@@ -100,7 +127,7 @@ export default class Businesses {
             success: false,
             message: 'Error creating business',
             error
-          }));
+          }));  }
 
       });
     return this;
