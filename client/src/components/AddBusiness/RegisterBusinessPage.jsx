@@ -162,7 +162,9 @@ class RegisterBusinessPage extends Component {
                 <aside style={thumbsContainer}>{thumbs}</aside>
               </div>
               <div className="text-center">
-                <Button onClick={this.props.handleFormSubmit} disabled={this.props.uploadButtonState}>{this.props.UploadBottonLabel} <FontAwesomeIcon icon={this.props.loadingIcon} spin size='2x' /></Button>
+                <Button onClick={this.props.handleFormSubmit} disabled={this.props.uploadButtonState}>
+                {this.props.UploadBottonLabel} <FontAwesomeIcon icon={this.props.loadingIcon} spin size='2x' />
+                </Button>
               </div>
             </section>
           </form>

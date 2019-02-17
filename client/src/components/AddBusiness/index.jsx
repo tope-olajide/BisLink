@@ -61,7 +61,6 @@ class BusinessList extends Component {
     this.setState({ [key]: value });
   }
   handleFormSubmit = files => {
-    
     if (this.state.filesToBeSent.length >= 1) 
     {this.enableLoading();
       toastNotification(["info"], `uploading pictures...`);
