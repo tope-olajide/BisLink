@@ -29,7 +29,10 @@ class ModifyBusiness extends Component {
         filesToBeSent: [],
         imageUrl: "",
         imageUploadError: false,
-        imageId: ""
+        imageId: "",
+        uploadButtonState: false,
+        UploadBottonLabel: "Update Business",
+        loadingIcon :"",
       };
       this.onDrop = this.onDrop.bind(this);
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -37,6 +40,20 @@ class ModifyBusiness extends Component {
    componentDidMount() {
       const id = this.props.match.params.businessId;
       this.fetchBusinessDetails(id);
+    }
+    disableLoading = () => {
+      this.setState({
+        uploadButtonState: false,
+        UploadBottonLabel: "Update Business",
+        loadingIcon :"",
+      });
+    }
+    enableLoading  = () => {
+      this.setState({
+        uploadButtonState: true,
+        UploadBottonLabel: " ",
+        loadingIcon :"spinner"
+      });
     }
     fetchBusinessDetails = id => {
       console.log(id);
@@ -87,10 +104,8 @@ class ModifyBusiness extends Component {
     handleFormSubmit = files => {
       const {businessId} =this.props.match.params
       if (this.state.filesToBeSent.length >= 1) {
-
-       
-      
-      alert("Loading....");
+        this.enableLoading();
+        toastNotification(["info"], `uploading pictures...`);
       // start loading animation
       // Push all the axios request promise into a single array
       const uploaders = this.state.filesToBeSent.map(file => {
@@ -123,8 +138,11 @@ class ModifyBusiness extends Component {
               businessImageArray: [...prevState.businessImageArray, {imageUrl: secure_url, imageId: public_id}]
             }))
             console.log(this.state.businessImageArray)
+            toastNotification(["info"], `${file} uploaded successfully!`);
           })
           .catch((err)=> {
+            toastNotification(["error"], ` ${err}`);
+            this.disableLoading()
             alert("error " + err);
             this.setState({imageUploadError:true})
  });
@@ -134,32 +152,37 @@ class ModifyBusiness extends Component {
         .all(uploaders)
         .then(data => {
  if(this.state.imageUploadError){
-   return
+    this.disableLoading()
+   return toastNotification(["error"], `unable to upload pictures`);
  }
  else{
-   alert(
-            "Success!!!: Upload picture successfully, now saving to database"
-          );
+  toastNotification(["info"], `All picures uploaded successfully, now saving to database `);
           const imgUrlToString = JSON.stringify(this.state.businessImageArray)
           this.setState({businessImageUrl:imgUrlToString})
           console.log(this.state.businessImageUrl)
           console.log(typeof this.state.businessImageUrl)
 
           this.props.dispatch(modifyBusiness(this.state, businessId)).then(()=>{
-            alert("saved to database successfully");
+            toastNotification(["success"], `saved to database successfully`);
+            this.disableLoading()
           }) }
           
         })
         .catch(function(err) {
-          alert(err);
+          toastNotification(["error"], `  ${err.response.data.message}`);
+          this.disableLoading()
         })
       }
         else{
+          this.enableLoading()
+          toastNotification(["info"], `saving...`);
           this.props.dispatch(modifyBusiness((this.state), businessId)).then(()=>{
-            alert("saved to database successfully");
+            toastNotification(["success"], `saved to database successfully`);
+            this.disableLoading()
           })        
           .catch(function(err) {
-            alert(err);
+            toastNotification(["error"], ` ${err.response.data.message}`);
+            this.disableLoading()
           })
         }
     }
@@ -195,6 +218,9 @@ class ModifyBusiness extends Component {
           website={this.state.website}
           businessDescription={this.state.businessDescription}
           modifyGallery={this.modifyGallery}
+          uploadButtonState={this.state.uploadButtonState}
+          UploadBottonLabel={this.state.UploadBottonLabel}
+          loadingIcon={this.state.loadingIcon}
           />
  <Footer />
  </div>

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Input, Button } from "mdbreact";
 import Dropzone from "react-dropzone";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const dropZoneStyle= {
   width:200,
   height:200,
@@ -168,8 +169,8 @@ default={this.props.businessAddress1}
                 <aside style={thumbsContainer}>{thumbs}</aside>
               </div>
               <div className="text-center">
-                <Button onClick={this.props.handleFormSubmit}>
-                  Update Business
+                <Button onClick={this.props.handleFormSubmit}  disabled={this.props.uploadButtonState}>
+                {this.props.UploadBottonLabel} <FontAwesomeIcon icon={this.props.loadingIcon} spin size='2x' />
                 </Button>
               </div>
             </section>
