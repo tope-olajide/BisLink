@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Input, Button } from "mdbreact";
 import { signOut } from "../../actions/authActions";
 import { connect } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class Footer extends Component {
   constructor(props) {
     super(props);
@@ -35,8 +36,8 @@ class Footer extends Component {
                   <p className="h5 text-center mb-4">Search for Businesses</p>
                   <div className="grey-text">
                     <Input
-                      label="Your name"
-                      icon="user"
+                      label="Business Name"
+                      icon="briefcase"
                       group
                       type="text"
                       onChange={event => {
@@ -44,8 +45,8 @@ class Footer extends Component {
                       }}
                     />
                     <Input
-                      label="Your name"
-                      icon="user"
+                      label="Locaton"
+                      icon= "map-marker"
                       group
                       type="text"
                       onChange={event => {
@@ -91,7 +92,7 @@ class Footer extends Component {
                     </a>{" "}
                   </p>
                   <p class="mt-5">
-                    Designed with <i class="fas fa-heart fa-lg" /> by{" "}
+                    Designed and developed with <FontAwesomeIcon icon="heart" /> by{" "}
                     <a href="https://github.com/tope-olajide/BisLink">
                       Temitope
                     </a>{" "}

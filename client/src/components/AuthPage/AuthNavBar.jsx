@@ -129,7 +129,6 @@ class NavigationBar extends React.Component {
         <Navbar color="black" dark expand="md" scrolling>
           <NavbarBrand href="/">
             <strong>
-              <FontAwesomeIcon icon="" size="1x" />
               BISLINK
             </strong>
           </NavbarBrand>

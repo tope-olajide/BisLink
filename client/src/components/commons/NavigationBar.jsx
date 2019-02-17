@@ -106,19 +106,19 @@ signOut=()=>{
               </NavItem>
               <NavItem active ={this.props.myProfile}>
                 <NavLink to="/view-profile">
-                  <FontAwesomeIcon icon="folder-plus" /> MY PROFILE
+                  <FontAwesomeIcon icon="user-alt" /> MY PROFILE
                 </NavLink>
               </NavItem>
               <NavItem active ={this.props.notifications}>
                 <NavLink to="/notifications">
-                  <FontAwesomeIcon icon="folder-plus" /> NOTIFICATIONS
+                  <FontAwesomeIcon icon="bell" /> NOTIFICATIONS
                 </NavLink>
               </NavItem>
               <NavItem>
               </NavItem>
               <NavItem>
                 <NavLink to='#?' onClick={this.signOut}>
-                  <FontAwesomeIcon icon="user" /> LOGOUT
+                  <FontAwesomeIcon icon="sign-out-alt" /> LOGOUT
                 </NavLink>
               </NavItem>
             </NavbarNav>

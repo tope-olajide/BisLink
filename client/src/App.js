@@ -15,7 +15,7 @@ import {
     faLink,
     faHeartbeat,
     faSpinner,faMapMarkerAlt,faMobileAlt,
-    faHeart, faThumbsDown, faThumbsUp,faEye,faTag,faTrash,faEdit,faBell
+    faHeart, faThumbsDown, faThumbsUp,faEye,faTag,faTrash,faEdit,faBell,faSignOutAlt,faUserAlt
 } from '@fortawesome/free-solid-svg-icons'
 
 import {faHeart as faHeartRegular} from '@fortawesome/free-regular-svg-icons'
@@ -51,7 +51,7 @@ library.add(
   faLink,
   faHeartbeat,faSpinner, faMapMarkerAlt, faMobileAlt,
   faHeart,faHeartRegular,
-  faThumbsDown, faThumbsUp,faEye,faEyeRegular,faTag,faTrash,faEdit,faBell
+  faThumbsDown, faThumbsUp,faEye,faEyeRegular,faTag,faTrash,faEdit,faBell,faSignOutAlt,faUserAlt
 
 )
 class App extends Component {
