@@ -91,7 +91,6 @@ html {
  
 /* small devices{600 pixels and up to 768} */
 @media screen and (min-width: 600px) and (max-width:768px) {
-
     .hero-caption {
         width: 100%;
         position: absolute;

@@ -34,7 +34,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allBusinesses: action.pagedBusiness
-      }
+      };
     case SET_BUSINESS_DETAILS:
       return {
         ...state,

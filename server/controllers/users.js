@@ -1,30 +1,35 @@
+/* eslint-disable require-jsdoc */
 import jsonwebtoken from 'jsonwebtoken';
 import {
-  validateUser, validateModifiedUser
+  validateUser,
+  validateModifiedUser
 } from '../middleware/validator';
 import {
-  User, Notification, Business, Favourite, Follower
+  User,
+  Notification,
+  Business,
+  Favourite,
+  Follower
 } from '../models';
 import Encryption from '../middleware/encryption';
+
 const newEncryption = new Encryption();
 
- const verifyUserNameAndEmail = (username, email) => {
+const verifyUserNameAndEmail = (username, email) => {
   const promise = new Promise((resolve, reject) => {
     User
       .findOne({
         attributes: ['email', 'username'],
         where: {
-          $or: [
-            {
-              username: {
-                $iLike: username
-              }
-            }, {
-              email: {
-                $iLike: email
-              }
+          $or: [{
+            username: {
+              $iLike: username
             }
-          ]
+          }, {
+            email: {
+              $iLike: email
+            }
+          }]
         }
       })
       .then((userFound) => {
@@ -46,7 +51,6 @@ const newEncryption = new Encryption();
 };
 
 export default class Users {
-
   signupUser(req, res) {
     const {
       fullname,
@@ -78,14 +82,14 @@ export default class Users {
         .then((result) => {
           const notificationAlert = {
             title: `Welcome ${result.fullname}`,
-            message: `You are welcome to my Bislink web app.`
-          }
+            message: 'You are welcome to my Bislink web app.'
+          };
           Notification
             .create({
               userId: result.id,
               title: notificationAlert.title,
               message: notificationAlert.message,
-            })
+            });
           const token = jsonwebtoken.sign({
             id: result.id,
             username: result.username,
@@ -178,7 +182,7 @@ export default class Users {
       about,
       ImageUrl,
       ImageId
-    } = body
+    } = body;
     const validateUserDetails = validateModifiedUser({
       fullname,
       email
@@ -202,41 +206,40 @@ export default class Users {
           });
         }
 
-/*         if (imageId !== foundUser.imageId) {
+        /*         if (imageId !== foundUser.imageId) {
           cloudinary.destroy(foundUser.imageId, () => {});
         } */
-       
-          foundUser.updateAttributes({
-              fullname,
-              email,
-              phoneNumber,
-              location,
-              about,
-              ImageUrl,
-              ImageId
-            })
-            .then((user) => {
-              const {
-                id
-              } = user;
-              const token = jsonwebtoken.sign({
-                id,
-                username,
-                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-              }, 'process.env.JWT_SECRET');
 
-              return res.status(200).json({
-                success: true,
-                message: 'User record updated',
-                user: {
-                  fullname,
-                  username,
-                  imageUrl: user.imageUrl,
-                  token
-                }
-              });
-            })
- 
+        foundUser.updateAttributes({
+            fullname,
+            email,
+            phoneNumber,
+            location,
+            about,
+            ImageUrl,
+            ImageId
+          })
+          .then((user) => {
+            const {
+              id
+            } = user;
+            const token = jsonwebtoken.sign({
+              id,
+              username,
+              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+            }, 'process.env.JWT_SECRET');
+
+            return res.status(200).json({
+              success: true,
+              message: 'User record updated',
+              user: {
+                fullname,
+                username,
+                imageUrl: user.imageUrl,
+                token
+              }
+            });
+          });
       }).catch(( /* error */ ) => res.status(500).json({
         success: false,
         message: "Error Updating user's profile"
@@ -292,7 +295,7 @@ export default class Users {
           message: 'Password Changed Successfully'
         }));
       })
-      .catch((  ) => res.status(500).json({
+      .catch(() => res.status(500).json({
         success: false,
         message: 'An error occured'
       }));
@@ -323,7 +326,8 @@ export default class Users {
           location,
           username,
           email,
-          ImageUrl,phoneNumber
+          ImageUrl,
+          phoneNumber
         } = userFound;
 
         const userInfo = {
@@ -333,7 +337,8 @@ export default class Users {
           location,
           username,
           email,
-          ImageUrl,phoneNumber
+          ImageUrl,
+          phoneNumber
         };
         Business.findAndCountAll({
           where: {
@@ -341,7 +346,7 @@ export default class Users {
           }
         }).then((businesses) => {
           userInfo.myBusinesses = businesses.rows;
-          userInfo.myBusinessCount = businesses.count
+          userInfo.myBusinessCount = businesses.count;
           Favourite.findAll({
               where: {
                 userId
@@ -349,38 +354,35 @@ export default class Users {
             })
             .then((favourites) => {
               userInfo.myFavourites = favourites;
-                  Follower.findAndCountAll({
-                    where: {
-                      followerId: userId
-                    },
-                  }).then((followers) => {
-                    userInfo.myFollowers = followers.rows;
-                    userInfo.myFollowersCount = followers.count
-                    Follower.findAndCountAll({
-                      where: {
-                        userId
-                      }
-                    }).then((followees) => {
-                      userInfo.myFollowees = followees.rows;
-                      userInfo.myFolloweesCount = followees.count
-                      return res.status(200).json({
-                        success: true,
-                        message: 'User found!',
-                        user: userInfo
-                      });
-                    })
-                  })
-              
-              
+              Follower.findAndCountAll({
+                where: {
+                  followerId: userId
+                },
+              }).then((followers) => {
+                userInfo.myFollowers = followers.rows;
+                userInfo.myFollowersCount = followers.count;
+                Follower.findAndCountAll({
+                  where: {
+                    userId
+                  }
+                }).then((followees) => {
+                  userInfo.myFollowees = followees.rows;
+                  userInfo.myFolloweesCount = followees.count;
+                  return res.status(200).json({
+                    success: true,
+                    message: 'User found!',
+                    user: userInfo
+                  });
+                });
+              });
             });
         }).catch(( /* error */ ) => res.status(500).json({
           success: false,
           message: "Error fetching user's profile"
         }));
-
       }).catch(( /* error */ ) => res.status(500).json({
         success: false,
-        message: "Error fetching user"
+        message: 'Error fetching user'
       }));
   }
 }

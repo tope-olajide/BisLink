@@ -2,7 +2,7 @@ import routes from './routes';
 import cors from 'cors'
 const express = require('express');
 const bodyParser = require('body-parser');
-
+require('dotenv').config();
 
 const app = express();
 
@@ -33,7 +33,7 @@ app.post('*', (req, res) => {
   });
 });
   
-let port = 5000;
+const port = process.env.port;
 app.listen(port, () => {
   console.log(`Server is up and running on port number ${port}`);
 });
