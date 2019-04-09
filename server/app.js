@@ -33,7 +33,7 @@ app.post('*', (req, res) => {
   });
 });
   
- const port = process.env.port|| 80;
+ const port = process.env.port || 8080;
 app.listen(port, () => {
-  console.log(`Server is up and running on port number ${port}`);
+  console.log(`Server is up and running on: http://localhost:%s', ${port}`);
 });
