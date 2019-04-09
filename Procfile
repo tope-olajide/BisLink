@@ -1,1 +1,1 @@
-web: ./server npm start
+web:./server npm start
