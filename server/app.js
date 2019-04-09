@@ -18,6 +18,8 @@ app.get('/', (req, res) => {
     message: 'Welcome to bisLink Homepage!'
   });
 });
+app.use('/', express.static('build'));
+app.use('*', express.static('build'));
 
 app.get('*', (req, res) => {
   res.status(404).send({
@@ -35,5 +37,5 @@ app.post('*', (req, res) => {
   
  const port = process.env.PORT || 5000;
 app.listen(port, () => {
-  console.log(`Server is up and running on: http://localhost:%s', ${port}`);
+  console.log(`Server is up and running on port:', ${port}`);
 });
