@@ -1,10 +1,19 @@
 import routes from './routes';
-import cors from 'cors'
+import cors from 'cors';
+import path from 'path';
+
 const express = require('express');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
 const app = express();
+app.use(express.static(path.join(__dirname, '../client/build')));
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '../client/build'));
+});
+
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -12,28 +21,10 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cors());
 app.use('/api/', routes);
-app.get('/', (req, res) => {
-  res.status(201).json({
-    title: 'BisLink',
-    message: 'Welcome to bisLink Homepage!'
-  });
-});
+
 app.use('/', express.static('build'));
 app.use('*', express.static('build'));
 
-app.get('*', (req, res) => {
-  res.status(404).send({
-    success: false,
-    message: 'invalid link'
-  });
-});
-
-app.post('*', (req, res) => {
-  res.status(404).send({
-    success: false,
-    message: 'invalid link'
-  });
-});
   
  const port = process.env.PORT || 5000;
 app.listen(port, () => {
