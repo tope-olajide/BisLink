@@ -58,6 +58,11 @@ module.exports = {
         allowNull: true,
         defaultValue: 0
       },
+      reviewCount: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        defaultValue: 0
+      },
       userId: {
         type: Sequelize.INTEGER,
         references: {
