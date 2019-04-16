@@ -34,11 +34,11 @@ module.exports = {
         allowNull: true,
       },
       about: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
       },
       ImageUrl: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
       },
       ImageId: {
