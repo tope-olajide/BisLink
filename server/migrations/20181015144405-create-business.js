@@ -20,17 +20,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      businessAddress2: {
-        type: Sequelize.STRING,
-        allowNull: true,
-      },
       phoneNumber1: {
         type: Sequelize.STRING,
         allowNull: false,
-      },
-      phoneNumber2: {
-        type: Sequelize.STRING,
-        allowNull: true,
       },
       website: {
         type: Sequelize.STRING,
@@ -41,11 +33,11 @@ module.exports = {
         allowNull: true,
       },
       businessImageUrl: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: true,
       },
-      businessImageId: {
-        type: Sequelize.STRING,
+      defaultBusinessImageUrl: {
+        type: Sequelize.TEXT,
         allowNull: true,
       },
       businessDescription: {
@@ -81,7 +73,6 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       },
-      
     });
   },
   down: queryInterface => queryInterface.dropTable('Businesses')
