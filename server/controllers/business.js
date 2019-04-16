@@ -114,7 +114,7 @@ export default class Businesses {
               category,
               businessDescription,
               businessImageUrl,
-              defaultBusinessImageUrl: parsedbusinessImageUrl[0],
+              defaultBusinessImageUrl: parsedbusinessImageUrl[0].imageUrl,
               userId,
             })
             .then((business) => {
@@ -173,7 +173,7 @@ export default class Businesses {
         if (!foundBusiness.defaultBusinessImageUrl) {
           foundBusiness.updateAttributes({
             businessImageUrl: updatedImageGallery,
-            defaultBusinessImageUrl: uploadedImage[0]
+            defaultBusinessImageUrl: newImageGallery[0].imageUrl
           })
             .catch(() => res.status(500).json({
               success: false,
