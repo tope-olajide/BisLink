@@ -350,8 +350,8 @@ export default class Users {
           Favourite.findAll({
               where: {
                 userId
-              },
-            })
+            },
+          })
             .then((favourites) => {
               userInfo.myFavourites = favourites;
               Follower.findAndCountAll({
