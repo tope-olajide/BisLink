@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: ''
     },
     businessDescription: {
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
       allowNull: false
     },
     viewCount: {
