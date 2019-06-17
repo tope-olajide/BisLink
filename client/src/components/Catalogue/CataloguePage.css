@@ -1,43 +1,24 @@
 .biz-header {
-    height: 100vh;
     background-image:linear-gradient(to right bottom, 
     rgba(73, 78, 80, 0.8),
     rgba(35, 44, 54, 0.7)),
-        url('../images/Lagos-skyline.jpg');
+    url('../images/Lagos-skyline.jpg');
     background-size: cover;
     background-position: top;
     position: relative;
     background-clip: padding-box;
     background-color: #F4F9FF;
-    top: 0px;
 }
-
-/* small devices{600 pixels and up to 768} */
-@media screen and (min-width: 600px) and (max-width:768px),screen and (max-height: 550px)  {
-    .biz-header {
-        height: 160vh;}
-}
-@media screen and (min-height: 600px)and (max-height:700px){
-    .biz-header {
-        height: 90vh;}
-}
-@media screen and (min-height: 700px)and (max-height:1000px){
-    .biz-header {
-        height: 75vh;}
-}
-@media screen and (min-width: 1080px), (min-height: 1000px){
-    .biz-header {
-        height: 90vh;}
-    
+     
 .hero-caption {
     width: 100%;
-    position: absolute;
-    top: 170px;
+    padding-bottom: 9%;
 }
 .hero-title {
+    padding-top: 9%;
     text-align: center;
     color: white;
-    font-size: 4.9em;
+    font-size: 5em;
     font-weight: 300;
     width: 98%;
     margin-left: auto;
@@ -73,4 +54,4 @@
     color: rgb(153, 144, 144);
     text-decoration: underline;
 }
-}
+/* */
