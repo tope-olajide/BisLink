@@ -82,10 +82,8 @@ class Notifications extends Component {
     return(
       <>
       <NavigationBar />
-<div className="card p-5 text-center mt-4"style={{"width": "60%","margin-left": "auto","margin-right": "auto"}}>
-{/* <a href='#'><ul class="list-group col-m-4">
-  <li class="list-group-item active">Mark all as read</li>
-</ul></a> */}
+<div className="card p-5 text-center mt-4 notification-container">
+
 <ul class="nav nav-tabs ">
   <li class="nav-item">
     <a class="nav-link active" href="#"><h5>Notifications</h5></a>
@@ -96,7 +94,7 @@ class Notifications extends Component {
 <div className="col-md-4 text-left">
 <nav class="nav flex-column nav-pills nav-justified">
   <a class="nav-link active d-flex justify-content-between align-items-center my-1" href="#">Unread <MDBBadge color="primary" pill>
-                {this.props.allNotificationsCount}
+                {this.props.newNotifications.length}
                   </MDBBadge></a>
   <a class="nav-link my-1 d-flex justify-content-between align-items-center" href="/notifications/seen">Read  <MDBBadge color="primary" pill>
                      {this.props.readNotificationsCount} 
@@ -127,12 +125,14 @@ class Notifications extends Component {
 </>
     )
   }
+  if (this.state.isLoading){
+    return(<LoadingAnimation />) 
+   }
   else {
     return null;
   }
 }}
 const mapStateToProps = state => {
-  console.log(state.notificationsReducer);
   return {
     newNotifications:
       state.notificationsReducer.unreadNotification.unreadNotifications,

@@ -17,9 +17,7 @@ class NotificationList extends Component {
                   <small className="text-muted">{this.props.date}</small>
                 </div>
               </MDBListGroupItem>{" "}</Link>
-              
          </MDBListGroup>
-         
       </>
     );
   }

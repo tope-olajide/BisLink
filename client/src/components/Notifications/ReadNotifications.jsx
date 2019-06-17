@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import {
-  MDBContainer,
   MDBBadge,
   MDBCol,
-  Button
+  
 } from "mdbreact";
 import {
   fetchAllNewNotifications,
@@ -19,7 +18,7 @@ class SeenNotifications extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
+      isLoading: true,
       isError: false
     };
   }
@@ -71,6 +70,7 @@ class SeenNotifications extends Component {
       });
   };
   render (){
+
     if (this.props.readNotifications) {
       const formatDate = unformatedDate => {
         const date = new Date(unformatedDate);
@@ -79,10 +79,13 @@ class SeenNotifications extends Component {
         const year = date.getFullYear();
         return `${day}/${month}/${year}`;
       };
+      if (this.state.isLoading){
+       return(<LoadingAnimation />) 
+      }
     return(
       <>
       <NavigationBar />
-<div className="card p-5 text-center mt-4"style={{"width": "60%","margin-left": "auto","margin-right": "auto"}}>
+<div className="card p-5 text-center mt-4 notification-container">
 <ul class="nav nav-tabs ">
   <li class="nav-item">
     <a class="nav-link active" href="#"><h5>Notifications</h5></a>
