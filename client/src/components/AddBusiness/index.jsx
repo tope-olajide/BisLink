@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { addBusiness } from "../../actions/businessActions";
-import RegisterBusinessPage from "./../AddBusiness/RegisterBusinessPage";
+import BusinessForm from "./../commons/BusinessForm";
 import NavBar from "./../commons/NavigationBar";
 import Footer from "../commons/Footer";
 import toastNotification from "./../../utils/toastNotification";
@@ -27,7 +27,7 @@ class BusinessList extends Component {
       imageUrl: "",
       imageUploadError: false,
       imageId: "",
-      uploadButtonState: false,
+      isSavingBusiness: false,
       UploadBottonLabel: "Register Business",
       loadingIcon :"",
     };
@@ -36,16 +36,12 @@ class BusinessList extends Component {
   }
   disableLoading = () => {
     this.setState({
-      uploadButtonState: false,
-      UploadBottonLabel: "Register Business",
-      loadingIcon :"",
+      isSavingBusiness: false
     });
   }
   enableLoading  = () => {
     this.setState({
-      uploadButtonState: true,
-      UploadBottonLabel: " ",
-      loadingIcon :"spinner"
+      isSavingBusiness: true
     });
   }
   onDrop(files) {
@@ -103,16 +99,13 @@ class BusinessList extends Component {
           this.disableLoading()
 });
     });
-
-
-    // Once all the files are uploaded
+// Once all the files are uploaded
     axios
     .all(uploaders)
     .then(data => {
 if(this.state.imageUploadError){
   this.disableLoading()
 return toastNotification(["error"], `unable to upload pictures`);
-
 }
 else{
       toastNotification(["info"], `All picures uploaded successfully, now saving to database `);
@@ -134,31 +127,32 @@ this.disableLoading()
     else{
 
 const {businessName,tagline,businessAddress1,phoneNumber1,website,category,businessDescription} =this.state;
-      this.enableLoading()
+this.setState({
+  isSavingBusiness: true
+});
       toastNotification(["info"], `saving...`);
     this.props.dispatch(addBusiness({businessName,tagline,businessAddress1,phoneNumber1,website,category,businessDescription})).then(()=>{
       toastNotification(["success"], `saved to database successfully`);
       this.disableLoading()
-    }).catch(function(err) {
-
+    })          .catch((err)=> {
       toastNotification(["error"], ` ${err.response.data.message}`);
-      
-    })
-    this.disableLoading()
+      this.setState({isSavingBusiness:false})
+});
   }
   }
   render() {
     return (
       <div>
         <NavBar  addBusiness = "active"/>
-        <RegisterBusinessPage
+        <BusinessForm
           files={this.state}
           onDrop={this.onDrop}
           handleFormSubmit={this.handleFormSubmit}
           handleInputChange={this.handleInputChange}
-          uploadButtonState={this.state.uploadButtonState}
-          UploadBottonLabel={this.state.UploadBottonLabel}
-          loadingIcon={this.state.loadingIcon}
+          buttonName={"Save Business"}
+          isSavingBusiness={this.state.isSavingBusiness}
+          showModifyGalleryButton = {false}
+          title = {"Register Your Business"}
         />
         <Footer />
       </div>
