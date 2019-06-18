@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import BusinessCard from '../Catalogue/BusinessCard'
+import BusinessCard from '../commons/BusinessCard'
 import NavigationBar from "../commons/NavigationBar";
 import Footer from "../commons/Footer";
 import toastNotification from "./../../utils/toastNotification";
