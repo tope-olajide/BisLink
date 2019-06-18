@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import axios from 'axios'
 import { modifyBusiness } from "../../actions/businessActions";
-import ModifyBusinessForm from './ModifyBusinessForm';
+import BusinessForm from '../commons/BusinessForm';
 import NavigationBar from './../commons/NavigationBar';
 import Footer from "../commons/Footer";
 import { connect } from "react-redux";
@@ -30,9 +30,7 @@ class ModifyBusiness extends Component {
         imageUrl: "",
         imageUploadError: false,
         imageId: "",
-        uploadButtonState: false,
-        UploadBottonLabel: "Update Business",
-        loadingIcon :"",
+        isSavingBusiness: false,
       };
       this.onDrop = this.onDrop.bind(this);
       this.handleInputChange = this.handleInputChange.bind(this);
@@ -41,20 +39,7 @@ class ModifyBusiness extends Component {
       const id = this.props.match.params.businessId;
       this.fetchBusinessDetails(id);
     }
-    disableLoading = () => {
-      this.setState({
-        uploadButtonState: false,
-        UploadBottonLabel: "Update Business",
-        loadingIcon :"",
-      });
-    }
-    enableLoading  = () => {
-      this.setState({
-        uploadButtonState: true,
-        UploadBottonLabel: " ",
-        loadingIcon :"spinner"
-      });
-    }
+
     fetchBusinessDetails = id => {
       console.log(id);
       this.props
@@ -104,7 +89,7 @@ class ModifyBusiness extends Component {
     handleFormSubmit = files => {
       const {businessId} =this.props.match.params
       if (this.state.filesToBeSent.length >= 1) {
-        this.enableLoading();
+        this.setState({isSavingBusiness:true})
         toastNotification(["info"], `uploading pictures...`);
       // start loading animation
       // Push all the axios request promise into a single array
@@ -142,8 +127,7 @@ class ModifyBusiness extends Component {
           })
           .catch((err)=> {
             toastNotification(["error"], ` ${err}`);
-            this.disableLoading()
-            alert("error " + err);
+            this.setState({isSavingBusiness:false})
             this.setState({imageUploadError:true})
  });
       });
@@ -152,7 +136,7 @@ class ModifyBusiness extends Component {
         .all(uploaders)
         .then(data => {
  if(this.state.imageUploadError){
-    this.disableLoading()
+  this.setState({isSavingBusiness:false})
    return toastNotification(["error"], `unable to upload pictures`);
  }
  else{
@@ -164,26 +148,26 @@ class ModifyBusiness extends Component {
 
           this.props.dispatch(modifyBusiness(this.state, businessId)).then(()=>{
             toastNotification(["success"], `saved to database successfully`);
-            this.disableLoading()
+            this.setState({isSavingBusiness:false})
           }) }
           
         })
         .catch(function(err) {
           toastNotification(["error"], `  ${err.response.data.message}`);
-          this.disableLoading()
+          this.setState({isSavingBusiness:false})
         })
       }
         else{
-          this.enableLoading()
+          this.setState({isSavingBusiness:true})
           toastNotification(["info"], `saving...`);
           this.props.dispatch(modifyBusiness((this.state), businessId)).then(()=>{
             toastNotification(["success"], `saved to database successfully`);
-            this.disableLoading()
+            this.setState({isSavingBusiness:false})
           })        
-          .catch(function(err) {
+          .catch((err)=> {
             toastNotification(["error"], ` ${err.response.data.message}`);
-            this.disableLoading()
-          })
+            this.setState({isSavingBusiness:false})
+ });
         }
     }
     render () {
@@ -204,8 +188,8 @@ class ModifyBusiness extends Component {
       }
         return (
           <div>
-          <NavigationBar business = 'active'/>
-          <ModifyBusinessForm
+          <NavigationBar />
+          <BusinessForm
           files={this.state}
           onDrop={this.onDrop}
           handleFormSubmit={this.handleFormSubmit}
@@ -218,9 +202,8 @@ class ModifyBusiness extends Component {
           website={this.state.website}
           businessDescription={this.state.businessDescription}
           modifyGallery={this.modifyGallery}
-          uploadButtonState={this.state.uploadButtonState}
-          UploadBottonLabel={this.state.UploadBottonLabel}
-          loadingIcon={this.state.loadingIcon}
+          buttonName={"Update Business"}
+          isSavingBusiness={this.state.isSavingBusiness}
           />
  <Footer />
  </div>
