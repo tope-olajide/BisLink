@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "mdbreact";
+import "./CataloguePage.css"
 class CataloguePageHeader extends Component {
   constructor(props) {
     super(props);
