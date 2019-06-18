@@ -26,6 +26,9 @@ Author: Temitope David O
     border-radius: 0;
     color: #ffffff;
   }
+  .hide-element{
+    visibility: hidden
+  }
   /* ==============================================================
      CATALOGUE COMPONENT STYLES
      ============================================================== */
