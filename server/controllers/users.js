@@ -160,7 +160,7 @@ export default class Users {
           message: 'Invalid pasword!'
         });
       })
-      .catch(( /* error */ ) => res.status(500).json({
+      .catch((/* error */) => res.status(500).json({
         success: false,
         message: 'An error occured'
       }));
@@ -194,10 +194,10 @@ export default class Users {
       });
     }
     User.findOne({
-        where: {
-          id: userId
-        },
-      })
+      where: {
+        id: userId
+      },
+    })
       .then((foundUser) => {
         if (!foundUser) {
           return res.status(404).json({
@@ -211,14 +211,14 @@ export default class Users {
         } */
 
         foundUser.updateAttributes({
-            fullname,
-            email,
-            phoneNumber,
-            location,
-            about,
-            ImageUrl,
-            ImageId
-          })
+          fullname,
+          email,
+          phoneNumber,
+          location,
+          about,
+          ImageUrl,
+          ImageId
+        })
           .then((user) => {
             const {
               id
@@ -240,7 +240,7 @@ export default class Users {
               }
             });
           });
-      }).catch(( /* error */ ) => res.status(500).json({
+      }).catch((/* error */) => res.status(500).json({
         success: false,
         message: "Error Updating user's profile"
       }));
@@ -307,11 +307,11 @@ export default class Users {
   }, res) {
     const userId = user.id;
     User.findOne({
-        attributes: ['id', 'fullname', 'about', 'location', 'phoneNumber', 'username', 'email', 'ImageUrl'],
-        where: {
-          id: userId
-        }
-      })
+      attributes: ['id', 'fullname', 'about', 'location', 'phoneNumber', 'username', 'email', 'ImageUrl'],
+      where: {
+        id: userId
+      }
+    })
       .then((userFound) => {
         if (!userFound) {
           return res.status(404).json({
@@ -348,12 +348,17 @@ export default class Users {
           userInfo.myBusinesses = businesses.rows;
           userInfo.myBusinessCount = businesses.count;
           Favourite.findAll({
-              where: {
-                userId
+            where: {
+              userId
             },
           })
             .then((favourites) => {
-              userInfo.myFavourites = favourites;
+              const favouriteBusinessIds = favourites.map(favourite => favourite.businessId); 
+              Business.findAll({
+                where: { id: favouriteBusinessIds },
+              }).then((favouriteBusinesses) => {
+              userInfo.myFavourites = favouriteBusinesses;
+
               Follower.findAndCountAll({
                 where: {
                   followerId: userId
@@ -373,14 +378,14 @@ export default class Users {
                     message: 'User found!',
                     user: userInfo
                   });
-                });
+                });});
               });
             });
-        }).catch(( /* error */ ) => res.status(500).json({
+        }).catch((/* error */) => res.status(500).json({
           success: false,
           message: "Error fetching user's profile"
         }));
-      }).catch(( /* error */ ) => res.status(500).json({
+      }).catch((/* error */) => res.status(500).json({
         success: false,
         message: 'Error fetching user'
       }));
