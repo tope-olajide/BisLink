@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "./react-tabs.css";
 import "./ProfileTab.css";
+import BusinessCard from '../commons/BusinessCard'
 import MyBusinessTabPanel from "./MyBusinessTabPanel"
 import MyFavouritesTabPanel from "./MyFavouritesTabPanel"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,13 +22,14 @@ class ProfileTab extends Component {
       </div>
        </>)
     }
-    if(!myFavourites){
+    if(!myFavourites ){
       return (
         <>
         <div className='text-center'>
         <h3>You do not have any Favourite business yet, when you do they'll appear here</h3>
         </div>
-         </>)
+         </>
+         )
     }
     return (
       <Tabs
@@ -46,7 +48,7 @@ class ProfileTab extends Component {
         <div className="container content-container">
             <div className="row card-container">
  {myBusinesses.map((business) => {
-  return<MyBusinessTabPanel 
+  return<BusinessCard 
                       key={business.id}
                       id={business.id}
                       businessName={business.businessName}
@@ -56,6 +58,7 @@ class ProfileTab extends Component {
                       phoneNumber={business.phoneNumber1}
                       website={business.website}
                       image={business.defaultBusinessImageUrl}
+                      isProfilepage={true}
           />         
  
 })
@@ -68,7 +71,7 @@ class ProfileTab extends Component {
         <div className="container content-container">
             <div className="row card-container">
         { myFavourites.map((business) => {
-  return<MyFavouritesTabPanel 
+  return<BusinessCard 
                       key={business.id}
                       id={business.id}
                       businessName={business.businessName}
@@ -77,7 +80,8 @@ class ProfileTab extends Component {
                       businessAddress={business.businessAddress1}
                       phoneNumber={business.phoneNumber1}
                       website={business.website}
-                      image={business.defaultBusinessImageUrl} />
+                      image={business.defaultBusinessImageUrl} 
+                      isProfilepage={true}/>
         })
                   } 
        </div> </div>
@@ -89,7 +93,7 @@ class ProfileTab extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.authReducer.usersProfile.myBusinesses)
+  console.log(state.authReducer.usersProfile.myFavourites)
   return {
     myBusinesses: state.authReducer.usersProfile.myBusinesses,
     myFavourites: state.authReducer.usersProfile.myFavourites
