@@ -6,7 +6,7 @@ class CataloguePage extends Component {
   render() {
     return (
       <>
-              <div className="col-md-4 h-100 "><Link to={`/business-details/${this.props.id}`}>
+              <div className={(this.props.isProfilepage)?"col-md-6":"col-md-4 h-100"}><Link to={`/business-details/${this.props.id}`}>
                 <div className="card flex-fill mb-5 mb-5 ml-0 mr-0 shadow-md ">
                   <Image
                     className="card-img-top"
