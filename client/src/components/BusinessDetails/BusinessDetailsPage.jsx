@@ -143,8 +143,8 @@ class BusinessDetailsPage extends Component {
                   </div>
                   <p className="text-center">{this.props.about}</p>
                   <div className="text-center mt-3">
-                    <Button disabled={this.props.isBusinessOwner} onClick={this.props.followUser}>
-                      {this.props.followButton}
+                    <Button disabled={this.props.isBusinessOwner} onClick={this.props.setFollow}>
+                      {(this.props.isFollowing)?"Unfollow":"follow"}
                     </Button>
                   </div>
                 </div>
