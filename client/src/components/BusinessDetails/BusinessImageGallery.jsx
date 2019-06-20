@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 class BusinessImageGallery extends Component {
   render() {
-       const addTransformationToUrl = url => {
+      const addTransformationToUrl = url => {
       const orignalTransformations = "w_1150,h_420,c_fit,c_pad,b_black/";
       const thumbTransformations = "w_350,h_250/";
       const urlDivider = "/image/upload/";
