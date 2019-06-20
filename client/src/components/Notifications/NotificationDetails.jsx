@@ -11,6 +11,7 @@ import NavigationBar from "../commons/NavigationBar";
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";import Footer from "../commons/Footer";
 import { connect } from "react-redux";
+import NotificationNav from './NotificationNav'
 class NotificationDetails extends Component {
   componentDidMount() {
     this.fetchNotificationDetails();
@@ -53,20 +54,11 @@ class NotificationDetails extends Component {
    
 </ul>
 <div className="row">
-<div className="col-md-4 text-left">
-<nav class="nav flex-column nav-pills nav-justified">
-  <a class="nav-link  d-flex justify-content-between align-items-center my-1" href="/notifications">Unread <MDBBadge color="primary" pill>
-                { this.props.unreadNotificationsCount }
-                  </MDBBadge></a>
-  <a class="nav-link my-1 d-flex justify-content-between align-items-center" href="/notifications/seen">Read  <MDBBadge color="primary" pill>
-                     { this.props.readNotificationsCount } 
-                  </MDBBadge></a>
-  <a class="nav-link  my-1 d-flex justify-content-between align-items-center" href="#" >All Notifications <MDBBadge color="primary" pill>
-                    {this.props.allNotificationsCount} 
-                  </MDBBadge></a>
- 
-</nav>
-</div>
+<NotificationNav 
+newNotificationsCount={this.props.unreadNotificationsCount}
+readNotificationsCount={this.props.readNotificationsCount}
+allNotificationsCount ={this.props.allNotificationsCount} 
+/>
 <div className="col-md-8 ">
 
 <MDBListGroup className="px-1">
