@@ -51,13 +51,6 @@ class BusinessDetails extends Component {
       this.setState({ favouriteIcon: "far", isFavourite: false });
     }
   };
-  setFollowButton = () => {
-    if (this.props.infoCount.isFollowing) {
-      this.setState({ followButton: "unfollow" });
-    } else {
-      this.setState({ followButton: "follow" });
-    }
-  };
   fetchBusinessDetails = id => {
     console.log(id);
     this.props
@@ -69,7 +62,6 @@ class BusinessDetails extends Component {
             isError: false
           });
           this.setFavourite(this.props.infoCount.isUserFavourite);
-          this.setFollowButton();
         });
       })
       .catch(error => {
@@ -97,7 +89,7 @@ class BusinessDetails extends Component {
       .then(() => {
         toastNotification(
           ["success"],
-          `Your review has been successfully added.`
+          `Your review has been added successfully.`
         );
         this.toggleReviewButton();
         this.setState({ title: "", content: "" });
@@ -111,14 +103,12 @@ class BusinessDetails extends Component {
         }
       });
   };
-  followUser = () => {
+  setFollow = () => {
     const userId = this.props.businessDetails.User.id;
     if (this.props.infoCount.isFollowing) {
       this.props
         .dispatch(unfollow(userId))
         .then(() => {
-          this.setFollowButton();
-
           toastNotification(
             ["success"],
             `You successfully unfollowed ${
@@ -129,17 +119,14 @@ class BusinessDetails extends Component {
         .catch(error => {
           if (!error.response) {
             toastNotification(["error"], "Network Error!");
-            this.setFollowButton();
           } else {
             toastNotification(["error"], error.response.data.message);
-            this.setFollowButton();
           }
         });
     } else {
       this.props
         .dispatch(follow(userId))
         .then(() => {
-          this.setFollowButton();
           toastNotification(
             ["success"],
             `You are now following ${this.props.businessDetails.User.username} `
@@ -148,10 +135,8 @@ class BusinessDetails extends Component {
         .catch(error => {
           if (!error.response) {
             toastNotification(["error"], "Network Error!");
-            this.setFollowButton();
           } else {
             toastNotification(["error"], error.response.data.message);
-            this.setFollowButton();
           }
         });
     }
@@ -336,9 +321,10 @@ class BusinessDetails extends Component {
             followersCount={this.props.infoCount.followersCount}
             followingCount={this.props.infoCount.followingCount}
             isBusinessOwner={this.props.infoCount.isBusinessOwner}
-            followUser={this.followUser}
+            setFollow={this.setFollow}
             followButton={this.state.followButton}
             reviewRef={this.reviewRef}
+            isFollowing={this.props.infoCount.isFollowing}
           />
           {console.log(this.props.businessDetails)}
           {console.log(this.props.infoCount)}
