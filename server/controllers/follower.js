@@ -153,7 +153,7 @@ const notificationAlert = {
           });
         }
 
-        const ids = followees.map(followee => followee.userId);
+        const ids = followees.map(followee => followee.userId); 
         Business.findAll({
           where: { id: ids },
           include: [
