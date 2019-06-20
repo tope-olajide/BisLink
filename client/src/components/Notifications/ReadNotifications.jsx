@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {
-  MDBBadge,
   MDBCol,
-  
 } from "mdbreact";
 import {
   fetchAllNewNotifications,
@@ -13,7 +11,9 @@ import Footer from "../commons/Footer";
 import NotificationList from "./NotificationList";
 import toastNotification from "../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
+import NotificationNav from './NotificationNav'
 import { connect } from "react-redux";
+import formatDate from '../../utils/dateFormat'
 class SeenNotifications extends Component {
   constructor(props) {
     super(props);
@@ -72,13 +72,6 @@ class SeenNotifications extends Component {
   render (){
 
     if (this.props.readNotifications) {
-      const formatDate = unformatedDate => {
-        const date = new Date(unformatedDate);
-        const day = date.getDate();
-        const month = date.getMonth() + 1;
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
-      };
       if (this.state.isLoading){
        return(<LoadingAnimation />) 
       }
@@ -93,20 +86,12 @@ class SeenNotifications extends Component {
    
 </ul>
 <div className="row">
-<div className="col-md-4 text-left">
-<nav class="nav flex-column nav-pills nav-justified">
-  <a class="nav-link  d-flex justify-content-between align-items-center my-1" href="/notifications">Unread <MDBBadge color="primary" pill>
-                {this.props.unreadNotificationsCount}
-                  </MDBBadge></a>
-  <a class="nav-link my-1 d-flex justify-content-between active align-items-center" href="#">Read  <MDBBadge color="primary" pill>
-                     {this.props.readNotifications.length} 
-                  </MDBBadge></a>
-  <a class="nav-link my-1 d-flex justify-content-between align-items-center" href="/notifications/all" >All Notifications <MDBBadge color="primary" pill>
-                     {this.props.allNotificationsCount} 
-                  </MDBBadge></a>
-  <a class="nav-link  my-3" href="#">Mark all as read</a>
-</nav>
-</div>
+<NotificationNav 
+newNotificationsCount={this.props.unreadNotificationsCount}
+readNotificationsCount={this.props.readNotifications.length}
+allNotificationsCount ={this.props.allNotificationsCount} 
+isReadNotificationActive={true}
+/>
 <div className="col-md-8 ">
 <MDBCol className="mt-0 mb-5">
 {this.props.readNotifications.map(notification => {
