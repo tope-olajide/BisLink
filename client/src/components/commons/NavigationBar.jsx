@@ -18,17 +18,22 @@ import {
 } from "mdbreact";
 import { connect } from "react-redux";
 import { signOut } from "../../actions/authActions";
+import { fetchAllNewNotifications } from "../../actions/notificationAction";
 class NavigationBar extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       collapse: false,
       modal: false,
       businessName: " ",
-      businessLocation: " "
+      businessLocation: " ",
+      isloading:false,
+      isError:false
     };
     this.onClick = this.onClick.bind(this);
+  }
+  componentWillMount() {
+    this.getNewNotificationsCount()
   }
   onClick() {
     this.setState({
@@ -55,6 +60,23 @@ class NavigationBar extends React.Component {
       modal: !this.state.modal
     });
   };
+  getNewNotificationsCount = () => {
+    this.setState({ isLoading: true });
+    this.props
+      .dispatch(fetchAllNewNotifications())
+      .then(() => {
+        this.setState({
+          isLoading: false,
+          isError: false
+        });
+      })
+      .catch(error => {
+        this.setState({
+          isLoading: false,
+          isError: true
+        });
+      });
+  }
   signOut = () => {
     this.props.dispatch(signOut());
   };
@@ -98,7 +120,6 @@ class NavigationBar extends React.Component {
             </MDBModalFooter>
           </MDBModal>
         </MDBContainer>
-
         <Navbar color="black" dark className="zindex" expand="lg" scrolling>
           <NavbarBrand href="/">
             <strong>
@@ -135,7 +156,8 @@ class NavigationBar extends React.Component {
               </NavItem>
               <NavItem active={this.props.notifications}>
                 <NavLink to="/notifications">
-                  <FontAwesomeIcon icon="bell" /> NOTIFICATIONS
+                  <FontAwesomeIcon icon="bell" />
+                <p className="nav-notification-badge">{(this.state.isLoading )?0:(this.state.isError)?0:this.props.newNotificationsCount.length}</p> NOTIFICATIONS 
                 </NavLink>
               </NavItem>
               <NavItem />
@@ -151,4 +173,11 @@ class NavigationBar extends React.Component {
     );
   }
 }
-export default connect()(NavigationBar);
+const mapStateToProps = state => {
+  console.log(state.notificationsReducer.unreadNotification.unreadNotifications)
+return {
+  newNotificationsCount:
+  state.notificationsReducer.unreadNotification.unreadNotifications
+};
+};
+export default connect(mapStateToProps)(NavigationBar);
