@@ -10,6 +10,7 @@ export function fetchAllNewNotifications() {
             const {
                 unreadNotifications,allNotificationsCount,readNotificationsCount
             } = response.data;
+            console.log(unreadNotifications)
             const unreadNotificationsPlusCount = {unreadNotifications,allNotificationsCount,readNotificationsCount }
             dispatch({
                 type: NEW_NOTIFICATIONS,
