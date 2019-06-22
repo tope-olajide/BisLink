@@ -8,8 +8,8 @@ class NotificationList extends Component {
   render() {
     return (
       <><MDBListGroup className="px-1"><Link to={`/notifications/${this.props.id}`}>
-              <MDBListGroupItem className="py-1 my-1" hover >
-              <FontAwesomeIcon icon="bell"  className="mr-2" /> <h6 className="text-right d-inline  ">
+              <MDBListGroupItem className="py-1 my-1 text-left" hover >
+              <FontAwesomeIcon icon="bell"  className="mr-4" /> <h6 className=" d-inline  ">
                 {this.props.title}
                 </h6>
                 <div className="d-flex w-100 justify-content-between">

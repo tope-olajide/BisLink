@@ -13,6 +13,9 @@ import {
         },
         viewNotificationDetails:{
             notificationDetails:{}
+        },
+        unreadNotificationsCount:{
+
         }
     }
     export default (state = initialState, action) => {

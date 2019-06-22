@@ -6,7 +6,6 @@ class NotificationNav extends Component {
       const nonActiveClass = "nav-link d-flex justify-content-between align-items-center my-1";
     return (
       <>
-        <div classNameName="col-md-4 text-left">
           <nav className="nav flex-column nav-pills nav-justified">
             <a
               className={(this.props.isUnReadNotificationActive)?activeClass: nonActiveClass}
@@ -35,11 +34,10 @@ class NotificationNav extends Component {
                 {this.props.allNotificationsCount}
               </MDBBadge>
             </a>
-            <a className="nav-link  my-3" href="#">
+            <a className="nav-link text-left  my-3" href="#">
               Mark all as read
             </a>
           </nav>
-        </div>
       </>
     );
   }

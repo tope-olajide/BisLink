@@ -42,7 +42,16 @@ Author: Temitope David O
   .biz-address {
     text-transform: capitalize;
   }
-  
+    /* ==============================================================
+     ERROR PAGE STYLES
+     ============================================================== */
+.error-container{
+  width: 80%;
+  margin: 0 auto
+}
+  .error-image{
+    width: 90%;
+  }
   /* ==============================================================
      BUSINESS CARD STYLES
      ============================================================== */
@@ -207,6 +216,29 @@ Author: Temitope David O
   }
   .search-input-wrapper input::placeholder {
     color: rgb(71, 67, 67);
+  }
+.nav-notification-badge {
+border: 1px solid rgb(14, 10, 218);
+padding: 0px;
+display: inline;
+border-radius: 47%;
+top: 0px;
+left:15px;
+padding-left: 4px;
+padding-right: 4px;
+position: absolute;
+font-size: 10px;
+background: blue;
+color: white;
+font-weight: bold
+  } 
+.nav-notification-badge:hover{
+  opacity: 0.8;
+  }
+@media screen and (max-width: 780px) {
+    .nav-notification-badge {
+      left:13px;
+    }
   }
   /* ==============================================================
      EDIT-PROFILE STYLES

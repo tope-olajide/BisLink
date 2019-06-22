@@ -14,6 +14,7 @@ import LoadingAnimation from "../commons/LoadingAnimation";
 import NotificationNav from './NotificationNav'
 import { connect } from "react-redux";
 import formatDate from '../../utils/dateFormat'
+import ErrorPage from "../commons/ErrorPage";
 class SeenNotifications extends Component {
   constructor(props) {
     super(props);
@@ -86,12 +87,13 @@ class SeenNotifications extends Component {
    
 </ul>
 <div className="row">
+<div className="col-md-4 ">
 <NotificationNav 
 newNotificationsCount={this.props.unreadNotificationsCount}
 readNotificationsCount={this.props.readNotifications.length}
 allNotificationsCount ={this.props.allNotificationsCount} 
 isReadNotificationActive={true}
-/>
+/></div>
 <div className="col-md-8 ">
 <MDBCol className="mt-0 mb-5">
 {this.props.readNotifications.map(notification => {
