@@ -15,7 +15,6 @@ class Footer extends Component {
   }
   saveToState(key, value) {
     this.setState({ [key]: value });
-    console.log(value);
   }
   handleBusinessSearch = () => {
     window.location = `/businesses/search/name=${
@@ -46,7 +45,7 @@ class Footer extends Component {
                     />
                     <Input
                       label="Locaton"
-                      icon= "map-marker"
+                      icon="map-marker"
                       group
                       type="text"
                       onChange={event => {
@@ -92,7 +91,8 @@ class Footer extends Component {
                     </a>{" "}
                   </p>
                   <p class="mt-5">
-                    Designed and developed with <FontAwesomeIcon icon="heart" /> by{" "}
+                    Designed and developed with <FontAwesomeIcon icon="heart" />{" "}
+                    by{" "}
                     <a href="https://github.com/tope-olajide/BisLink">
                       Temitope
                     </a>{" "}
