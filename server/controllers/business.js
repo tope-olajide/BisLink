@@ -214,18 +214,18 @@ export default class Businesses {
               };
               /* Filters the sender out, the user sending the notification should not be among the reciever. */
               const filteredUserIds = userIds.filter(eachUser => eachUser.userId !== userId);
-              const bizFavouriteUserIds = filteredUserIds.map(eachUser => ({
+              const notifications = filteredUserIds.map(eachUser => ({
                 userId: eachUser.userId,
                 title: notificationAlert.title,
                 message: notificationAlert.message
               }));
-              Notification.bulkCreate(bizFavouriteUserIds).then((created) => {
+              Notification.bulkCreate(notifications).then((created) => {
                 res.status(200).json({
                   success: true,
                   message: 'Business record updated successfully',
                   business,
                   userIds,
-                  bizFavouriteUserIds,
+                  notifications,
                   created,
                   userId:user.id
                 });
