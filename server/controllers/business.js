@@ -150,6 +150,7 @@ export default class Businesses {
     user,
     body
   }, res) {
+    const userId = user.id;
     const updateBusiness = ({
       businessId,
       businessName,
@@ -178,7 +179,6 @@ export default class Businesses {
             .catch(() => res.status(500).json({
               success: false,
               message: 'unable to save business images'
-
             }));
         } else {
           foundBusiness.updateAttributes({
@@ -212,18 +212,22 @@ export default class Businesses {
                 title: `${user.username} has modified your favourite business`,
                 message: `one of your favourite businesses named: ${business.businessName} has been modified by its owner`
               };
-              const bizFavouriteUserIds = userIds.map((eachUser) => ({
-                receiverId: eachUser,
+              /* Filters the sender out, the user sending the notification should not be among the reciever. */
+              const filteredUserIds = userIds.filter(eachUser => eachUser.userId !== userId);
+              const bizFavouriteUserIds = filteredUserIds.map(eachUser => ({
+                userId: eachUser.userId,
                 title: notificationAlert.title,
                 message: notificationAlert.message
               }));
-              Notification.bulkCreate(bizFavouriteUserIds).then(() => {
+              Notification.bulkCreate(bizFavouriteUserIds).then((created) => {
                 res.status(200).json({
                   success: true,
                   message: 'Business record updated successfully',
                   business,
-                  userIds
-
+                  userIds,
+                  bizFavouriteUserIds,
+                  created,
+                  userId:user.id
                 });
               });
             });
@@ -235,7 +239,7 @@ export default class Businesses {
           message: 'Error updating business'
         }));
     };
-    const userId = user.id;
+    
     const {
       businessId
     } = params;
