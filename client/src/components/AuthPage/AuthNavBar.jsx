@@ -39,7 +39,6 @@ class NavigationBar extends Component {
   }
   saveToState = (key, value)=> {
     this.setState({ [key]: value });
-    console.log(value);
   }
 
   handleSignUp = () => {
