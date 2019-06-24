@@ -5,8 +5,6 @@ import BusinessReview from "./BusinessReview";
 import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class BusinessDetailsPage extends Component {
-
-
   render() {
     return (
       <div>
@@ -36,12 +34,14 @@ class BusinessDetailsPage extends Component {
                 })}
                 <div className="mt-5" />
               </div>
-              <div className="card shadow-sm p-5 mt-3 mb-2" ref={this.props.reviewRef }>
+              <div
+                className="card shadow-sm p-5 mt-3 mb-2"
+                ref={this.props.reviewRef}
+              >
                 <h4 className=" light-color light-text text-center px-3 mb-5">
                   <strong>Write a Review</strong>
                 </h4>
-
-                <form >
+                <form>
                   <div className="grey-text">
                     <Input
                       label="Title"
@@ -63,7 +63,10 @@ class BusinessDetailsPage extends Component {
                     />
                   </div>
                   <div className="text-center">
-                    <Button onClick={this.props.handleReviewSubmit} disabled={this.props.disableReviewButton}>
+                    <Button
+                      onClick={this.props.handleReviewSubmit}
+                      disabled={this.props.disableReviewButton}
+                    >
                       Submit Review
                     </Button>
                   </div>
@@ -74,34 +77,51 @@ class BusinessDetailsPage extends Component {
             <aside className="col-md-5 blog-sidebar">
               <div className="card mt-3 shadow-sm">
                 <Image
-                      className="card-img-top"
-                      src={this.props.defaultImage}
-                      alt="Card image cap"
-                    /> 
+                  className="card-img-top"
+                  src={this.props.defaultImage}
+                  alt="Card image cap"
+                />
                 <div className="card-body card-contents">
                   <ul>
                     <li>
                       <span>
-                        <FontAwesomeIcon className='card-icon mr-3' icon="map-marker-alt" size="1x" />
-                        <p className='d-inline'> <strong>
-                          {this.props.businessAddress1}</strong>
+                        <FontAwesomeIcon
+                          className="card-icon mr-3"
+                          icon="map-marker-alt"
+                          size="1x"
+                        />
+                        <p className="d-inline">
+                          {" "}
+                          <strong>{this.props.businessAddress1}</strong>
                         </p>
                       </span>
                     </li>
                     <li>
-                      <FontAwesomeIcon className='card-icon mr-3' icon="mobile-alt" size="1x" /> <p>
-                       
+                      <FontAwesomeIcon
+                        className="card-icon mr-3"
+                        icon="mobile-alt"
+                        size="1x"
+                      />{" "}
+                      <p>
                         <strong>{this.props.phoneNumber1}</strong>
                       </p>
                     </li>
                     <li>
-                      <FontAwesomeIcon className='card-icon mr-3' icon="link" size="1x" />
+                      <FontAwesomeIcon
+                        className="card-icon mr-3"
+                        icon="link"
+                        size="1x"
+                      />
                       <p>
                         <strong> {this.props.website}</strong>
                       </p>
                     </li>
                     <li>
-                      <FontAwesomeIcon className='card-icon mr-3' icon="tag" size="1x" />
+                      <FontAwesomeIcon
+                        className="card-icon mr-3"
+                        icon="tag"
+                        size="1x"
+                      />
                       <p>
                         <strong> {this.props.category}</strong>
                       </p>
@@ -113,9 +133,9 @@ class BusinessDetailsPage extends Component {
                 <div className="profile-section-biz-details">
                   <Image
                     src={this.props.ImageUrl}
-                    alt = {this.props.ImageUrl}
+                    alt={this.props.ImageUrl}
                     className="mx-auto  d-block"
-                    height='150'
+                    height="150"
                   />
                   <div className=" profile-text">
                     <h5 className="py-1">{this.props.username}</h5>
@@ -143,8 +163,11 @@ class BusinessDetailsPage extends Component {
                   </div>
                   <p className="text-center">{this.props.about}</p>
                   <div className="text-center mt-3">
-                    <Button disabled={this.props.isBusinessOwner} onClick={this.props.setFollow}>
-                      {(this.props.isFollowing)?"Unfollow":"follow"}
+                    <Button
+                      disabled={this.props.isBusinessOwner}
+                      onClick={this.props.setFollow}
+                    >
+                      {this.props.isFollowing ? "Unfollow" : "follow"}
                     </Button>
                   </div>
                 </div>

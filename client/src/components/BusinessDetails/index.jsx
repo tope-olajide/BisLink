@@ -17,6 +17,7 @@ import LoadingAnimation from "../commons/LoadingAnimation";
 import toastNotification from "./../../utils/toastNotification";
 import { connect } from "react-redux";
 import NavigationBar from "../commons/NavigationBar";
+import ErrorPage from "../commons/ErrorPage";
 class BusinessDetails extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +53,6 @@ class BusinessDetails extends Component {
     }
   };
   fetchBusinessDetails = id => {
-    console.log(id);
     this.props
       .dispatch(fetchBusinessDetails(id))
       .then(() => {
@@ -78,7 +78,6 @@ class BusinessDetails extends Component {
   };
   saveToState = (key, value) => {
     this.setState({ [key]: value });
-    console.log(value);
   };
   addBusinessReviews = () => {
     this.toggleReviewButton();
@@ -267,77 +266,70 @@ class BusinessDetails extends Component {
   render() {
     if (this.state.isLoading) {
       return (
-        <div>
-          <NavigationBar />
+        <>
           <LoadingAnimation />
-        </div>
+        </>
       );
     } else if (this.state.isError) {
       return (
-        <div>
-          <NavigationBar />
-          <h1>An Error has occured</h1>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <NavigationBar />
-          <BusinessImageGallery
-            businessName={this.props.businessDetails.businessName}
-            tagline={this.props.businessDetails.tagline}
-            upvotes={this.props.businessDetails.upvotes}
-            downvotes={this.props.businessDetails.downvotes}
-            viewCount={this.props.businessDetails.viewCount}
-            favouriteIcon={this.state.favouriteIcon}
-            spinnerIcon={this.state.spinnerIcon}
-            addToFavourite={this.addToFavourite}
-            isBusinessOwner={this.props.infoCount.isBusinessOwner}
-            upvoteBusiness={this.upvoteBusiness}
-            downvoteBusiness={this.downvoteBusiness}
-            editBusiness={this.editBusiness}
-            businessImageUrl={this.parseImageGallery()}
-            scrollToReview={this.scrollToReview}
-          />
-          <BusinessDetailsPage
-            saveToState={this.saveToState}
-            handleReviewSubmit={this.addBusinessReviews}
-            businessDescription={this.props.businessDetails.businessDescription}
-            reviewLength={this.props.businessReview.length}
-            reviews={this.props.businessReview}
-            disableReviewButton={this.state.disableReviewButton}
-            title={this.state.title}
-            content={this.state.content}
-            defaultImage={this.props.businessDetails.defaultBusinessImageUrl}
-            businessAddress1={this.props.businessDetails.businessAddress1}
-            phoneNumber1={this.props.businessDetails.phoneNumber1}
-            website={this.props.businessDetails.website}
-            category={this.props.businessDetails.category}
-            ImageUrl={this.props.businessDetails.User.ImageUrl}
-            username={this.props.businessDetails.User.username}
-            location={this.props.businessDetails.User.location}
-            about={this.props.businessDetails.User.about}
-            businessCount={this.props.infoCount.businessCount}
-            followersCount={this.props.infoCount.followersCount}
-            followingCount={this.props.infoCount.followingCount}
-            isBusinessOwner={this.props.infoCount.isBusinessOwner}
-            setFollow={this.setFollow}
-            followButton={this.state.followButton}
-            reviewRef={this.reviewRef}
-            isFollowing={this.props.infoCount.isFollowing}
-          />
-          {console.log(this.props.businessDetails)}
-          {console.log(this.props.infoCount)}
-          {console.log(this.props.businessReview)}
-
-          <Footer />
-        </div>
+        <>
+          <ErrorPage />
+        </>
       );
     }
+    return (
+      <>
+        <NavigationBar />
+        <BusinessImageGallery
+          businessName={this.props.businessDetails.businessName}
+          tagline={this.props.businessDetails.tagline}
+          upvotes={this.props.businessDetails.upvotes}
+          downvotes={this.props.businessDetails.downvotes}
+          viewCount={this.props.businessDetails.viewCount}
+          favouriteIcon={this.state.favouriteIcon}
+          spinnerIcon={this.state.spinnerIcon}
+          addToFavourite={this.addToFavourite}
+          isBusinessOwner={this.props.infoCount.isBusinessOwner}
+          upvoteBusiness={this.upvoteBusiness}
+          downvoteBusiness={this.downvoteBusiness}
+          editBusiness={this.editBusiness}
+          businessImageUrl={this.parseImageGallery()}
+          scrollToReview={this.scrollToReview}
+        />
+        <BusinessDetailsPage
+          saveToState={this.saveToState}
+          handleReviewSubmit={this.addBusinessReviews}
+          businessDescription={this.props.businessDetails.businessDescription}
+          reviewLength={this.props.businessReview.length}
+          reviews={this.props.businessReview}
+          disableReviewButton={this.state.disableReviewButton}
+          title={this.state.title}
+          content={this.state.content}
+          defaultImage={this.props.businessDetails.defaultBusinessImageUrl}
+          businessAddress1={this.props.businessDetails.businessAddress1}
+          phoneNumber1={this.props.businessDetails.phoneNumber1}
+          website={this.props.businessDetails.website}
+          category={this.props.businessDetails.category}
+          ImageUrl={this.props.businessDetails.User.ImageUrl}
+          username={this.props.businessDetails.User.username}
+          location={this.props.businessDetails.User.location}
+          about={this.props.businessDetails.User.about}
+          businessCount={this.props.infoCount.businessCount}
+          followersCount={this.props.infoCount.followersCount}
+          followingCount={this.props.infoCount.followingCount}
+          isBusinessOwner={this.props.infoCount.isBusinessOwner}
+          setFollow={this.setFollow}
+          followButton={this.state.followButton}
+          reviewRef={this.reviewRef}
+          isFollowing={this.props.infoCount.isFollowing}
+        />
+
+        <Footer />
+      </>
+    );
   }
 }
 const mapStateToProps = state => {
-  console.log(state.reviewReducer.reviews);
   return {
     businessDetails: state.businessReducer.businessDetails.business,
     infoCount: state.businessReducer.businessDetails.infoCount,
