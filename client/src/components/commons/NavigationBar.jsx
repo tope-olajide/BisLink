@@ -27,13 +27,13 @@ class NavigationBar extends React.Component {
       modal: false,
       businessName: " ",
       businessLocation: " ",
-      isloading:false,
-      isError:false
+      isloading: false,
+      isError: false
     };
     this.onClick = this.onClick.bind(this);
   }
   componentWillMount() {
-    this.getNewNotificationsCount()
+    this.getNewNotificationsCount();
   }
   onClick() {
     this.setState({
@@ -48,7 +48,6 @@ class NavigationBar extends React.Component {
   };
   saveToState(key, value) {
     this.setState({ [key]: value });
-    console.log(value);
   }
   handleBusinessSearch = () => {
     window.location = `/businesses/search/name=${
@@ -76,7 +75,7 @@ class NavigationBar extends React.Component {
           isError: true
         });
       });
-  }
+  };
   signOut = () => {
     this.props.dispatch(signOut());
   };
@@ -157,7 +156,14 @@ class NavigationBar extends React.Component {
               <NavItem active={this.props.notifications}>
                 <NavLink to="/notifications">
                   <FontAwesomeIcon icon="bell" />
-                <p className="nav-notification-badge">{(this.state.isLoading )?0:(this.state.isError)?0:this.props.newNotificationsCount.length}</p> NOTIFICATIONS 
+                  <p className="nav-notification-badge">
+                    {this.state.isLoading
+                      ? 0
+                      : this.state.isError
+                      ? 0
+                      : this.props.newNotificationsCount.length}
+                  </p>{" "}
+                  NOTIFICATIONS
                 </NavLink>
               </NavItem>
               <NavItem />
@@ -174,10 +180,9 @@ class NavigationBar extends React.Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state.notificationsReducer.unreadNotification.unreadNotifications)
-return {
-  newNotificationsCount:
-  state.notificationsReducer.unreadNotification.unreadNotifications
-};
+  return {
+    newNotificationsCount:
+      state.notificationsReducer.unreadNotification.unreadNotifications
+  };
 };
 export default connect(mapStateToProps)(NavigationBar);
