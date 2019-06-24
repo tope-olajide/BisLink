@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import { Input, Button } from "mdbreact";
 import Dropzone from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import './RegisterBusinessPage.css'
-const dropZoneStyle= {
-  width:200,
-  height:200,
-  marginLeft: 'auto',
-  marginRight:'auto',
+import "./RegisterBusinessPage.css";
+const dropZoneStyle = {
+  width: 200,
+  height: 200,
+  marginLeft: "auto",
+  marginRight: "auto",
   borderWidth: 2,
-  borderColor: '#666',
-  borderStyle: 'dashed',
+  borderColor: "#666",
+  borderStyle: "dashed",
   borderRadius: 5
-}
+};
 const thumbsContainer = {
   display: "flex",
   flexDirection: "row",
@@ -58,16 +58,19 @@ class RegisterBusinessPage extends Component {
       <div>
         <div className="business-form-header">
           <div className="hero-text">
-            <h1>
-             {this.props.title}
-            </h1>
+            <h1>{this.props.title}</h1>
           </div>
         </div>
         <div className="biz-form-container col-md-7 mt-5">
-                <div className="  text-right ">
-             <Button className={(this.props.showModifyGalleryButton)? "":"hide-element"} onClick={this.props.modifyGallery} >
-                  Modify Picture Gallery
-                </Button>
+          <div className="  text-right ">
+            <Button
+              className={
+                this.props.showModifyGalleryButton ? "" : "hide-element"
+              }
+              onClick={this.props.modifyGallery}
+            >
+              Modify Picture Gallery
+            </Button>
           </div>
         </div>
 
@@ -93,22 +96,22 @@ class RegisterBusinessPage extends Component {
                   icon="asterisk"
                   value={this.props.tagline}
                   onChange={event => {
-                    this.props.handleInputChange(
-                      "tagline",
-                      event.target.value
-                    );
+                    this.props.handleInputChange("tagline", event.target.value);
                   }}
                 />
               </div>
             </div>
- 
+
             <Input
               label="Business Address"
               className="mt-5"
               icon="building"
-value={this.props.businessAddress1}
+              value={this.props.businessAddress1}
               onChange={event => {
-                this.props.handleInputChange("businessAddress1", event.target.value);
+                this.props.handleInputChange(
+                  "businessAddress1",
+                  event.target.value
+                );
               }}
             />
             <div className="row">
@@ -156,12 +159,19 @@ value={this.props.businessAddress1}
               value={this.props.businessDescription}
               rows="3"
               onChange={event => {
-                this.props.handleInputChange("businessDescription", event.target.value);
+                this.props.handleInputChange(
+                  "businessDescription",
+                  event.target.value
+                );
               }}
             />
             <section>
               <div className="dropzone">
-                <Dropzone accept="image/*" style={dropZoneStyle} onDrop={this.props.onDrop}>
+                <Dropzone
+                  accept="image/*"
+                  style={dropZoneStyle}
+                  onDrop={this.props.onDrop}
+                >
                   <h4>
                     Try dropping your picture here, or click to select the
                     picture you want to upload.
@@ -170,8 +180,15 @@ value={this.props.businessAddress1}
                 <aside style={thumbsContainer}>{thumbs}</aside>
               </div>
               <div className="text-center">
-                <Button onClick={this.props.handleFormSubmit}  disabled={(this.props.isSavingBusiness)?true:false}>
-                {(this.props.isSavingBusiness)?<FontAwesomeIcon icon="spinner" spin size='2x' />:this.props.buttonName} 
+                <Button
+                  onClick={this.props.handleFormSubmit}
+                  disabled={this.props.isSavingBusiness ? true : false}
+                >
+                  {this.props.isSavingBusiness ? (
+                    <FontAwesomeIcon icon="spinner" spin size="2x" />
+                  ) : (
+                    this.props.buttonName
+                  )}
                 </Button>
               </div>
             </section>
