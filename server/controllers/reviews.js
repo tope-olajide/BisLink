@@ -52,12 +52,14 @@ export default class Reviews {
               title: `${user.username} has reviewed one of your businesses`,
               message: `${user.username} has added a review to one of your business titled: '${business.businessName}'`
             };
+             /* Filters the sender out, the user sending the notification should not be among the reciever. */
+            if(userId !== business.userId){
             Notification
               .create({
                 userId: notificationAlert.receiverId,
                 title: notificationAlert.title,
                 message: notificationAlert.message,
-              })
+              })}
           })
           Review
           .findOne({
