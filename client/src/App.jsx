@@ -26,26 +26,22 @@ import {
   faSignOutAlt,
   faUserAlt
 } from "@fortawesome/free-solid-svg-icons";
-
 import { faHeart as faHeartRegular } from "@fortawesome/free-regular-svg-icons";
 import { faEye as faEyeRegular } from "@fortawesome/free-regular-svg-icons";
 import AuthPage from "./components/AuthPage";
-import AddBusiness from "./components/AddBusiness";
+import AddBusiness from "./components/RegisterBusiness";
 import BusinessList from "./components/Catalogue";
 import BusinessDetails from "./components/BusinessDetails";
 import Profile from "./components/Profile";
 import ModifyUser from "./components/ModifyUser";
 import ModifyBusiness from "./components/ModifyBusiness";
-import LoadingAnimation from "./components/commons/LoadingAnimation";
 import Notifications from "./components/Notifications";
-/*import Loading from './components/presentation/LoadingAnimation' */
 import withAuthorization from "./utils/withAuthorization";
 import ModifyGallery from "./components/ModifyGallery";
 import BusinessSearch from "./components/BusinessSearch";
 import AllNotifications from "./components/Notifications/AllNotifications";
 import NotificationDetails from "./components/Notifications/NotificationDetails";
 import SeenNotification from "./components/Notifications/ReadNotifications";
-
 library.add(
   faHome,
   faBriefcase,
