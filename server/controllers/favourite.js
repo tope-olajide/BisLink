@@ -17,7 +17,7 @@ export default class Favourites {
 const notificationAlert = {
   receiverId:business.userId,
   title:`${user.username} has added one of your business to his/her favourite`,
-  message: `${user.username} has added your business named: ${business.businessName}  to his/her favourite business collection`
+  message: `${user.username} has added your business named: ${business.businessName} to his/her favourite business collection`
 };
 Notification
           .create({
@@ -26,7 +26,6 @@ Notification
             message:notificationAlert.message,
           })
           })
-        
           return res.status(201).json({
             success: true,
             message: `Business with id: ${businessId} added to favourites!`,
