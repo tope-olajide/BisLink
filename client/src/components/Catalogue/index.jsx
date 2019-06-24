@@ -9,6 +9,7 @@ import NavigationBar from "../commons/NavigationBar";
 import { connect } from "react-redux";
 import Pagination from "react-js-pagination";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import ErrorPage from "../commons/ErrorPage";
 class BusinessList extends Component {
   constructor(props) {
     super(props);
@@ -19,25 +20,24 @@ class BusinessList extends Component {
       businessName: " ",
       businessLocation: " "
     };
-    this.myRef = React.createRef()
+    this.myRef = React.createRef();
   }
 
   componentDidMount() {
-    this.handlePageChange()
+    this.handlePageChange();
   }
 
-  scrollToMyRef = (e) => {
+  scrollToMyRef = e => {
     e.preventDefault();
-    window.scrollTo(0, this.myRef.current.offsetTop) 
-  } 
-sortByPopular =(e) => {
-  e.preventDefault();
+    window.scrollTo(0, this.myRef.current.offsetTop);
+  };
+  sortByPopular = e => {
+    e.preventDefault();
     window.location = `/businesses/search/sort=popular`;
-  }
-  handlePageChange = (pageNumber) => {
-    const limit = 9
-    console.log(`active page is ${pageNumber}`);
-    this.setState({activePage: pageNumber});
+  };
+  handlePageChange = pageNumber => {
+    const limit = 9;
+    this.setState({ activePage: pageNumber });
     this.setState({ isLoading: true });
     this.props
       .dispatch(fetchBusinesses(pageNumber, limit))
@@ -52,94 +52,89 @@ sortByPopular =(e) => {
           isLoading: false,
           isError: true
         });
-        if (!error.response){
-            toastNotification(["error"],'Network Error!' )
-        }else {
-             toastNotification(["error"], error.response.data.message);
+        if (!error.response) {
+          toastNotification(["error"], "Network Error!");
+        } else {
+          toastNotification(["error"], error.response.data.message);
         }
-       
       });
-  }
+  };
   render() {
     if (this.state.isLoading) {
       return (
-        <div>
-          <NavigationBar homePage ="active" scrollToMyRef={this.scrollToMyRef} />
+        <>
           <LoadingAnimation />
-        </div>
+        </>
       );
     } else if (this.state.isError) {
       return (
-        <div>
-          <NavigationBar homePage ="active"/>
-          <h1>An Error has occured</h1>
-        </div>
+        <>
+          <ErrorPage />
+        </>
       );
     } else {
       return (
-        <><NavigationBar homePage ="active" scrollToMyRef={this.scrollToMyRef} />
-          <CataloguePageHeader 
-          />
+        <>
+          <NavigationBar homePage="active" scrollToMyRef={this.scrollToMyRef} />
+          <CataloguePageHeader />
           <div>
-        <h1 className="text-center my-5 featured-text">
-          <FontAwesomeIcon icon="briefcase" /> Featured Places
-        </h1>
-      </div>
+            <h1 className="text-center my-5 featured-text">
+              <FontAwesomeIcon icon="briefcase" /> Featured Places
+            </h1>
+          </div>
           <div className="container content-container">
-            <div className="row card-container">
+            <div className="row">
               {!this.props.allBusinesses.length ? (
-                <div>No Business</div>
+                <div>No Businesses Found!</div>
               ) : (
                 this.props.allBusinesses.map(business => {
- 
                   return (
                     <>
-                    <BusinessCard
-                      key={business.id}
-                      id={business.id}
-                      businessName={business.businessName}
-                      category={business.category}
-                      reviewCount={business.reviewCount}
-                      businessAddress={business.businessAddress1}
-                      phoneNumber={business.phoneNumber1}
-                      website={business.website}
-                      image={business.defaultBusinessImageUrl}
-                      viewCount={business.viewCount}
-                       upvotes={business.upvotes}
-                      downvotes={business.downvotes} 
-                    />
+                      <BusinessCard
+                        key={business.id}
+                        id={business.id}
+                        businessName={business.businessName}
+                        category={business.category}
+                        reviewCount={business.reviewCount}
+                        businessAddress={business.businessAddress1}
+                        phoneNumber={business.phoneNumber1}
+                        website={business.website}
+                        image={business.defaultBusinessImageUrl}
+                        viewCount={business.viewCount}
+                        upvotes={business.upvotes}
+                        downvotes={business.downvotes}
+                      />
                     </>
                   );
                 })
               )}
-
             </div>
-            <div className =''> 
-            <Pagination
-          activePage={this.state.activePage}
-          itemsCountPerPage={9}
-          totalItemsCount={this.props.totalPages}
-          pageRangeDisplayed={5}
-          onChange={this.handlePageChange}
-          innerClass={'pagination pagination-lg'}
-          itemClass = {'page-item'}
-          linkClass={'page-link'}
-          disabledClass={'disabled'}
-          activeLinkClass={'active'}
-          activeClass={'active'}
-        /></div>
+            <div className="">
+              <Pagination
+                activePage={this.state.activePage}
+                itemsCountPerPage={9}
+                totalItemsCount={this.props.totalPages}
+                pageRangeDisplayed={5}
+                onChange={this.handlePageChange}
+                innerClass={"pagination pagination-lg"}
+                itemClass={"page-item"}
+                linkClass={"page-link"}
+                disabledClass={"disabled"}
+                activeLinkClass={"active"}
+                activeClass={"active"}
+              />
+            </div>
           </div>
-<Footer myRef={this.myRef}/>
+          <Footer myRef={this.myRef} />
         </>
       );
     }
   }
 }
 const mapStateToProps = state => {
-    console.log(state.businessReducer)
   return {
     allBusinesses: state.businessReducer.allBusinesses.businesses,
-    totalPages:state.businessReducer.allBusinesses.totalPages
+    totalPages: state.businessReducer.allBusinesses.totalPages
   };
 };
 /* export default connect(mapStateToProps)(BusinessList) */

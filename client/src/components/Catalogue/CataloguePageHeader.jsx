@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "mdbreact";
-import "./CataloguePage.css"
+import ErrorPage from "../commons/ErrorPage";
+import "./CataloguePage.css";
 class CataloguePageHeader extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,6 @@ class CataloguePageHeader extends Component {
   }
   saveToState(key, value) {
     this.setState({ [key]: value });
-    console.log(value);
   }
   handleBusinessSearch = () => {
     window.location = `/businesses/search/name=${
