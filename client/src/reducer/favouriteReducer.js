@@ -1,18 +1,15 @@
-import {
-    ADD_TO_FAVOURITE,REMOVE_FROM_FAVOURITE
-} from '../actions/type'
+import { ADD_TO_FAVOURITE, REMOVE_FROM_FAVOURITE } from "../actions/type";
 
 const initialState = {
-    myFavourites: {
-        
-    }
-}
+  myFavourites: {}
+};
 export default (state = initialState, action) => {
-    switch (action.type) {
-        case ADD_TO_FAVOURITE:
-        return { ...state, myFavourites: action.isFavourite };
-        case REMOVE_FROM_FAVOURITE:
-        return { ...state, myFavourites: action.isFavourite };
-        default: return state;
-    }
-}
+  switch (action.type) {
+    case ADD_TO_FAVOURITE:
+      return { ...state, myFavourites: action.isFavourite };
+    case REMOVE_FROM_FAVOURITE:
+      return { ...state, myFavourites: action.isFavourite };
+    default:
+      return state;
+  }
+};

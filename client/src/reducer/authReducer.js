@@ -1,7 +1,4 @@
-import {
-  SET_CURRENT_USER,
-  FETCH_USERS_PROFILE
-} from './../actions/type';
+import { SET_CURRENT_USER, FETCH_USERS_PROFILE } from "./../actions/type";
 
 const initialState = {
   user: {},

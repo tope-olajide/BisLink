@@ -9,7 +9,7 @@ import {
   MODIFY_BUSINESS,
   FOLLOW_USER,
   UNFOLLOW_USER
-} from '../actions/type'
+} from "../actions/type";
 
 const initialState = {
   allBusinesses: {
@@ -18,16 +18,10 @@ const initialState = {
   myBusinesses: {
     businesses: {}
   },
-  businessDetails: {
-
-  },
-  fetchBusinessReviews: {
-
-  },
-  addBusinessReview: {
-
-  }
-}
+  businessDetails: {},
+  fetchBusinessReviews: {},
+  addBusinessReview: {}
+};
 export default (state = initialState, action) => {
   switch (action.type) {
     case FETCH_ALL_BUSINESSES:
@@ -98,8 +92,8 @@ export default (state = initialState, action) => {
             isUserFavourite: action.isFavourite
           }
         }
-      }
-      case REMOVE_FROM_FAVOURITE:
+      };
+    case REMOVE_FROM_FAVOURITE:
       return {
         ...state,
         businessDetails: {
@@ -109,7 +103,7 @@ export default (state = initialState, action) => {
             isUserFavourite: action.isFavourite
           }
         }
-      }
+      };
     case ADD_BUSINESS:
       return {
         ...state,
@@ -124,4 +118,4 @@ export default (state = initialState, action) => {
     default:
       return state;
   }
-}
+};
