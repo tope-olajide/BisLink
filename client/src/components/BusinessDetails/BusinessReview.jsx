@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Image from "react-graceful-image";
-import "./style.css";
 class BusinessReview extends Component {
   render() {
     return (

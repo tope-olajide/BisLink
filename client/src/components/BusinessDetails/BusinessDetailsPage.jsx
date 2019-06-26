@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Input, Button } from "mdbreact";
 import Image from "react-graceful-image";
 import BusinessReview from "./BusinessReview";
-import "./style.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class BusinessDetailsPage extends Component {
   render() {
