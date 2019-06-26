@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Button } from "mdbreact";
-import ErrorPage from "../commons/ErrorPage";
-import "./CataloguePage.css";
 class CataloguePageHeader extends Component {
   constructor(props) {
     super(props);
