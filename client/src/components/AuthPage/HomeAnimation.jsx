@@ -1,5 +1,5 @@
 import React from 'react';
-import './cb-slideshow.css';
+import '../../styles/cb-slideshow.css';
 
 class HomeAnimation extends React.Component {
 render () {
