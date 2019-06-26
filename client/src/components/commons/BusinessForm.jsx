@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Input, Button } from "mdbreact";
 import Dropzone from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import "./RegisterBusinessPage.css";
 const dropZoneStyle = {
   width: 200,
   height: 200,
