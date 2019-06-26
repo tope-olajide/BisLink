@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
-import {
-  MDBCol,
-} from "mdbreact";
+import React, { Component } from "react";
+import { MDBCol } from "mdbreact";
 import {
   fetchAllNewNotifications,
   fetchAllNotifications
@@ -12,8 +10,8 @@ import NotificationList from "./NotificationList";
 import toastNotification from "./../../utils/toastNotification";
 import LoadingAnimation from "../commons/LoadingAnimation";
 import { connect } from "react-redux";
-import NotificationNav from './NotificationNav'
-import formatDate from '../../utils/dateFormat'
+import NotificationNav from "./NotificationNav";
+import formatDate from "../../utils/dateFormat";
 import ErrorPage from "../commons/ErrorPage";
 class AllNotifications extends Component {
   constructor(props) {
@@ -70,61 +68,68 @@ class AllNotifications extends Component {
         }
       });
   };
-  render (){
-    if (this.props.allNotifications) {
-    return(
+  render() {
+    if (this.state.isLoading) {
+      return (
+        <>
+          <LoadingAnimation />
+        </>
+      );
+    } else if (this.state.isError) {
+      return (
+        <>
+          <ErrorPage />
+        </>
+      );
+    }
+    return (
       <>
-      <NavigationBar />
-<div className="card p-5 text-center mt-4 notification-container">
-<ul class="nav nav-tabs ">
-  <li class="nav-item">
-    <a class="nav-link active" href="#"><h5>Notifications</h5></a>
-  </li>
-   
-</ul>
-<div className="row">
-<div className="col-md-4 ">
-<NotificationNav 
-newNotificationsCount={this.props.newNotificationsCount}
-readNotificationsCount={this.props.readNotificationsCount}
-allNotificationsCount ={this.props.allNotifications.length}
-isAllNotificationActive={true}
-/></div>
-<div className="col-md-8 ">
-<MDBCol className="mt-0 mb-5">
-{this.props.allNotifications.map(notification => {
-                return (
-                  <NotificationList
-                    key={notification.id}
-                    id={notification.id}
-                    title={notification.title}
-                    date={formatDate(notification.createdAt)}
-                  />
-                );
-              })}
-</MDBCol>
-</div>
-</div>
-</div>
-<Footer />
-</>
-    )
+        <NavigationBar />
+        <div className="card p-5 text-center mt-4 notification-container">
+          <ul class="nav nav-tabs ">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <h5>Notifications</h5>
+              </a>
+            </li>
+          </ul>
+          <div className="row">
+            <div className="col-md-4 ">
+              <NotificationNav
+                newNotificationsCount={this.props.newNotificationsCount}
+                readNotificationsCount={this.props.readNotificationsCount}
+                allNotificationsCount={this.props.allNotifications.length}
+                isAllNotificationActive={true}
+              />
+            </div>
+            <div className="col-md-8 ">
+              <MDBCol className="mt-0 mb-5">
+                {this.props.allNotifications.map(notification => {
+                  return (
+                    <NotificationList
+                      key={notification.id}
+                      id={notification.id}
+                      title={notification.title}
+                      date={formatDate(notification.createdAt)}
+                    />
+                  );
+                })}
+              </MDBCol>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
   }
-  if (this.state.isLoading){
-    return(<LoadingAnimation />) 
-   }
-  else {
-    return null;
-  }
-}}
+}
 const mapStateToProps = state => {
-  console.log(state.notificationsReducer);
   return {
     allNotifications:
       state.notificationsReducer.allNotifications.allNotifications,
-      newNotificationsCount:
+    newNotificationsCount:
       state.notificationsReducer.allNotifications.newNotificationsCount,
-      readNotificationsCount:
+    readNotificationsCount:
       state.notificationsReducer.allNotifications.readNotificationsCount
   };
 };

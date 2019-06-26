@@ -17,7 +17,7 @@ class Notifications extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoading: false,
+      isLoading: true,
       isError: false
     };
   }
@@ -47,7 +47,6 @@ class Notifications extends Component {
       });
   };
   fetchNewNotifications = () => {
-    this.setState({ isLoading: true });
     this.props
       .dispatch(fetchAllNewNotifications())
       .then(() => {
@@ -69,55 +68,60 @@ class Notifications extends Component {
       });
   };
   render() {
-    if (this.props.newNotifications) {
+    if (this.state.isLoading) {
       return (
         <>
-          <NavigationBar />
-          <div className="card p-5 text-center mt-4 notification-container">
-            <ul class="nav nav-tabs ">
-              <li class="nav-item">
-                <a class="nav-link active" href="#">
-                  <h5>Notifications</h5>
-                </a>
-              </li>
-            </ul>
-            <div className="row">
+          <LoadingAnimation />
+        </>
+      );
+    } else if (this.state.isError) {
+      return (
+        <>
+          <ErrorPage />
+        </>
+      );
+    }
+else{
+    return (
+      <>
+        <NavigationBar />
+        <div className="card p-5 text-center mt-4 notification-container">
+          <ul class="nav nav-tabs ">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">
+                <h5>Notifications</h5>
+              </a>
+            </li>
+          </ul>
+          <div className="row">
             <div className="col-md-4 ">
               <NotificationNav
                 newNotificationsCount={this.props.newNotifications.length}
                 readNotificationsCount={this.props.readNotificationsCount}
                 allNotificationsCount={this.props.allNotificationsCount}
                 isUnReadNotificationActive={true}
-              /></div>
-              <div className="col-md-8">
-                <MDBCol className="mt-0 mb-5">
-                  {this.props.newNotifications.map(notification => {
-                    return (
-                      <NotificationList
-                        key={notification.id}
-                        id={notification.id}
-                        title={notification.title}
-                        date={formatDate(notification.createdAt)}
-                      />
-                    );
-                  })}
-                </MDBCol>
-              </div>
+              />
+            </div>
+            <div className="col-md-8">
+              <MDBCol className="mt-0 mb-5">
+                {this.props.newNotifications.map(notification => {
+                  return (
+                    <NotificationList
+                      key={notification.id}
+                      id={notification.id}
+                      title={notification.title}
+                      date={formatDate(notification.createdAt)}
+                    />
+                  );
+                })}
+              </MDBCol>
             </div>
           </div>
-          <Footer />
-        </>
-      );
-    }
-   else if (this.state.isLoading) {
-      return <LoadingAnimation />;
-    }
-   else if (this.state.isError) {
-      return <ErrorPage />;
-    } else {
-      return null;
-    }
-  }
+        </div>
+        <Footer />
+      </>
+    );
+  }}
 }
 const mapStateToProps = state => {
   return {
