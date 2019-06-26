@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "mdbreact";
 import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter } from 'mdbreact';
 import Image from "react-graceful-image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 class PictureGallery extends Component {
     state = {
         modal: false
@@ -21,7 +22,7 @@ class PictureGallery extends Component {
         return ( <>
 
          
-            <div className="col-md-3 d-flex">
+            <div className="col-md-3 mt-5 d-flex">
               <div className="card  mb-5 mb-5 ml-0 mr-0 shadow-md rounded-0">
                 <Image
                   className="card-img-top rounded-0"
@@ -33,7 +34,7 @@ class PictureGallery extends Component {
                 <MDBModal isOpen={this.state.modal} toggle={this.toggle}>
                   <MDBModalHeader toggle={this.toggle}>Confirm Delete</MDBModalHeader>
                   <MDBModalBody>
-                    <h5>Are You sure you want to delete this picture ?</h5>
+                    <h5>Are you sure you want to delete this picture?</h5>
                   </MDBModalBody>
                   <MDBModalFooter>
                     <MDBBtn color="secondary" onClick={this.toggle}>Cancel</MDBBtn>
@@ -42,7 +43,7 @@ class PictureGallery extends Component {
                 </MDBModal>
               </MDBContainer> 
                 <div className="text-center card-body">
-                  <Button onClick={this.toggle}> Delete</Button>
+                  <Button onClick={this.toggle}> <FontAwesomeIcon icon="trash" size="2x" /></Button>
                   <Button onClick={this.setDefaultImage}>Set as Default</Button>
               </div>
               </div>

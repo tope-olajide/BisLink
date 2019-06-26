@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import PictureGallery from './PictureGallery'
 import NavBar from './../commons/NavigationBar';
 import Footer from "../commons/Footer";
+import LoadingAnimation from "../commons/LoadingAnimation";
 import { connect } from "react-redux";
 import {
     fetchPictures,setDefaultImage,deletePicture
 } from "../../actions/galleryAction";
 import toastNotification from "./../../utils/toastNotification";
+import ErrorPage from "../commons/ErrorPage";
 class ModifyGallery extends Component {
     componentDidMount() {
         this.fetchBusinessPictures()
@@ -38,7 +40,7 @@ class ModifyGallery extends Component {
         this.props
           .dispatch(setDefaultImage(id, businessImageUrl))
           .then(() => {
-            alert('success')
+            toastNotification(["success"], `Default business image set successfully`);
           })
           .catch(error => {
             alert(error)
@@ -61,10 +63,22 @@ class ModifyGallery extends Component {
       };
 
     render () {
-
+      if (this.state.isLoading) {
+        return (
+          <>
+            <LoadingAnimation />
+          </>
+        );
+        
+      } else if (this.state.isError) {
+        return (
+          <><ErrorPage />
+          </>
+        );
+      }
         return (
 
-<div>
+<>
 <NavBar />
 <div className="container content-container">
     <div className="row card-container">
@@ -81,18 +95,15 @@ class ModifyGallery extends Component {
     />  
     </>) } 
 })
-
 }
-
     </div>
     </div>
     <Footer />
-</div>
+</>
         )
     }
 }
 const mapStateToProps = state => {
-    console.log(state.galleryReducer)
     return {
         businessPictures: state.galleryReducer.businessPictures
     };
