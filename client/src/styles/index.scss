@@ -1,0 +1,430 @@
+/*!------------------------------------------------------------------
+Website Name: BisLink
+Version: 2.0
+Author: Temitope David O
+-------------------------------------------------------------------*/
+/* ==============================================================
+   GLOBAL STYLES
+   ============================================================== */
+$color-white: #f3f3f3;
+@mixin central-alignnment($width: 0) {
+  margin-left: auto;
+  margin-right: auto;
+  width: $width;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+}
+html {
+  min-height: 100%;
+  position: relative;
+}
+.input-wrapper {
+  margin-bottom: 15px;
+}
+.input-wrapper input::placeholder {
+  color: rgb(196, 168, 168);
+}
+.input-wrapper input[type="text"] {
+  background: transparent;
+  border: none;
+  border: 1px solid #ffff;
+  outline: none;
+  border-radius: 0;
+  color: #ffffff;
+}
+.hide-element {
+  visibility: hidden;
+}
+/* ==============================================================
+     CATALOGUE COMPONENT STYLES
+     ============================================================== */
+.biz-header {
+  background: {
+    image: linear-gradient(
+        to right bottom,
+        rgba(73, 78, 80, 0.8),
+        rgba(35, 44, 54, 0.7)
+      ),
+      url("images/Lagos-skyline.jpg");
+    size: cover;
+    position: top;
+    clip: padding-box;
+    color: #f4f9ff;
+  }
+  position: relative;
+}
+
+.hero-caption {
+  width: 100%;
+  padding-bottom: 9%;
+}
+.hero-title {
+  padding-top: 9%;
+  text-align: center;
+  color: $color-white;
+  font-size: 5em;
+  font-weight: 300;
+  @include central-alignnment(98%);
+}
+.hero-paragraph {
+  text-align: center;
+  color: $color-white;
+  font-size: 30px;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  @include central-alignnment(90%);
+}
+.hero-search-container {
+  @include central-alignnment(50%);
+}
+.browse-by,
+.browse-by a {
+  text-align: center;
+  color: rgb(182, 229, 229);
+  font-size: 22px;
+  margin-top: 30px;
+  font-weight: 300;
+&:hover {
+  color: rgb(153, 144, 144);
+  text-decoration: underline;
+}
+}
+.featured-text {
+  font-size: 2.9em;
+}
+.category,
+.biz-address {
+  text-transform: capitalize;
+}
+/* ==============================================================
+     ERROR PAGE STYLES
+     ============================================================== */
+.error-container {
+  width: 80%;
+  margin: 0 auto;
+}
+.error-image {
+  width: 90%;
+}
+/* ==============================================================
+     BUSINESS CARD STYLES
+     ============================================================== */
+.card-container {
+  @include central-alignnment(100%);
+}
+.biz-name {
+  margin-bottom: 3px;
+  font-weight: bold;
+  font-size: 1.2em;
+  color: rgb(97, 83, 83);
+  text-transform: capitalize;
+}
+.card-body {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin-top: 9px;
+    }
+  }
+}
+
+.card-bottom {
+  margin-top: 8px;
+  .view-icon {
+    float: right;
+    margin: 0 20px;
+    color: #2bbbad;
+  }
+  .trash-icon {
+    float: right;
+  }
+  .edit-icon {
+    float: right;
+    margin: 0 20px;
+  }
+  p {
+    color: rgb(247, 4, 4);
+    text-transform: uppercase;
+    font-size: 13px;
+    cursor: pointer;
+  }
+}
+.card-contents {
+  p {
+    display: inline;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2bbbad;
+  }
+}
+
+.card {
+  p {
+    display: inline;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2bbbad;
+  }
+}
+.space-text {
+  margin-right: 10px;
+}
+.card-icon {
+  color: #2bbbad;
+}
+.card {
+  border-radius: 0%;
+}
+.card-img {
+  height: 200px;
+}
+
+/* ==============================================================
+     REGISTER AND EDIT-BUSINESS FORM STYLES
+     ============================================================== */
+.biz-form-container {
+  @include central-alignnment(60%);
+}
+@media screen and (max-width: 900px) {
+  .biz-form-container {
+    @include central-alignnment(90%);
+  }
+  .biz-form-title {
+    font-size: 30px;
+    font-weight: 600;
+    border-bottom: 2px solid black;
+    padding: 10px;
+  }
+}
+
+/* ==============================================================
+     PROFILE STYLES
+       ============================================================== */
+.profile-text {
+  text-align: center;
+  line-height: 0px;
+  text-transform: capitalize;
+}
+
+.table {
+  text-align: center;
+}
+
+.dashboard-containers {
+  width: 90%;
+  margin: auto auto;
+  background: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+  width: 85%;
+  margin: auto auto;
+  text-align: center;
+}
+.header {
+  height: 50vh;
+  background: {
+    image: url("images/hero.jpg");
+    size: cover;
+    position: top;
+    clip: padding-box;
+    color: #f4f9ff;
+  }
+  position: relative;
+  z-index: -1;
+}
+.dashboard-containers {
+  width: 90%;
+  margin: auto auto;
+  background: #ffffff;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-section-biz-details {
+  @include central-alignnment(90%);
+  img {
+    border-radius: 50%;
+    border: 6px solid $color-white;
+    width: 160px;
+  }
+}
+
+.profile-img {
+  border-radius: 50%;
+  border: 6px solid $color-white;
+  height: 200px;
+  display: block;
+  margin-top: -100px;
+  @include central-alignnment(200px);
+}
+.ppix {
+  margin-top: -100px;
+  @include central-alignnment(200px);
+}
+
+.table {
+  text-align: center;
+}
+.user-info {
+  @include central-alignnment(85%);
+  text-align: center;
+}
+/* ==============================================================
+     BUSINESS-DETAILS STYLES
+  ============================================================== */
+.review {
+  margin-left: 5px;
+}
+.cat-review {
+  margin-top: 0px;
+}
+.review-card {
+  margin-left: 0px;
+}
+
+.commenter-avatar {
+  text-align: center;
+  img {
+    width: 60px;
+    margin: 0px auto auto;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+  }
+}
+.space-nav {
+  margin-right: 30px;
+}
+/* ==============================================================
+     NAV STYLES
+     ============================================================== */
+.zindex {
+  z-index: 999;
+}
+.search-input-wrapper input[type="text"] {
+  background: transparent;
+  border: none;
+  border: 2px solid rgb(7, 22, 87);
+  outline: none;
+  border-radius: 0;
+  color: #181616;
+}
+.search-input-wrapper input::placeholder {
+  color: rgb(71, 67, 67);
+}
+.nav-notification-badge {
+  border: 1px solid blue;
+  padding: 0px;
+  display: inline;
+  border-radius: 47%;
+  top: 0px;
+  left: 15px;
+  padding-left: 4px;
+  padding-right: 4px;
+  position: absolute;
+  font-size: 10px;
+  background: blue;
+  color: $color-white;
+  font-weight: bold;
+  &:hover {
+  opacity: 0.8;
+}
+}
+@media screen and (max-width: 780px) {
+  .nav-notification-badge {
+    left: 13px;
+  }
+}
+/* ==============================================================
+     EDIT-PROFILE STYLES
+     ============================================================== */
+.form__container-card {
+  @include central-alignnment();
+}
+/* ==============================================================
+     NOTIFICATIONS STYLES
+     ============================================================== */
+
+.notification-container {
+  @include central-alignnment(70%);
+}
+@media screen and (max-width: 780px) {
+  .notification-container {
+    @include central-alignnment(95%);
+  }
+}
+/* ==============================================================
+     FOOTER STYLES
+     ============================================================== */
+.footer-search-form {
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.copyright-content {
+  margin-top: 70px;
+  float: right;
+  margin-right: 0px;
+}
+.footer {
+  margin-top: 50px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: #ffffff;
+}
+@media screen and (max-width: 768px) {
+  .footer-search-form {
+    margin-top: 50px;
+    @include central-alignnment(78%);
+  }
+  .copyright-content {
+    @include central-alignnment(85%);
+  }
+}
+/* ==============================================================
+     LOADING ANIMATIONS STYLES
+     ============================================================== */
+.loader {
+  width: 70%;
+}
+.loading-container {
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 56%;
+  transform: translate(-50%, -50%);
+}
+/* ==============================================================
+     BUSINESS FORM STYLES
+     ============================================================== */
+.business-form-header {
+  height: 50vh;
+  background: {
+    image: url("images/00.jpg");
+    size: cover;
+    position: top;
+  }
+  position: relative;
+  z-index: -1;
+  margin-top: -10px;
+}
+.hero-text {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: $color-white;
+  background: rgba(108, 126, 129, 0.5);
+  h1 {
+    text-shadow: 3px 3px rgb(37, 24, 26);
+    font-size: 2.6em;
+  }
+}
+//463
