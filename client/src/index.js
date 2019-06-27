@@ -12,7 +12,7 @@ import { Provider } from "react-redux";
 import reducer from "./reducer";
 
 import "./styles/toastr.css";
-import "./index.css";
+import "./styles/index.scss";
 
 import App from "./App.jsx";
 import * as serviceWorker from "./serviceWorker";
