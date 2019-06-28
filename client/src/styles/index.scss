@@ -1,11 +1,17 @@
-/*------------------------------------------------------------------
+/*!------------------------------------------------------------------
 Website Name: BisLink
-Version: 1.0
+Version: 2.0
 Author: Temitope David O
 -------------------------------------------------------------------*/
 /* ==============================================================
    GLOBAL STYLES
    ============================================================== */
+$color-white: #f3f3f3;
+@mixin central-alignnment($width: 0) {
+  margin-left: auto;
+  margin-right: auto;
+  width: $width;
+}
 body {
   margin: 0;
   padding: 0;
@@ -14,6 +20,9 @@ body {
 html {
   min-height: 100%;
   position: relative;
+}
+.input-wrapper {
+  margin-bottom: 15px;
 }
 .input-wrapper input::placeholder {
   color: rgb(196, 168, 168);
@@ -33,17 +42,19 @@ html {
      CATALOGUE COMPONENT STYLES
      ============================================================== */
 .biz-header {
-  background-image: linear-gradient(
-      to right bottom,
-      rgba(73, 78, 80, 0.8),
-      rgba(35, 44, 54, 0.7)
-    ),
-    url("images/Lagos-skyline.jpg");
-  background-size: cover;
-  background-position: top;
+  background: {
+    image: linear-gradient(
+        to right bottom,
+        rgba(73, 78, 80, 0.8),
+        rgba(35, 44, 54, 0.7)
+      ),
+      url("images/Lagos-skyline.jpg");
+    size: cover;
+    position: top;
+    clip: padding-box;
+    color: #f4f9ff;
+  }
   position: relative;
-  background-clip: padding-box;
-  background-color: #f4f9ff;
 }
 
 .hero-caption {
@@ -53,30 +64,21 @@ html {
 .hero-title {
   padding-top: 9%;
   text-align: center;
-  color: white;
+  color: $color-white;
   font-size: 5em;
   font-weight: 300;
-  width: 98%;
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment(98%);
 }
 .hero-paragraph {
   text-align: center;
-  color: white;
+  color: $color-white;
   font-size: 30px;
   margin-top: 15px;
   margin-bottom: 30px;
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment(90%);
 }
 .hero-search-container {
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.input-wrapper {
-  margin-bottom: 15px;
+  @include central-alignnment(50%);
 }
 .browse-by,
 .browse-by a {
@@ -85,17 +87,14 @@ html {
   font-size: 22px;
   margin-top: 30px;
   font-weight: 300;
-}
-.browse-by :hover {
+&:hover {
   color: rgb(153, 144, 144);
   text-decoration: underline;
 }
-/* medium to large devices devices{768 pixels and up to 1079} */
-
+}
 .featured-text {
   font-size: 2.9em;
 }
-
 .category,
 .biz-address {
   text-transform: capitalize;
@@ -114,9 +113,7 @@ html {
      BUSINESS CARD STYLES
      ============================================================== */
 .card-container {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment(100%);
 }
 .biz-name {
   margin-bottom: 3px;
@@ -125,55 +122,54 @@ html {
   color: rgb(97, 83, 83);
   text-transform: capitalize;
 }
-
-.card-body ul {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
-.card-body ul li {
-  margin-top: 9px;
+.card-body {
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    li {
+      margin-top: 9px;
+    }
+  }
 }
 
 .card-bottom {
   margin-top: 8px;
+  .view-icon {
+    float: right;
+    margin: 0 20px;
+    color: #2bbbad;
+  }
+  .trash-icon {
+    float: right;
+  }
+  .edit-icon {
+    float: right;
+    margin: 0 20px;
+  }
+  p {
+    color: rgb(247, 4, 4);
+    text-transform: uppercase;
+    font-size: 13px;
+    cursor: pointer;
+  }
+}
+.card-contents {
+  p {
+    display: inline;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2bbbad;
+  }
 }
 
-.card-contents p {
-  display: inline;
-  font-size: 15px;
-  font-weight: 400;
-  color: #2bbbad;
-}
-
-.card-bottom .view-icon {
-  float: right;
-  margin: 0 20px;
-  color: #2bbbad;
-}
-
-.card-bottom .trash-icon {
-  float: right;
-}
-
-.card-bottom .edit-icon {
-  float: right;
-  margin: 0 20px;
-}
-
-.card p {
-  display: inline;
-  font-size: 15px;
-  font-weight: 400;
-  color: #2bbbad;
-}
-
-.card-bottom p {
-  color: rgb(247, 4, 4);
-  text-transform: uppercase;
-  font-size: 13px;
-  cursor: pointer;
+.card {
+  p {
+    display: inline;
+    font-size: 15px;
+    font-weight: 400;
+    color: #2bbbad;
+  }
 }
 .space-text {
   margin-right: 10px;
@@ -192,14 +188,11 @@ html {
      REGISTER AND EDIT-BUSINESS FORM STYLES
      ============================================================== */
 .biz-form-container {
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment(60%);
 }
-@media screen and (max-width: 780px) {
+@media screen and (max-width: 900px) {
   .biz-form-container {
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    @include central-alignnment(90%);
   }
   .biz-form-title {
     font-size: 30px;
@@ -236,12 +229,14 @@ html {
 }
 .header {
   height: 50vh;
-  background-image: url("images/hero.jpg");
-  background-size: cover;
-  background-position: top;
+  background: {
+    image: url("images/hero.jpg");
+    size: cover;
+    position: top;
+    clip: padding-box;
+    color: #f4f9ff;
+  }
   position: relative;
-  background-clip: padding-box;
-  background-color: #f4f9ff;
   z-index: -1;
 }
 .dashboard-containers {
@@ -251,48 +246,33 @@ html {
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1), 0 3px 6px rgba(0, 0, 0, 0.1);
 }
 
-.profile-section-biz-details img {
-  border-radius: 50%;
-  border: 6px solid white;
-  width: 160px;
-}
 .profile-section-biz-details {
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment(90%);
+  img {
+    border-radius: 50%;
+    border: 6px solid $color-white;
+    width: 160px;
+  }
 }
 
 .profile-img {
   border-radius: 50%;
-  border: 6px solid white;
-  width: 200px;
+  border: 6px solid $color-white;
   height: 200px;
   display: block;
   margin-top: -100px;
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment(200px);
 }
 .ppix {
-  width: 200px;
   margin-top: -100px;
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment(200px);
 }
-.profile-section-biz-details {
-  width: 90%;
-  margin-left: auto;
-  margin-right: auto;
-}
-.profile-text {
-  text-align: center;
-  line-height: 0px;
-}
+
 .table {
   text-align: center;
 }
 .user-info {
-  width: 85%;
-  margin: auto auto;
+  @include central-alignnment(85%);
   text-align: center;
 }
 /* ==============================================================
@@ -301,25 +281,22 @@ html {
 .review {
   margin-left: 5px;
 }
-
 .cat-review {
   margin-top: 0px;
 }
-
 .review-card {
   margin-left: 0px;
-}
-.commenter-avatar img {
-  width: 60px;
-  margin: 0px auto auto;
-  border: 1px solid #ffffff;
-  border-radius: 50%;
 }
 
 .commenter-avatar {
   text-align: center;
+  img {
+    width: 60px;
+    margin: 0px auto auto;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+  }
 }
-
 .space-nav {
   margin-right: 30px;
 }
@@ -352,11 +329,11 @@ html {
   position: absolute;
   font-size: 10px;
   background: blue;
-  color: #f3f3f3;
+  color: $color-white;
   font-weight: bold;
-}
-.nav-notification-badge:hover {
+  &:hover {
   opacity: 0.8;
+}
 }
 @media screen and (max-width: 780px) {
   .nav-notification-badge {
@@ -367,24 +344,18 @@ html {
      EDIT-PROFILE STYLES
      ============================================================== */
 .form__container-card {
-  margin-left: auto;
-  margin-right: auto;
+  @include central-alignnment();
 }
-
 /* ==============================================================
      NOTIFICATIONS STYLES
      ============================================================== */
 
-.notification-container  {
-  width: 70%;
-  margin-left: auto;
-  margin-right: auto;
+.notification-container {
+  @include central-alignnment(70%);
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 780px) {
   .notification-container {
-    width: 95%;
-    margin-left: auto;
-    margin-right: auto;
+    @include central-alignnment(95%);
   }
 }
 /* ==============================================================
@@ -400,7 +371,6 @@ html {
   float: right;
   margin-right: 0px;
 }
-
 .footer {
   margin-top: 50px;
   bottom: 0;
@@ -411,18 +381,12 @@ html {
 @media screen and (max-width: 768px) {
   .footer-search-form {
     margin-top: 50px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 78%;
+    @include central-alignnment(78%);
   }
-
   .copyright-content {
-    width: 85%;
-    margin-left: auto;
-    margin-right: auto;
+    @include central-alignnment(85%);
   }
 }
-
 /* ==============================================================
      LOADING ANIMATIONS STYLES
      ============================================================== */
@@ -436,15 +400,16 @@ html {
   left: 56%;
   transform: translate(-50%, -50%);
 }
-
 /* ==============================================================
      BUSINESS FORM STYLES
      ============================================================== */
 .business-form-header {
   height: 50vh;
-  background-image: url("images/00.jpg");
-  background-size: cover;
-  background-position: top;
+  background: {
+    image: url("images/00.jpg");
+    size: cover;
+    position: top;
+  }
   position: relative;
   z-index: -1;
   margin-top: -10px;
@@ -455,10 +420,11 @@ html {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
+  color: $color-white;
   background: rgba(108, 126, 129, 0.5);
+  h1 {
+    text-shadow: 3px 3px rgb(37, 24, 26);
+    font-size: 2.6em;
+  }
 }
-.hero-text h1 {
-  text-shadow: 3px 3px rgb(37, 24, 26);
-  font-size: 2.6em;
-}
+//463
