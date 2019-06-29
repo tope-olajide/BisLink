@@ -64,14 +64,10 @@ const validateEmail = (emailAddress) => {
   return true;
 };
 
-
-
-
 export const validateModifiedUser = ({
   fullname,
   email
 }) => {
-
   const checkEachChar = (char) => {
     char = parseInt(char, 10);
     return Number.isInteger(char);
@@ -121,13 +117,13 @@ export const validateUser = ({
   const validateFullname = checkForInteger(fullname);
   if (fullname.length < 4 ||
      validateFullname.length > 1) {
-    return 'Fullname minimum character must be 4 and must not contain a number';
+    return 'Fullname must contain atleast 4 minimum characters';
   }
   if (!fullname.includes(' ')) {
     return 'Your firstname and lastname must be separated with space';
   }
   if (username.length < 3 || username.includes(' ')) {
-    return 'Username must contain at least 3 alphabets and no space!';
+    return 'Username must contain at least 3 alphabet characters with no space!';
   }
   if (!validateEmail(email)) {
     return 'please enter a valid email address'
