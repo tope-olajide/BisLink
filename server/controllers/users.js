@@ -134,7 +134,7 @@ export default class Users {
         if (!userFound) {
           return res.status(401).json({
             success: false,
-            message: 'user not found'
+            message: 'Invalid login Details!'
           });
         }
 
@@ -157,7 +157,7 @@ export default class Users {
         }
         res.status(401).json({
           success: false,
-          message: 'Invalid pasword!'
+          message: 'Invalid login Details!'
         });
       })
       .catch((/* error */) => res.status(500).json({
@@ -209,37 +209,53 @@ export default class Users {
         /*         if (imageId !== foundUser.imageId) {
           cloudinary.destroy(foundUser.imageId, () => {});
         } */
-
-        foundUser.updateAttributes({
-          fullname,
-          email,
-          phoneNumber,
-          location,
-          about,
-          ImageUrl,
-          ImageId
-        })
-          .then((user) => {
-            const {
-              id
-            } = user;
-            const token = jsonwebtoken.sign({
-              id,
-              username,
-              exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-            }, 'process.env.JWT_SECRET');
-
-            return res.status(200).json({
-              success: true,
-              message: 'User record updated',
-              user: {
-                fullname,
+        User.findOne({
+          where: {
+            email
+          },
+        }).then((userFound) => {
+          if (userFound) {
+            if (userFound.id !== userId) {
+              return res.status(409).json({
+                success: false,
+                message: 'Email already taken'
+              });
+            }
+          }
+          foundUser.updateAttributes({
+            fullname,
+            email,
+            phoneNumber,
+            location,
+            about,
+            ImageUrl,
+            ImageId
+          })
+            .then((updatedUser) => {
+              const {
+                id
+              } = updatedUser;
+              const token = jsonwebtoken.sign({
+                id,
                 username,
-                imageUrl: user.imageUrl,
-                token
-              }
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+              }, 'process.env.JWT_SECRET');
+
+              return res.status(200).json({
+                success: true,
+                message: 'User record updated',
+                user: {
+                  fullname,
+                  email,
+                  phoneNumber,
+                  location,
+                  about,
+                  imageUrl: updatedUser.imageUrl,
+                  token
+                }
+              });
             });
-          });
+        });
       }).catch((/* error */) => res.status(500).json({
         success: false,
         message: "Error Updating user's profile"
@@ -302,6 +318,7 @@ export default class Users {
 
     return this;
   }
+  // eslint-disable-next-line class-methods-use-this
   getUser({
     user
   }, res) {
@@ -338,7 +355,14 @@ export default class Users {
           username,
           email,
           ImageUrl,
-          phoneNumber
+          phoneNumber,
+          myBusinesses: '',
+          myBusinessCount: '',
+          myFavourites: '',
+          myFollowers: '',
+          myFollowersCount: '',
+          myFollowees: '',
+          myFolloweesCount: ''
         };
         Business.findAndCountAll({
           where: {
@@ -353,32 +377,33 @@ export default class Users {
             },
           })
             .then((favourites) => {
-              const favouriteBusinessIds = favourites.map(favourite => favourite.businessId); 
+              const favouriteBusinessIds = favourites.map(favourite => favourite.businessId);
               Business.findAll({
                 where: { id: favouriteBusinessIds },
               }).then((favouriteBusinesses) => {
-              userInfo.myFavourites = favouriteBusinesses;
+                userInfo.myFavourites = favouriteBusinesses;
 
-              Follower.findAndCountAll({
-                where: {
-                  followerId: userId
-                },
-              }).then((followers) => {
-                userInfo.myFollowers = followers.rows;
-                userInfo.myFollowersCount = followers.count;
                 Follower.findAndCountAll({
                   where: {
-                    userId
-                  }
-                }).then((followees) => {
-                  userInfo.myFollowees = followees.rows;
-                  userInfo.myFolloweesCount = followees.count;
-                  return res.status(200).json({
-                    success: true,
-                    message: 'User found!',
-                    user: userInfo
+                    followerId: userId
+                  },
+                }).then((followers) => {
+                  userInfo.myFollowers = followers.rows;
+                  userInfo.myFollowersCount = followers.count;
+                  Follower.findAndCountAll({
+                    where: {
+                      userId
+                    }
+                  }).then((followees) => {
+                    userInfo.myFollowees = followees.rows;
+                    userInfo.myFolloweesCount = followees.count;
+                    return res.status(200).json({
+                      success: true,
+                      message: 'User found!',
+                      user: userInfo
+                    });
                   });
-                });});
+                });
               });
             });
         }).catch((/* error */) => res.status(500).json({
