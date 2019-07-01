@@ -82,7 +82,7 @@ class BusinessList extends Component {
               <FontAwesomeIcon icon="briefcase" /> Featured Places
             </h1>
           </div>
-          <div className="container content-container">
+          <div className=" content-container">
             <div className="row">
               {!this.props.allBusinesses.length ? (
                 <div>No Businesses Found!</div>
