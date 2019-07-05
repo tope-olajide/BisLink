@@ -481,7 +481,7 @@ export default class Businesses {
       })
       .then(businessFound => businessFound.increment('viewCount'))
       .then((business) => {
-        if (userId == business.User.id) {
+        if (userId === business.User.id) {
           infoCount.isBusinessOwner = true;
         } else {
           infoCount.isBusinessOwner = false;
