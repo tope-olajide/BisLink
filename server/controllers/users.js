@@ -277,7 +277,7 @@ export default class Users {
     if (newPassword.trim().length === 0 || newPassword.length < 6) {
       return res.status(400).json({
         success: false,
-        message: 'Password must be at least 6 characters!'
+        message: 'Password must be at least 5 characters!'
       });
     }
 
