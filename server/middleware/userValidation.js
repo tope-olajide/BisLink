@@ -26,7 +26,7 @@ export const validateNotificationOwner = (notificationId, userId) => {
         if (Number(notification.userId) !== Number(userId)) {
           reject({
             status: 401,
-            message: 'You cannot view or modify a notification that is not yours'
+            message: 'You cannot view or delete a notification that is not yours'
           });
         }
         resolve(notification);
