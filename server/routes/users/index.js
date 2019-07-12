@@ -3,7 +3,7 @@ import User from '../../controllers/users';
 import Businesses from '../../controllers/business';
 import Auth from '../../middleware/auth';
 import Favourites from '../../controllers/favourite';
-import Followers from '../../controllers/follower';
+import Followers from '../../controllers/follow';
 import Notifications from '../../controllers/notification';
 
 const user = express.Router();
