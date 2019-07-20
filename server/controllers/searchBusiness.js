@@ -22,7 +22,7 @@ export default class BusinessSearch {
         offset
       }).then((businesses) => {
         const totalPages = businesses.count;
-        if (businesses.length < 1) {
+        if (businesses.rows.length < 1) {
           return res.status(404).json({
             success: true,
             message: 'Nothing found!',
@@ -61,7 +61,7 @@ export default class BusinessSearch {
         offset
       }).then((businesses) => {
         const totalPages = businesses.count;
-        if (businesses.length < 1) {
+        if (businesses.rows.length < 1) {
           return res.status(404).json({
             success: true,
             message: 'Nothing found!',
@@ -95,7 +95,7 @@ export default class BusinessSearch {
         offset
       }).then((businesses) => {
         const totalPages = businesses.count;
-        if (businesses.length < 1) {
+        if (businesses.rows.length < 1) {
           return res.status(404).json({
             success: true,
             message: 'Nothing found!',
@@ -128,7 +128,7 @@ export default class BusinessSearch {
       })
       .then((businesses) => {
         const totalPages = businesses.count;
-        if (businesses.length < 1) {
+        if (businesses.rows.length < 1) {
           return res.status(404).json({
             success: true,
             message: 'Nothing found!',
@@ -169,7 +169,7 @@ export default class BusinessSearch {
       })
       .then((businesses) => {
         const totalPages = businesses.count;
-        if (businesses.length < 1) {
+        if (businesses.rows.length < 1) {
           return res.status(404).json({
             success: true,
             message: 'Nothing found!',
