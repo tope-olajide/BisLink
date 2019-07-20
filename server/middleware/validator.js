@@ -146,12 +146,15 @@ export const validateUser = ({
   }
   return false;
 };
-export const validateBusiness = ({ businessName, businessAddress1, businessDescription }) => {
-  if (!businessName || businessName.length < 5) {
-    return 'Business name must be more than 5 characters';
+export const validateBusiness = ({ businessName, businessAddress1, businessDescription, phoneNumber1 }) => {
+  if (!businessName || businessName.trim().length < 5) {
+    return 'Business name must be more than 5 characters!';
   }
   if (!businessAddress1 || businessAddress1.length < 5) {
     return 'Business Address must be atleast 5 characters long!';
+  }
+  if (!phoneNumber1 || phoneNumber1.trim().length < 5) {
+    return 'Business phone-number must be more than 5 characters!';
   }
   if (!businessDescription || businessDescription.length < 10) {
     return 'Business Description must be atleast 10 characters long!';
