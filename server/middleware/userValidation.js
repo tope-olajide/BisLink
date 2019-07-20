@@ -6,6 +6,12 @@ export const validateUserRight = (businessId, userId) => {
     Business
       .findById(businessId)
       .then((businessFound) => {
+        if (!businessFound) {
+          reject({
+            status: 404,
+            message: 'Business does not exist!'
+          });
+        }
         if (Number(businessFound.userId) !== Number(userId)) {
           reject({
             status: 401,
