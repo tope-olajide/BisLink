@@ -53,7 +53,7 @@ const businesses = [
     updatedAt: Date.now()
   },
   {
-    id: 1,
+    id: 2,
     businessName: 'Halleluyah Restaurant',
     businessAddress1: '52 Ishaga road, Surulere, Lagos.',
     tagline: 'simply Halle-licious',
@@ -121,7 +121,7 @@ export const insertUserData = () => {
  *
  * @returns {void} Nothing
  */
-export const insertBusinesData = () => {
+export const insertBusinessData = () => {
   Business.bulkCreate(businesses);
 };
 
@@ -167,7 +167,6 @@ export const validUser = {
   username: 'userone',
   password: 'userone234'
 };
-
 
 export const inValidUserId = {
   businessId: 1,
