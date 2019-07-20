@@ -315,7 +315,7 @@ for invalid entries`, (done) => {
         });
     });
   });
-    describe('/PUT Update user profile', () => {
+  describe('/PUT Update user profile', () => {
     it('should update user details', (done) => {
       chai.request(app)
         .put('/api/user/profile')
