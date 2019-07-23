@@ -1,9 +1,9 @@
 import jsonwebtoken from 'jsonwebtoken';
-import { User, Business, Review, Followers } from '../models';
+import { User, Business, Review, Follower } from '../models';
 
 const users = [
   {
-    Fullname: 'User One',
+    fullname: 'User One',
     email: 'userone@ymail.co.uk',
     username: 'userone',
     password: 'userone234',
@@ -11,7 +11,7 @@ const users = [
     updatedAt: Date.now(),
   },
   {
-    Fullname: 'User Two',
+    fullname: 'User Two',
     email: 'usertwo@gmail.com',
     username: 'usertwo',
     password: 'usertwo345',
@@ -19,7 +19,7 @@ const users = [
     updatedAt: Date.now(),
   }
 ];
-const followData = [
+const followers = [
   {
     userId: 1,
     followerId: 2,
@@ -134,8 +134,8 @@ export const insertReviewData = () => {
   Review.bulkCreate(reviews);
 };
 
-export const insertFollowData = () => {
-  Followers.bulkCreate(followData);
+export const insertFollowersData = () => {
+  Follower.bulkCreate(followers);
 };
 
 /**
