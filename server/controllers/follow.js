@@ -21,25 +21,24 @@ export default class Favourites {
               title: notificationAlert.title,
               message: notificationAlert.message,
             })
-            .then((createdNotificatons) => {
-              return res.status(201).json({
-                success: true,
-                message: `you are now following ${userId} `,
-                addedFollower,
-                isFollowing: true,
-                notification: createdNotificatons
-              });
-            })
-            .catch(() => res.status(500).json({
+            .then(createdNotificatons => res.status(201).json({
+              success: true,
+              message: `you are now following ${userId}`,
+              addedFollower,
+              isFollowing: true,
+              notification: createdNotificatons
+            }))
+            .catch(error => res.status(500).json({
               success: false,
               message: 'Error creating Notifications',
               error
             }));
+        } else {
+          return res.status(409).json({
+            success: false,
+            message: `You are already following ${userId}!`
+          });
         }
-        return res.status(409).json({
-          success: false,
-          message: `You are already following ${userId}!`
-        });
       })
       .catch(error => res.status(500).json({
         success: false,
@@ -113,7 +112,7 @@ export default class Favourites {
       .then((followers) => {
         if (followers.length < 1) {
           return res.status(404).json({
-            success: true,
+            success: false,
             message: 'Nothing found!',
             followers: []
           });
@@ -148,7 +147,7 @@ export default class Favourites {
       .then((followees) => {
         if (followees.length === 0) {
           return res.status(404).json({
-            success: true,
+            success: false,
             message: 'Nothing found!',
             followees: []
           });
@@ -163,7 +162,7 @@ export default class Favourites {
         }).then(followee => res.status(200).json({
           success: true,
           message: 'followees found',
-          followees: followee
+          followees: followees
         }));
       })
       .catch((/* error */) => res.status(500).json({
