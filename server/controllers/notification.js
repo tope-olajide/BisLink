@@ -37,7 +37,7 @@ export default class Notifications {
               notificationState: 'seen'
             }
           }).then((readNotificationsCount) => {
-            if (allNotifications.length < 1) {
+            if (allNotifications.length === 0) {
               return res.status(404).json({
                 success: true,
                 message: 'No notifications found!',
@@ -48,10 +48,11 @@ export default class Notifications {
             }
             return res.status(200).json({
               success: true,
-              message: 'Notifications found',
+              message: 'Notification(s) found',
               allNotifications,
               newNotificationsCount,
-              readNotificationsCount
+              readNotificationsCount,
+              userId
             });
           });
         });
@@ -94,15 +95,13 @@ export default class Notifications {
             }).then((allNotificationsCount) => {
               res.status(200).json({
                 success: true,
-                message: 'notification found',
+                message: 'Notification(s) found',
                 notification: notification.message,
                 readNotificationsCount,
                 allNotificationsCount,
                 unreadNotificationsCount
-
-              })
-              ; 
-});
+              });
+            });
           });
         });
       })
@@ -123,14 +122,14 @@ export default class Notifications {
 
     return this;
   }
-  DeleteNotification({ params, user }, res) {
+  deleteNotification({ params, user }, res) {
     const {
       notificationId
     } = params;
     const userId = user.id;
     validateNotificationOwner(notificationId, userId).then(() => {
       Notification
-        .destory({
+        .destroy({
           where: {
             id: notificationId
           }
@@ -180,18 +179,18 @@ export default class Notifications {
               notificationState: 'seen'
             }
           }).then((readNotificationsCount) => {
-            if (unreadNotifications) {
+            if (unreadNotifications.length) {
               res.status(200).json({
                 success: true,
-                message: 'unread notification found',
+                message: 'New notification(s) found',
                 unreadNotifications,
                 allNotificationsCount,
                 readNotificationsCount
               });
             }
-            return res.status(200).json({
-              success: true,
-              message: 'You currently do not have any unread notifications',
+            return res.status(404).json({
+              success: false,
+              message: 'You currently do not have any unread notification(s)',
               unreadNotifications: [],
               allNotificationsCount,
               readNotificationsCount
@@ -227,49 +226,51 @@ export default class Notifications {
               notificationState: 'unseen'
             }
           }).then((unreadNotificationsCount) => {
-            if (readNotifications) {
+            if (readNotifications.length) {
               res.status(200).json({
                 success: true,
-                message: 'read notification found',
+                message: 'read notification(s) found',
                 readNotifications,
                 allNotificationsCount,
                 unreadNotificationsCount
               });
             }
-            return res.status(200).json({
+            return res.status(404).json({
               success: true,
-              message: 'You currently do not have any seen notifications ',
+              message: 'No viewed notifications found',
               readNotifications: [],
               allNotificationsCount
             });
           })
           ;
- });
+        });
       }).catch((/* error */) => res.status(500).json({
         success: false,
         message: 'Error fetching unread notification'
       }));
   }
-  markAllNotificationsAsRead({ user }, res) {
+  markAllUnreadNotificationsAsRead({ user }, res) {
     const userId = user.id;
     Notification
       .findAll({
-        attributes: ['id', 'title', 'message', 'createdAt'],
         where: {
           userId,
           notificationState: 'unseen'
         }
       }).then((unSeenNotifications) => {
-        unSeenNotifications.updateAttributes({
+        const markAsRead = unSeenNotifications.map(eachNotification => eachNotification.updateAttributes({
           notificationState: 'seen'
-        });
-      }).then(() => res.status(200).json({
+        }));
+        return Promise.all(markAsRead);
+      }).then(notification => res.status(200).json({
         success: true,
         message: 'All unread notifications marked as read',
         notification
-      })).catch((/* error */) => res.status(500).json({
+      }))
+      .catch(error => res.status(500).json({
         success: false,
-        message: 'Error fetching notification'
-      }));
+        message: 'Error fetching notification',
+        error
+      }))
   }
 }
