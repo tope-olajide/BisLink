@@ -1,4 +1,4 @@
-/* eslint-disable eol-last */
+
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import jsonwebtoken from 'jsonwebtoken';
@@ -171,7 +171,7 @@ for null`, (done) => {
         .end((err, res) => {
           expect(res.statusCode).to.equal(201);
           expect(res.body).to.have.all.deep.keys(
-            'success', 'message', 'token');
+            'success', 'message', 'token', 'notifications');
           expect(res.body.success).to.equal(true);
           expect(res.body.message).to
             .equal('New user created/token generated!');
@@ -438,4 +438,4 @@ for invalid entries`, (done) => {
           });
       });
   });
-});
+});  
