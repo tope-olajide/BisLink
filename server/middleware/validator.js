@@ -78,22 +78,21 @@ export const validateModifiedUser = ({
     return newarray;
   };
 
-  const validateFullname = checkForInteger(fullname);
-  if (fullname.length < 4 ||
-     validateFullname.length > 1) {
-    return 'Fullname minimum character must be 4 and must not contain a number';
+  const verifyFullnameChars = checkForInteger(fullname);
+  if (fullname.trim().includes(' ') === false) {
+    return 'Your firstname and lastname must be separated by whitespace';
   }
-  if (!fullname.includes(' ')) {
-    return 'Your firstname and lastname must be separated with space';
+  if (fullname.trim().length < 4) {
+    return 'Fullname must contain atleast 4 minimum characters';
+  }
+  if (verifyFullnameChars.length >= 1) {
+    return 'Your fullname must not contains numeric characters';
   }
   if (!validateEmail(email)) {
-    return 'please enter a valid email address'
+    return 'please enter a valid email address';
   }
   return false;
 };
-
-
-
 
 
 export const validateUser = ({
@@ -102,8 +101,19 @@ export const validateUser = ({
   password,
   email
 }) => {
+  if (!fullname) {
+    return 'Fullname must contain atleast 4 minimum characters';
+  }
+  if (!username) {
+    return 'Username must contain at least 3 alphabet characters with no whitespace!';
+  }
+  if (!email) {
+    return 'please enter a valid email address';
+  }
+  if (!password) {
+    return 'Password must be at least 5 characters!';
+  }
   username = username.toLowerCase();
-
   const checkEachChar = (char) => {
     char = parseInt(char, 10);
     return Number.isInteger(char);
@@ -114,44 +124,49 @@ export const validateUser = ({
     return newarray;
   };
 
-  const validateFullname = checkForInteger(fullname);
-  if (fullname.length < 4 ||
-     validateFullname.length > 1) {
+  const verifyFullnameChars = checkForInteger(fullname);
+  if (fullname.trim().includes(' ') === false) {
+    return 'Your firstname and lastname must be separated by whitespace';
+  }
+  if (fullname.trim().length < 4) {
     return 'Fullname must contain atleast 4 minimum characters';
   }
-  if (!fullname.includes(' ')) {
-    return 'Your firstname and lastname must be separated with space';
+  if (verifyFullnameChars.length >= 1) {
+    return 'Your fullname must not contains numeric characters';
   }
-  if (username.length < 3 || username.includes(' ')) {
-    return 'Username must contain at least 3 alphabet characters with no space!';
+
+  if (username.trim().length < 3 || username.includes(' ')) {
+    return 'Username must contain at least 3 alphabet characters with no whitespace!';
   }
   if (!validateEmail(email)) {
-    return 'please enter a valid email address'
+    return 'please enter a valid email address';
   }
   if (password.trim().length === 0 || password.length < 5) {
     return 'Password must be at least 5 characters!';
   }
   return false;
 };
-export const validateBusiness = ({ businessName, businessAddress1, businessDescription })=> {
-  if (!businessName || businessName.length < 5) {
-    return 'title must be more than 5 charachers';
+export const validateBusiness = ({ businessName, businessAddress1, businessDescription, phoneNumber1 }) => {
+  if (!businessName || businessName.trim().length < 5) {
+    return 'Business name must be more than 5 characters!';
   }
   if (!businessAddress1 || businessAddress1.length < 5) {
-    return 'address length is too small';
+    return 'Business Address must be atleast 5 characters long!';
+  }
+  if (!phoneNumber1 || phoneNumber1.trim().length < 5) {
+    return 'Business phone-number must be more than 5 characters!';
   }
   if (!businessDescription || businessDescription.length < 10) {
-    return 'Description is too small';
+    return 'Business Description must be atleast 10 characters long!';
   }
   return false;
 };
-export const validateReview = ({title, content}) => {
-    
-  if (!title) {
-    return 'Please input a valid review title';
+export const validateReview = ({ title, content }) => {
+  if (!title || title.trim().length <= 4) {
+    return 'Review title must be atleast 4 characters';
   }
-  if (!content) {
-    return 'Please input a valid review contents';
+  if (!content || content.trim().length <= 10) {
+    return 'Review content must be atleast 10 characters';
   }
   return false;
 };

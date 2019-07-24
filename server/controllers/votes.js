@@ -1,8 +1,9 @@
+/* eslint-disable require-jsdoc */
 import {
   Upvote,
   Downvote,
   Business,
-  User,Notification
+  User, Notification
 } from '../models';
 
 
@@ -19,11 +20,11 @@ export default class Vote {
       .destroy({
         where: {
           $and: [{
-              userId
-            },
-            {
-              businessId
-            }
+            userId
+          },
+          {
+            businessId
+          }
           ]
         }
       }).then((response) => {
@@ -38,11 +39,11 @@ export default class Vote {
             });
         }
       })
-      .catch((error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         success: false,
         message: 'An error occured',
         error
-      }))
+      }));
     Upvote
       .findOrCreate({
         where: {
@@ -68,15 +69,15 @@ export default class Vote {
                     downvotes
                   } = business;
                   const notificationAlert = {
-                    title:`One of your business has been upvoted `,
+                    title: 'One of your business has been upvoted ',
                     message: `One of your business named: ${businessName} has been upvoted by ${user.id} `
-                  }
+                  };
                   Notification
-                  .create({
-                    userId,
-                    title:notificationAlert.title,
-                    message:notificationAlert.message,
-                  })
+                    .create({
+                      userId,
+                      title: notificationAlert.title,
+                      message: notificationAlert.message,
+                    });
                   return res.status(201).json({
                     success: true,
                     message: `Business with id: ${businessId} Upvoted!`,
@@ -94,7 +95,7 @@ export default class Vote {
           });
         }
       })
-      .catch((error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         success: false,
         message: 'An error occured',
         error
@@ -115,11 +116,11 @@ export default class Vote {
       .destroy({
         where: {
           $and: [{
-              userId
-            },
-            {
-              businessId
-            }
+            userId
+          },
+          {
+            businessId
+          }
           ]
         }
       })
@@ -135,7 +136,7 @@ export default class Vote {
             });
         }
       })
-      .catch((error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         success: false,
         message: 'An error occured',
         error
@@ -166,15 +167,15 @@ export default class Vote {
                     downvotes
                   } = business;
                   const notificationAlert = {
-                    title:`One of your businesses has been Downvoted `,
+                    title: 'One of your businesses has been Downvoted ',
                     message: `One of your businesses named: ${businessName} has been Downvoted by ${user.id} `
-                  }
+                  };
                   Notification
-                  .create({ 
-                    userId,
-                    title:notificationAlert.title,
-                    message:notificationAlert.message,
-                  })
+                    .create({
+                      userId,
+                      title: notificationAlert.title,
+                      message: notificationAlert.message,
+                    });
                   return res.status(201).json({
                     success: true,
                     message: `Business with id: ${businessId} Downvoted!`,
@@ -192,7 +193,7 @@ export default class Vote {
           });
         }
       })
-      .catch((error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         success: false,
         message: 'An error occured',
         error
@@ -232,7 +233,7 @@ export default class Vote {
           votes
         });
       })
-      .catch((error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         success: false,
         message: 'Error fetching upvotes',
         error
@@ -273,21 +274,12 @@ export default class Vote {
           votes
         });
       })
-      .catch(( /* error */ ) => res.status(500).json({
+      .catch((/* error */) => res.status(500).json({
         success: false,
         message: 'Error fetching downvotes'
       }));
 
     return this;
   }
-
-
-
-
-
-
-
-
-
-
 }
+

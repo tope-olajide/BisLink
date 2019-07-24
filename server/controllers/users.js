@@ -82,24 +82,26 @@ export default class Users {
         .then((result) => {
           const notificationAlert = {
             title: `Welcome ${result.fullname}`,
-            message: 'You are welcome to my Bislink web app.'
+            message: `Hello  ${result.fullname}, you are welcome to my Bislink web app.This platform creates awareness for businesses and gives the users the ability to write reviews about the businesses they have interacted with.`
           };
           Notification
             .create({
               userId: result.id,
               title: notificationAlert.title,
               message: notificationAlert.message,
+            }).then((notifications) => {
+              const token = jsonwebtoken.sign({
+                id: result.id,
+                username: result.username,
+                exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
+              }, 'process.env.JWT_SECRET');
+              return res.status(201).json({
+                success: true,
+                message: 'New user created/token generated!',
+                token,
+                notifications
+              });
             });
-          const token = jsonwebtoken.sign({
-            id: result.id,
-            username: result.username,
-            exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24)
-          }, 'process.env.JWT_SECRET');
-          return res.status(201).json({
-            success: true,
-            message: 'New user created/token generated!',
-            token
-          });
         })
         .catch(error => res.status(500).json({
           success: false,
@@ -277,7 +279,7 @@ export default class Users {
     if (newPassword.trim().length === 0 || newPassword.length < 6) {
       return res.status(400).json({
         success: false,
-        message: 'Password must be at least 6 characters!'
+        message: 'Password must be at least 5 characters!'
       });
     }
 

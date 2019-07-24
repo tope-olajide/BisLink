@@ -6,6 +6,12 @@ export const validateUserRight = (businessId, userId) => {
     Business
       .findById(businessId)
       .then((businessFound) => {
+        if (!businessFound) {
+          reject({
+            status: 404,
+            message: 'Business does not exist!'
+          });
+        }
         if (Number(businessFound.userId) !== Number(userId)) {
           reject({
             status: 401,
@@ -26,7 +32,7 @@ export const validateNotificationOwner = (notificationId, userId) => {
         if (Number(notification.userId) !== Number(userId)) {
           reject({
             status: 401,
-            message: 'You cannot view or modify a notification that is not yours'
+            message: 'You cannot view or delete a notification that is not yours'
           });
         }
         resolve(notification);

@@ -1,3 +1,6 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable require-jsdoc */
+
 import {
   Review,
   Business,
@@ -19,7 +22,7 @@ export default class Reviews {
       businessId
     } = params;
     const title = body.title;
-    const content = body.content
+    const content = body.content;
     const validateReviewError = validateReview({
       title,
       content
@@ -32,11 +35,11 @@ export default class Reviews {
     }
     Review
       .create({
-          title,
-          content,
-          userId,
-          businessId
-        }
+        title,
+        content,
+        userId,
+        businessId
+      }
 
       )
       .then((createdReview) => {
@@ -52,19 +55,20 @@ export default class Reviews {
               title: `${user.username} has reviewed one of your businesses`,
               message: `${user.username} has added a review to one of your business titled: '${business.businessName}'`
             };
-             /* Filters the sender out, the user sending the notification should not be among the reciever. */
-            if(userId !== business.userId){
-            Notification
-              .create({
-                userId: notificationAlert.receiverId,
-                title: notificationAlert.title,
-                message: notificationAlert.message,
-              })}
-          })
-          Review
+            /* Filters the sender out, the user sending the notification should not be among the reciever. */
+            if (userId !== business.userId) {
+              Notification
+                .create({
+                  userId: notificationAlert.receiverId,
+                  title: notificationAlert.title,
+                  message: notificationAlert.message,
+                });
+            }
+          });
+        Review
           .findOne({
             where: {
-              id:createdReview.id
+              id: createdReview.id
             },
             include: [{
               model: User,
@@ -74,17 +78,13 @@ export default class Reviews {
               ['id', 'DESC']
             ]
           })
-          .then((reviews)=>{
-            
-          return res.status(201).json({
-          success: true,
-          message: 'New review created',
-          reviews: reviews,
-          reviewer: createdReview.id
-        })
-          })
-
-      }).catch((error) => res.status(500).json({
+          .then(reviews => res.status(201).json({
+            success: true,
+            message: 'New review created',
+            reviews,
+            reviewer: createdReview.id
+          }));
+      }).catch(error => res.status(500).json({
         success: false,
         message: 'Error Creating review',
         error
@@ -109,8 +109,8 @@ export default class Reviews {
       })
       .then((reviews) => {
         if (reviews.length === 0) {
-          return res.status(200).json({
-            success: true,
+          return res.status(404).json({
+            success: false,
             message: 'No Review found!',
             reviews: []
           });
@@ -121,7 +121,7 @@ export default class Reviews {
           reviews
         });
       })
-      .catch((error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         success: false,
         message: 'Error fetching reviews',
         error

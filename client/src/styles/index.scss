@@ -48,7 +48,7 @@ html {
         rgba(73, 78, 80, 0.8),
         rgba(35, 44, 54, 0.7)
       ),
-      url("images/Lagos-skyline.jpg");
+      url("../images/Lagos-skyline.jpg");
     size: cover;
     position: top;
     clip: padding-box;
@@ -56,7 +56,14 @@ html {
   }
   position: relative;
 }
-
+.content-container{
+  @include central-alignnment(80%);
+}
+@media screen and (max-width: 1200px) {
+  .content-container{
+    @include central-alignnment(95%);
+  }
+}
 .hero-caption {
   width: 100%;
   padding-bottom: 9%;
@@ -230,7 +237,7 @@ html {
 .header {
   height: 50vh;
   background: {
-    image: url("images/hero.jpg");
+    image: url("../images/hero.jpg");
     size: cover;
     position: top;
     clip: padding-box;
@@ -406,7 +413,7 @@ html {
 .business-form-header {
   height: 50vh;
   background: {
-    image: url("images/00.jpg");
+    image: url("../images/00.jpg");
     size: cover;
     position: top;
   }

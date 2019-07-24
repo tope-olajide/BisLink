@@ -3,7 +3,7 @@ import User from '../../controllers/users';
 import Businesses from '../../controllers/business';
 import Auth from '../../middleware/auth';
 import Favourites from '../../controllers/favourite';
-import Followers from '../../controllers/follower';
+import Followers from '../../controllers/follow';
 import Notifications from '../../controllers/notification';
 
 const user = express.Router();
@@ -29,9 +29,9 @@ user
   .delete(newFavourite.removeFromFavourites)
   .get(newFavourite.getFavBusiness);
 
-user.route('/followee').get(newFollower.fetchAllFollowees);
+user.get('/followee', newFollower.fetchAllFollowees);
 
-user.route('/follower').get(newFollower.fetchAllFollowers);
+user.get('/follower', newFollower.fetchAllFollowers);
 
 user.get('/favourite/:userId', newFavourite.getFavBusinesses);
 
@@ -40,12 +40,12 @@ user
   .post(newFollower.followUser)
   .delete(newFollower.unFollowUser);
 
-user.route('/notifications/all').get(newNotification.getAllNotifications);
-user.route('/notifications/seen').get(newNotification.getReadNotifications);
-user
-  .route('/notifications/:notificationId')
-  .get(newNotification.viewNotification);
-user.route('/notifications').get(newNotification.getUnreadNotifications);
+user.get('/notifications/all', newNotification.getAllNotifications);
+user.get('/notifications/seen', newNotification.getReadNotifications);
+user.get('/notifications/:notificationId', newNotification.viewNotification);
+user.delete('/notifications/:notificationId', newNotification.deleteNotification);
+user.get('/notifications', newNotification.getUnreadNotifications);
+user.put('/notifications', newNotification.markAllUnreadNotificationsAsRead);
 
 
 export default user;

@@ -1,3 +1,4 @@
+/* eslint-disable class-methods-use-this */
 /* eslint-disable require-jsdoc */
 import {
   Business,
@@ -14,6 +15,7 @@ import {
   validateUserRight
 } from '../middleware/userValidation';
 import searchBusiness from './searchBusiness';
+
 const isNamePicked = (userId, businessName) => {
   const promise = new Promise((resolve) => {
     Business
@@ -69,7 +71,8 @@ export default class Businesses {
           validateBusiness({
             businessName,
             businessAddress1,
-            businessDescription
+            businessDescription,
+            phoneNumber1,
           });
         if (validateBusinessError) {
           return res.status(400).json({
@@ -227,11 +230,10 @@ export default class Businesses {
                   userIds,
                   notifications,
                   created,
-                  userId:user.id
+                  userId: user.id
                 });
               });
             });
-
         })
         .catch(error => res.status(500).json({
           success: false,
@@ -239,7 +241,7 @@ export default class Businesses {
           message: 'Error updating business'
         }));
     };
-    
+
     const {
       businessId
     } = params;
@@ -259,7 +261,8 @@ export default class Businesses {
         validateBusiness({
           businessName,
           businessAddress1,
-          businessDescription
+          businessDescription,
+          phoneNumber1
         });
       if (validateBusinessError) {
         return res.status(400).json({
@@ -340,6 +343,7 @@ export default class Businesses {
     const {
       businessId
     } = params;
+
     validateUserRight(businessId, user.id).then(() => {
       Business.findOne({
         where: {
@@ -437,14 +441,13 @@ export default class Businesses {
       .then((businesses) => {
         /* const totalPages = Math.ceil(businesses.count / limit) */
         const totalPages = businesses.count;
-        if (businesses.length < 1) {
+        if (businesses.rows.length < 1) {
           return res.status(404).json({
             success: true,
             message: 'Nothing found!',
             businesses: []
           });
         }
-
         return res.status(200).json({
           success: true,
           message: 'business(es) found!',
@@ -468,6 +471,12 @@ export default class Businesses {
     const {
       businessId
     } = params;
+    if (isNaN(businessId)) {
+      res.status(422).json({
+        success: false,
+        message: 'Invalid Business ID'
+      });
+    }
     const infoCount = {};
     Business
       .findOne({
@@ -479,9 +488,16 @@ export default class Businesses {
           attributes: ['id', 'username', 'location', 'ImageUrl', 'about']
         }]
       })
-      .then(businessFound => businessFound.increment('viewCount'))
+      .then((businessFound) => {
+        if (!businessFound) {
+          res.status(404).json({
+            success: true,
+            message: 'Business does not exist!'
+          });
+        } businessFound.increment('viewCount');
+      })
       .then((business) => {
-        if (userId == business.User.id) {
+        if (userId === business.User.id) {
           infoCount.isBusinessOwner = true;
         } else {
           infoCount.isBusinessOwner = false;
@@ -540,7 +556,7 @@ export default class Businesses {
           });
         });
       })
-      .catch(( /* error */ ) => res.status(500).json({
+      .catch((/* error */) => res.status(500).json({
         success: false,
         message: 'Error fetching business'
       }));
@@ -554,9 +570,9 @@ export default class Businesses {
       newSearchBusiness.sortByMostPopular(req, res);
     } else if (req.query.sort === 'recent') {
       newSearchBusiness.sortByMostRecent(req, res);
-    } else if (req.query.name === 'undefined' || req.query.name === ' ') {
+    } else if (!req.query.name || req.query.name === ' ') {
       newSearchBusiness.searchAllLocation(req, res);
-    } else if (req.query.location === 'undefined') {
+    } else if (!req.query.location) {
       newSearchBusiness.searchBusinessName(req, res);
     } else {
       newSearchBusiness.searchBusinessInLocation(req, res);
