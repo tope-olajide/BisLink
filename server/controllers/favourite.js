@@ -1,3 +1,6 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable require-jsdoc */
+
 import { Favourite, Business, User, Notification } from '../models';
 
 export default class Favourites {
@@ -5,27 +8,32 @@ export default class Favourites {
   addToFavourite({ user, params }, res) {
     const userId = user.id;
     const { businessId } = params;
-
+    if (isNaN(businessId)) {
+      res.status(401).json({
+        success: false,
+        message: 'Invalid Business ID'
+      });
+    }
     Favourite
       .findOrCreate({ where: { userId, businessId } })
       .spread((addedBusiness, created) => {
         if (created) {
           Business
-          .findOne({
-            where: { id: businessId }
-          }).then((business) =>{         
-const notificationAlert = {
-  receiverId:business.userId,
-  title:`${user.username} has added one of your business to his/her favourite`,
-  message: `${user.username} has added your business named: ${business.businessName} to his/her favourite business collection`
-};
-Notification
-          .create({
-            userId:notificationAlert.receiverId,
-            title:notificationAlert.title,
-            message:notificationAlert.message,
-          })
-          })
+            .findOne({
+              where: { id: businessId }
+            }).then((business) => {
+              const notificationAlert = {
+                receiverId: business.userId,
+                title: `${user.username} has added one of your business to his/her favourite`,
+                message: `${user.username} has added your business named: ${business.businessName} to his/her favourite business collection`
+              };
+              Notification
+                .create({
+                  userId: notificationAlert.receiverId,
+                  title: notificationAlert.title,
+                  message: notificationAlert.message,
+                });
+            });
           return res.status(201).json({
             success: true,
             message: `Business with id: ${businessId} added to favourites!`,
@@ -49,6 +57,12 @@ Notification
 
   removeFromFavourites({ params, user }, res) {
     const { businessId } = params;
+    if (isNaN(businessId)) {
+      res.status(401).json({
+        success: false,
+        message: 'Invalid Business ID'
+      });
+    }
     const userId = user.id;
     Favourite
       .destroy({
@@ -68,7 +82,7 @@ Notification
           });
         }
       })
-      .catch(( error) => res.status(500).json({
+      .catch(error => res.status(500).json({
         success: false,
         message: 'Error removing business from favourites'
       }));
@@ -78,7 +92,12 @@ Notification
   getFavBusiness({ params, user: { id } }, res) {
     const { businessId } = params;
     const userId = id;
-
+    if (isNaN(businessId)) {
+      res.status(401).json({
+        success: false,
+        message: 'Invalid Business ID'
+      });
+    }
     Favourite
       .findOne({
         where: { userId, businessId },
@@ -95,7 +114,7 @@ Notification
 
         return res.status(200).json({
           success: true,
-          message: 'Favourite business found',
+          message: 'Favourite business(es) found',
           business
         });
       })
