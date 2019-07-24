@@ -162,11 +162,11 @@ export const validateBusiness = ({ businessName, businessAddress1, businessDescr
   return false;
 };
 export const validateReview = ({ title, content }) => {
-  if (!title) {
-    return 'Please input a valid review title';
+  if (!title || title.trim().length <= 4) {
+    return 'Review title must be atleast 4 characters';
   }
-  if (!content) {
-    return 'Please input a valid review contents';
+  if (!content || content.trim().length <= 10) {
+    return 'Review content must be atleast 10 characters';
   }
   return false;
 };
